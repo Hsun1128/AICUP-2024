@@ -1,0 +1,473 @@
+2024-11-05 23:02:29:DEBUG:jieba:Building prefix dict from /home/s1136102/python/AICUP/custom_dicts/dict.txt.big ...
+2024-11-05 23:02:29:DEBUG:jieba:Loading model from cache /tmp/jieba.ua6683cd5b6b7d5b3ab16049ce5b543c6.cache
+2024-11-05 23:02:30:DEBUG:jieba:Loading model cost 1.206 seconds.
+2024-11-05 23:02:30:DEBUG:jieba:Prefix dict has been built successfully.
+2024-11-05 23:02:30:INFO:__main__:載入自定義字典: ../custom_dicts/with_frequency/common_use_dict_with_frequency.txt
+2024-11-05 23:02:30:INFO:__main__:載入自定義字典: ../custom_dicts/with_frequency/insurance_dict_with_frequency.txt
+2024-11-05 23:02:30:INFO:__main__:Loading stopwords success
+2024-11-05 23:02:30:INFO:__main__:stopwords: {'但', ']', '」', '可', '左', '為', '但是', '"', '呢', '若', '以前', '比如', '則', '喔', '﹑', '公司', '新', '下', '2', '和', '或', '他', '啊', '又', '；', '本', '~', ':', '•', '後', '產品', '外', '裡', '&', '人', '）', '之', '從前', '﹒', '第', '前', '關', '～', '著', '〃', '．', '需要', '剛才', '：', '因此', '雖然', '`', '％', '同時', '哇', '.', '有', '一直', '／', '的', '然而', '︰', '「', '其', '對', '得', '期', '依', '是', '併', '並', '即使', '並且', '它', '}', '且', '!', '右', '頁', '現在', '後來', '該', '由', '係', '如何', ',', '(', '_', '被', '及', ';', ')', '我', '如果', '項', '經常', '\\', '如', '在', '時', '比如說', '?', '中', '已', '呀', '於', '$', '以及', '|', '因', '最近', '[', '未', '開始', '也', '吧', '有限公司', '他們', '–', '以', '所以', '與', '1', '保險', '請', '約', '嗎', '三季', '你', '#', '。', '需', '、', '年', '/', '應該', '至', '註', '（', '二季', '邊', '等', '{', '%', '什麼', '－', '因而', '應', '4', '】', '＄', '使', '附', '＿', '因為', '一季', '哦', '？', '而', '！', '怎麼', '你們', '了', '3', '，', '我們', '她', '【', '客戶', '上', "'", '將', '不', '內', '-'}
+2024-11-05 23:02:30:INFO:gensim.utils:loading KeyedVectors object from /home/s1136102/python/AICUP/初賽Baseline/../word2vec/wiki.zh.bin
+2024-11-05 23:02:30:INFO:gensim.utils:loading vectors from /home/s1136102/python/AICUP/初賽Baseline/../word2vec/wiki.zh.bin.vectors.npy with mmap=None
+2024-11-05 23:02:30:INFO:gensim.utils:KeyedVectors lifecycle event {'fname': '/home/s1136102/python/AICUP/初賽Baseline/../word2vec/wiki.zh.bin', 'datetime': '2024-11-05T23:02:30.914818', 'gensim': '4.3.3', 'python': '3.9.12 (main, Jun  1 2022, 11:38:51) \n[GCC 7.5.0]', 'platform': 'Linux-5.4.0-150-generic-x86_64-with-glibc2.27', 'event': 'loaded'}
+2024-11-05 23:02:30:INFO:__main__:Word2Vec model loaded successfully
+2024-11-05 23:02:33:INFO:datasets:PyTorch version 2.4.0+cu121 available.
+2024-11-05 23:02:34:INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: BAAI/bge-m3
+2024-11-05 23:02:39:INFO:__main__:BM25_K1: 0.5
+2024-11-05 23:02:39:INFO:__main__:BM25_B: 0.7
+2024-11-05 23:02:39:INFO:__main__:================================================================= QID: 51 =================================================================
+2024-11-05 23:02:40:INFO:faiss.loader:Loading faiss with AVX2 support.
+2024-11-05 23:02:40:INFO:faiss.loader:Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2024-11-05 23:02:40:INFO:faiss.loader:Loading faiss.
+2024-11-05 23:02:40:INFO:faiss.loader:Successfully loaded faiss.
+2024-11-05 23:02:40:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:02:40:INFO:__main__:query分詞結果: 季/多少/2023/聯電/營業/利益
+2024-11-05 23:02:40:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:40:INFO:__main__:Rank 1: PDF 653, Chunk 0, Final Score: 0.9537 (BM25: 1.0000, FAISS: 0.8456, Repeat Bonus: 0.0000), words frequency: [('利益', 7), ('營業', 3)]
+2024-11-05 23:02:40:INFO:__main__:Rank 2: PDF 162, Chunk 0, Final Score: 0.9131 (BM25: 0.9456, FAISS: 0.8373, Repeat Bonus: 0.0000), words frequency: [('營業', 8), ('利益', 4)]
+2024-11-05 23:02:40:INFO:__main__:Rank 3: PDF 61, Chunk 3, Final Score: 0.6978 (BM25: 0.3354, FAISS: 0.8769, Repeat Bonus: 0.2000), words frequency: [('營業', 5)]
+2024-11-05 23:02:40:INFO:__main__:Rank 4: PDF 899, Chunk 0, Final Score: 0.4622 (BM25: 0.0000, FAISS: 0.8739, Repeat Bonus: 0.2000), words frequency: []
+2024-11-05 23:02:40:INFO:__main__:Rank 5: PDF 61, Chunk 0, Final Score: 0.3000 (BM25: 0.0000, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:02:40:INFO:__main__:================================================================= QID: 52 =================================================================
+2024-11-05 23:02:45:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:02:45:INFO:__main__:query分詞結果: 部分/百分/多少/占/2023/季/會計/有限/百分比/股份/報告/科技股份/財務報告/財務/資產/光寶/子公司/總額/合併/科技股/未經/會計師/核閱/科技/非/重要
+2024-11-05 23:02:45:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:45:INFO:__main__:Rank 1: PDF 918, Chunk 1, Final Score: 0.8814 (BM25: 1.0000, FAISS: 0.7627, Repeat Bonus: 0.0000), words frequency: [('合併', 6), ('總額', 6), ('財務', 3), ('報告', 3), ('財務報告', 3), ('占', 3), ('核閱', 2), ('會計', 2), ('會計師', 2), ('資產', 2)]
+2024-11-05 23:02:45:INFO:__main__:Rank 2: PDF 918, Chunk 0, Final Score: 0.8314 (BM25: 0.8995, FAISS: 0.7632, Repeat Bonus: 0.0000), words frequency: [('核閱', 9), ('合併', 8), ('財務', 8), ('會計', 7), ('報告', 6), ('會計師', 5), ('財務報告', 5), ('光寶', 3), ('科技', 2), ('股份', 2)]
+2024-11-05 23:02:45:INFO:__main__:Rank 3: PDF 1018, Chunk 1, Final Score: 0.7911 (BM25: 0.7271, FAISS: 0.8551, Repeat Bonus: 0.0000), words frequency: [('合併', 8), ('股份', 7), ('有限', 7), ('科技', 6), ('子公司', 3), ('科技股', 3), ('科技股份', 3), ('財務', 3), ('報告', 3), ('財務報告', 3)]
+2024-11-05 23:02:45:INFO:__main__:Rank 4: PDF 918, Chunk 2, Final Score: 0.7775 (BM25: 0.7924, FAISS: 0.7627, Repeat Bonus: 0.0000), words frequency: [('財務', 10), ('報告', 7), ('財務報告', 7), ('合併', 6), ('會計', 4), ('會計師', 3), ('核閱', 3), ('未經', 1), ('部分', 1), ('非', 1)]
+2024-11-05 23:02:45:INFO:__main__:Rank 5: PDF 1018, Chunk 0, Final Score: 0.7757 (BM25: 0.6963, FAISS: 0.8551, Repeat Bonus: 0.0000), words frequency: [('合併', 7), ('股份', 6), ('有限', 6), ('光寶', 5), ('科技', 2), ('科技股', 2), ('科技股份', 2), ('子公司', 2), ('財務', 1), ('報告', 1)]
+2024-11-05 23:02:45:INFO:__main__:================================================================= QID: 53 =================================================================
+2024-11-05 23:02:48:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:02:48:INFO:__main__:query分詞結果: 元/多少/歸屬/屬於/季/變動表/2022/綜合/業主/權益/本期/損益/歸屬於/新台幣/長榮/總額/仟/合併/母公司/變動/綜合損益
+2024-11-05 23:02:48:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:48:INFO:__main__:Rank 1: PDF 145, Chunk 1, Final Score: 0.9017 (BM25: 1.0000, FAISS: 0.8034, Repeat Bonus: 0.0000), words frequency: [('損益', 13), ('綜合', 8), ('權益', 5), ('綜合損益', 4), ('合併', 3), ('總額', 3), ('本期', 2), ('歸屬', 2), ('屬於', 2), ('歸屬於', 2)]
+2024-11-05 23:02:48:INFO:__main__:Rank 2: PDF 351, Chunk 0, Final Score: 0.8456 (BM25: 0.9623, FAISS: 0.7289, Repeat Bonus: 0.0000), words frequency: [('權益', 9), ('變動', 7), ('損益', 6), ('本期', 6), ('綜合', 5), ('綜合損益', 4), ('合併', 3), ('總額', 3), ('長榮', 1), ('變動表', 1)]
+2024-11-05 23:02:48:INFO:__main__:Rank 3: PDF 145, Chunk 0, Final Score: 0.7839 (BM25: 0.3508, FAISS: 0.8169, Repeat Bonus: 0.2000), words frequency: [('損益', 2), ('長榮', 1), ('合併', 1), ('綜合', 1), ('新台幣', 1), ('仟', 1), ('元', 1), ('權益', 1), ('本期', 1)]
+2024-11-05 23:02:48:INFO:__main__:Rank 4: PDF 178, Chunk 0, Final Score: 0.5724 (BM25: 0.1449, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('合併', 3), ('長榮', 2), ('新台幣', 1)]
+2024-11-05 23:02:48:INFO:__main__:Rank 5: PDF 178, Chunk 2, Final Score: 0.5508 (BM25: 0.1416, FAISS: 0.9600, Repeat Bonus: 0.0000), words frequency: [('合併', 5), ('變動', 5)]
+2024-11-05 23:02:48:INFO:__main__:================================================================= QID: 54 =================================================================
+2024-11-05 23:02:49:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:02:49:INFO:__main__:query分詞結果: 現金流出/季/淨/活動/現金/流出/多少/現金流/投資/亞德客/KY/2022/亞德/金流
+2024-11-05 23:02:49:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:49:INFO:__main__:Rank 1: PDF 969, Chunk 0, Final Score: 0.9822 (BM25: 0.5643, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('亞德', 2), ('亞德客', 2), ('現金', 1), ('金流', 1), ('現金流', 1)]
+2024-11-05 23:02:49:INFO:__main__:Rank 2: PDF 969, Chunk 1, Final Score: 0.8967 (BM25: 0.4956, FAISS: 0.8978, Repeat Bonus: 0.2000), words frequency: [('亞德', 1), ('亞德客', 1), ('現金', 1), ('金流', 1), ('現金流', 1)]
+2024-11-05 23:02:49:INFO:__main__:Rank 3: PDF 612, Chunk 1, Final Score: 0.8834 (BM25: 1.0000, FAISS: 0.7667, Repeat Bonus: 0.0000), words frequency: [('現金', 12), ('活動', 4), ('金流', 4), ('現金流', 4), ('投資', 2), ('淨', 1)]
+2024-11-05 23:02:49:INFO:__main__:Rank 4: PDF 612, Chunk 0, Final Score: 0.7696 (BM25: 0.7701, FAISS: 0.7691, Repeat Bonus: 0.0000), words frequency: [('現金', 3), ('金流', 3), ('現金流', 3), ('活動', 2), ('亞德', 1), ('亞德客', 1)]
+2024-11-05 23:02:49:INFO:__main__:Rank 5: PDF 520, Chunk 0, Final Score: 0.5954 (BM25: 0.3637, FAISS: 0.8272, Repeat Bonus: 0.0000), words frequency: [('亞德', 3), ('亞德客', 3), ('投資', 1)]
+2024-11-05 23:02:49:INFO:__main__:================================================================= QID: 55 =================================================================
+2024-11-05 23:02:51:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:02:51:INFO:__main__:query分詞結果: 季/信用狀/開立/子公司/多少/聯電/機器設備/信用/2022/設備/使用/億元/進口/機器
+2024-11-05 23:02:51:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:51:INFO:__main__:Rank 1: PDF 166, Chunk 0, Final Score: 1.1803 (BM25: 1.0000, FAISS: 0.9343, Repeat Bonus: 0.2000), words frequency: [('子公司', 6), ('億元', 6), ('開立', 2), ('進口', 1), ('機器', 1), ('設備', 1), ('機器設備', 1), ('使用', 1), ('信用', 1), ('信用狀', 1)]
+2024-11-05 23:02:51:INFO:__main__:Rank 2: PDF 116, Chunk 0, Final Score: 0.6248 (BM25: 0.5361, FAISS: 0.8317, Repeat Bonus: 0.0000), words frequency: [('設備', 3), ('子公司', 2), ('信用', 2), ('信用狀', 2), ('機器', 1), ('機器設備', 1), ('使用', 1)]
+2024-11-05 23:02:51:INFO:__main__:Rank 3: PDF 635, Chunk 0, Final Score: 0.5752 (BM25: 0.1288, FAISS: 0.9503, Repeat Bonus: 0.2000), words frequency: [('設備', 2), ('子公司', 1), ('使用', 1)]
+2024-11-05 23:02:51:INFO:__main__:Rank 4: PDF 166, Chunk 1, Final Score: 0.5562 (BM25: 0.1225, FAISS: 0.9014, Repeat Bonus: 0.2000), words frequency: [('子公司', 1), ('億元', 1)]
+2024-11-05 23:02:51:INFO:__main__:Rank 5: PDF 166, Chunk 2, Final Score: 0.3726 (BM25: 0.1511, FAISS: 0.8895, Repeat Bonus: 0.0000), words frequency: [('億元', 5), ('子公司', 3)]
+2024-11-05 23:02:51:INFO:__main__:================================================================= QID: 56 =================================================================
+2024-11-05 23:02:51:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:02:51:INFO:__main__:query分詞結果: 交易/關聯企業/多少/銷貨收入/收入/國巨/第三/關係/關聯/相關/第三季/關係人/2022/企業/銷貨
+2024-11-05 23:02:51:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:51:INFO:__main__:Rank 1: PDF 171, Chunk 1, Final Score: 1.1443 (BM25: 1.0000, FAISS: 0.8145, Repeat Bonus: 0.2000), words frequency: [('關聯', 16), ('企業', 16), ('關聯企業', 16), ('關係', 14), ('關係人', 12), ('國巨', 2), ('收入', 2), ('銷貨', 1), ('銷貨收入', 1)]
+2024-11-05 23:02:51:INFO:__main__:Rank 2: PDF 171, Chunk 0, Final Score: 0.5668 (BM25: 0.1714, FAISS: 0.8229, Repeat Bonus: 0.2000), words frequency: [('關係', 3), ('交易', 3), ('關係人', 2)]
+2024-11-05 23:02:51:INFO:__main__:Rank 3: PDF 760, Chunk 1, Final Score: 0.5374 (BM25: 0.0959, FAISS: 0.9009, Repeat Bonus: 0.2000), words frequency: [('交易', 2), ('相關', 1)]
+2024-11-05 23:02:51:INFO:__main__:Rank 4: PDF 760, Chunk 0, Final Score: 0.5343 (BM25: 0.0490, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('相關', 4)]
+2024-11-05 23:02:51:INFO:__main__:Rank 5: PDF 1003, Chunk 0, Final Score: 0.5261 (BM25: 0.0975, FAISS: 0.8596, Repeat Bonus: 0.2000), words frequency: [('交易', 2), ('收入', 1)]
+2024-11-05 23:02:51:INFO:__main__:================================================================= QID: 57 =================================================================
+2024-11-05 23:02:56:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:02:56:INFO:__main__:query分詞結果: 智邦/季/海關/貨物/多少/函予/銀行/2023/金額/進出口/截至/出具/進出/出口/保證
+2024-11-05 23:02:56:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:56:INFO:__main__:Rank 1: PDF 668, Chunk 0, Final Score: 0.8614 (BM25: 1.0000, FAISS: 0.7228, Repeat Bonus: 0.0000), words frequency: [('金額', 4), ('海關', 3), ('截至', 2), ('智邦', 2), ('進出', 2), ('出口', 2), ('進出口', 2), ('貨物', 2), ('銀行', 2), ('出具', 2)]
+2024-11-05 23:02:56:INFO:__main__:Rank 2: PDF 410, Chunk 0, Final Score: 0.5084 (BM25: 0.0168, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('智邦', 2)]
+2024-11-05 23:02:56:INFO:__main__:Rank 3: PDF 960, Chunk 2, Final Score: 0.4750 (BM25: 0.1590, FAISS: 0.7911, Repeat Bonus: 0.0000), words frequency: [('2023', 3), ('截至', 1)]
+2024-11-05 23:02:56:INFO:__main__:Rank 4: PDF 919, Chunk 1, Final Score: 0.4609 (BM25: 0.0836, FAISS: 0.8382, Repeat Bonus: 0.0000), words frequency: [('銀行', 3)]
+2024-11-05 23:02:56:INFO:__main__:Rank 5: PDF 410, Chunk 1, Final Score: 0.4596 (BM25: 0.0000, FAISS: 0.9192, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:02:56:INFO:__main__:================================================================= QID: 58 =================================================================
+2024-11-05 23:02:58:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:02:58:INFO:__main__:query分詞結果: 季/總額/權益/多少/合併/2023/聯電
+2024-11-05 23:02:58:INFO:__main__:query擴展詞: 
+2024-11-05 23:02:58:INFO:__main__:Rank 1: PDF 209, Chunk 0, Final Score: 0.9040 (BM25: 1.0000, FAISS: 0.8080, Repeat Bonus: 0.0000), words frequency: [('權益', 13), ('總額', 3), ('合併', 2)]
+2024-11-05 23:02:58:INFO:__main__:Rank 2: PDF 112, Chunk 0, Final Score: 0.8231 (BM25: 0.2626, FAISS: 0.9836, Repeat Bonus: 0.2000), words frequency: [('權益', 2), ('合併', 1)]
+2024-11-05 23:02:58:INFO:__main__:Rank 3: PDF 256, Chunk 1, Final Score: 0.5918 (BM25: 0.3225, FAISS: 0.8612, Repeat Bonus: 0.0000), words frequency: [('權益', 3)]
+2024-11-05 23:02:58:INFO:__main__:Rank 4: PDF 256, Chunk 2, Final Score: 0.5724 (BM25: 0.3213, FAISS: 0.8236, Repeat Bonus: 0.0000), words frequency: [('權益', 3)]
+2024-11-05 23:02:58:INFO:__main__:Rank 5: PDF 328, Chunk 0, Final Score: 0.5000 (BM25: 0.0000, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('合併', 1)]
+2024-11-05 23:02:58:INFO:__main__:================================================================= QID: 59 =================================================================
+2024-11-05 23:03:02:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:02:INFO:__main__:query分詞結果: 季/總額/多少/本期/2023/其他/損益/台化/綜合損益/綜合
+2024-11-05 23:03:02:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:02:INFO:__main__:Rank 1: PDF 639, Chunk 12, Final Score: 0.9282 (BM25: 0.9692, FAISS: 0.8873, Repeat Bonus: 0.0000), words frequency: [('綜合', 3), ('損益', 3), ('本期', 3), ('綜合損益', 2), ('其他', 1), ('總額', 1)]
+2024-11-05 23:03:02:INFO:__main__:Rank 2: PDF 639, Chunk 3, Final Score: 0.9119 (BM25: 0.4921, FAISS: 0.9316, Repeat Bonus: 0.2000), words frequency: [('損益', 5), ('綜合', 2), ('綜合損益', 2), ('總額', 1)]
+2024-11-05 23:03:02:INFO:__main__:Rank 3: PDF 632, Chunk 0, Final Score: 0.8908 (BM25: 1.0000, FAISS: 0.7815, Repeat Bonus: 0.0000), words frequency: [('損益', 7), ('綜合', 6), ('本期', 6), ('其他', 5), ('綜合損益', 5), ('總額', 3)]
+2024-11-05 23:03:02:INFO:__main__:Rank 4: PDF 639, Chunk 5, Final Score: 0.6882 (BM25: 0.4526, FAISS: 0.9238, Repeat Bonus: 0.0000), words frequency: [('台化', 7)]
+2024-11-05 23:03:02:INFO:__main__:Rank 5: PDF 639, Chunk 6, Final Score: 0.6837 (BM25: 0.4573, FAISS: 0.9100, Repeat Bonus: 0.0000), words frequency: [('台化', 14)]
+2024-11-05 23:03:02:INFO:__main__:================================================================= QID: 60 =================================================================
+2024-11-05 23:03:05:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:05:INFO:__main__:query分詞結果: 林口/第三期/工程/三期/多少/園區/季為/支出/資本支出/興建/2023/第三/尚未/發生/總計/研華/簽約/資本
+2024-11-05 23:03:05:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:05:INFO:__main__:Rank 1: PDF 726, Chunk 0, Final Score: 0.8660 (BM25: 1.0000, FAISS: 0.7320, Repeat Bonus: 0.0000), words frequency: [('工程', 3), ('興建', 2), ('林口', 2), ('園區', 2), ('第三', 1), ('三期', 1), ('第三期', 1), ('簽約', 1), ('尚未', 1), ('發生', 1)]
+2024-11-05 23:03:05:INFO:__main__:Rank 2: PDF 415, Chunk 0, Final Score: 0.7796 (BM25: 0.1592, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('研華', 3), ('第三', 1), ('園區', 1)]
+2024-11-05 23:03:05:INFO:__main__:Rank 3: PDF 916, Chunk 1, Final Score: 0.5067 (BM25: 0.1624, FAISS: 0.8510, Repeat Bonus: 0.0000), words frequency: [('總計', 3), ('資本', 2), ('研華', 1)]
+2024-11-05 23:03:05:INFO:__main__:Rank 4: PDF 415, Chunk 1, Final Score: 0.4847 (BM25: 0.0000, FAISS: 0.9693, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:03:05:INFO:__main__:Rank 5: PDF 854, Chunk 0, Final Score: 0.4737 (BM25: 0.0000, FAISS: 0.9475, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:03:05:INFO:__main__:================================================================= QID: 61 =================================================================
+2024-11-05 23:03:10:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:10:INFO:__main__:query分詞結果: 多少/帳面/存貨/2023/金額/鴻海/季度/集團/帳面金額
+2024-11-05 23:03:10:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:10:INFO:__main__:Rank 1: PDF 900, Chunk 3, Final Score: 0.8961 (BM25: 1.0000, FAISS: 0.7922, Repeat Bonus: 0.0000), words frequency: [('集團', 4), ('存貨', 3), ('金額', 2), ('帳面', 1), ('帳面金額', 1)]
+2024-11-05 23:03:10:INFO:__main__:Rank 2: PDF 900, Chunk 1, Final Score: 0.8759 (BM25: 0.9547, FAISS: 0.7970, Repeat Bonus: 0.0000), words frequency: [('集團', 5), ('金額', 3), ('存貨', 2), ('帳面', 1), ('帳面金額', 1)]
+2024-11-05 23:03:10:INFO:__main__:Rank 3: PDF 359, Chunk 2, Final Score: 0.7600 (BM25: 0.6344, FAISS: 0.8856, Repeat Bonus: 0.0000), words frequency: [('集團', 2), ('金額', 2), ('帳面', 1), ('帳面金額', 1)]
+2024-11-05 23:03:10:INFO:__main__:Rank 4: PDF 359, Chunk 30, Final Score: 0.7555 (BM25: 0.6795, FAISS: 0.8314, Repeat Bonus: 0.0000), words frequency: [('集團', 2), ('帳面', 2), ('金額', 2), ('帳面金額', 2)]
+2024-11-05 23:03:10:INFO:__main__:Rank 5: PDF 359, Chunk 33, Final Score: 0.7311 (BM25: 0.6368, FAISS: 0.8253, Repeat Bonus: 0.0000), words frequency: [('金額', 7), ('帳面', 4), ('帳面金額', 2), ('集團', 1)]
+2024-11-05 23:03:10:INFO:__main__:================================================================= QID: 62 =================================================================
+2024-11-05 23:03:12:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:12:INFO:__main__:query分詞結果: 現金/多少/季聯/約當現金/金額/2022/發科
+2024-11-05 23:03:12:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:12:INFO:__main__:Rank 1: PDF 89, Chunk 0, Final Score: 0.9816 (BM25: 0.5633, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('金額', 2), ('現金', 1)]
+2024-11-05 23:03:12:INFO:__main__:Rank 2: PDF 591, Chunk 0, Final Score: 0.9549 (BM25: 1.0000, FAISS: 0.9098, Repeat Bonus: 0.0000), words frequency: [('金額', 4), ('現金', 2), ('約當現金', 1)]
+2024-11-05 23:03:12:INFO:__main__:Rank 3: PDF 721, Chunk 0, Final Score: 0.9042 (BM25: 0.4289, FAISS: 0.9796, Repeat Bonus: 0.2000), words frequency: [('現金', 4), ('金額', 1)]
+2024-11-05 23:03:12:INFO:__main__:Rank 4: PDF 56, Chunk 1, Final Score: 0.8250 (BM25: 0.7259, FAISS: 0.9242, Repeat Bonus: 0.0000), words frequency: [('發科', 2), ('金額', 1)]
+2024-11-05 23:03:12:INFO:__main__:Rank 5: PDF 56, Chunk 0, Final Score: 0.8209 (BM25: 0.6972, FAISS: 0.9447, Repeat Bonus: 0.0000), words frequency: [('金額', 1), ('發科', 1)]
+2024-11-05 23:03:12:INFO:__main__:================================================================= QID: 63 =================================================================
+2024-11-05 23:03:14:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:03:14:INFO:__main__:query分詞結果: 季/現金/活動/聯發科/之淨/多少/現金流/2023/營業/現金流入/流入/金流
+2024-11-05 23:03:14:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:14:INFO:__main__:Rank 1: PDF 306, Chunk 0, Final Score: 0.9350 (BM25: 1.0000, FAISS: 0.7832, Repeat Bonus: 0.0000), words frequency: [('現金', 18), ('金流', 9), ('現金流', 9), ('活動', 7), ('營業', 4), ('之淨', 4), ('流入', 2), ('現金流入', 2)]
+2024-11-05 23:03:14:INFO:__main__:Rank 2: PDF 284, Chunk 0, Final Score: 0.5629 (BM25: 0.1284, FAISS: 0.9101, Repeat Bonus: 0.2000), words frequency: [('聯發科', 1)]
+2024-11-05 23:03:14:INFO:__main__:Rank 3: PDF 284, Chunk 1, Final Score: 0.5602 (BM25: 0.1396, FAISS: 0.8749, Repeat Bonus: 0.2000), words frequency: [('2023', 1)]
+2024-11-05 23:03:14:INFO:__main__:Rank 4: PDF 385, Chunk 0, Final Score: 0.3318 (BM25: 0.0455, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('現金', 2)]
+2024-11-05 23:03:14:INFO:__main__:Rank 5: PDF 959, Chunk 0, Final Score: 0.3244 (BM25: 0.0960, FAISS: 0.8572, Repeat Bonus: 0.0000), words frequency: [('營業', 1), ('現金', 1)]
+2024-11-05 23:03:14:INFO:__main__:================================================================= QID: 64 =================================================================
+2024-11-05 23:03:15:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:15:INFO:__main__:query分詞結果: 報表/季/提及/聯發科/訴訟/哪/合併/號碼/哪些/財務/幾項/專利/2022/侵權/涉及/合併財務報表
+2024-11-05 23:03:15:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:15:INFO:__main__:Rank 1: PDF 706, Chunk 0, Final Score: 1.2000 (BM25: 1.0000, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('專利', 6), ('訴訟', 2), ('號碼', 2), ('合併', 1), ('財務', 1), ('報表', 1), ('合併財務報表', 1), ('聯發科', 1), ('侵權', 1)]
+2024-11-05 23:03:15:INFO:__main__:Rank 2: PDF 872, Chunk 0, Final Score: 1.0529 (BM25: 0.8168, FAISS: 0.8889, Repeat Bonus: 0.2000), words frequency: [('財務', 6), ('合併', 2), ('報表', 1), ('合併財務報表', 1), ('聯發科', 1), ('專利', 1)]
+2024-11-05 23:03:15:INFO:__main__:Rank 3: PDF 128, Chunk 0, Final Score: 0.9665 (BM25: 0.6144, FAISS: 0.9186, Repeat Bonus: 0.2000), words frequency: [('財務', 9), ('合併', 3), ('報表', 3), ('合併財務報表', 3)]
+2024-11-05 23:03:15:INFO:__main__:Rank 4: PDF 124, Chunk 0, Final Score: 0.8335 (BM25: 0.8041, FAISS: 0.8629, Repeat Bonus: 0.0000), words frequency: [('專利', 3), ('訴訟', 2), ('合併', 1), ('財務', 1), ('報表', 1), ('合併財務報表', 1), ('侵權', 1), ('號碼', 1)]
+2024-11-05 23:03:15:INFO:__main__:Rank 5: PDF 128, Chunk 1, Final Score: 0.7562 (BM25: 0.6001, FAISS: 0.9123, Repeat Bonus: 0.0000), words frequency: [('財務', 7), ('合併', 3), ('報表', 2), ('合併財務報表', 2)]
+2024-11-05 23:03:15:INFO:__main__:================================================================= QID: 65 =================================================================
+2024-11-05 23:03:20:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:20:INFO:__main__:query分詞結果: 報導/季/部門/文件/2023/在鴻海/提到/哪些/辨認
+2024-11-05 23:03:20:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:20:INFO:__main__:Rank 1: PDF 255, Chunk 3, Final Score: 0.8719 (BM25: 1.0000, FAISS: 0.7438, Repeat Bonus: 0.0000), words frequency: [('部門', 13), ('報導', 4), ('辨認', 1)]
+2024-11-05 23:03:20:INFO:__main__:Rank 2: PDF 359, Chunk 49, Final Score: 0.8696 (BM25: 0.9740, FAISS: 0.7652, Repeat Bonus: 0.0000), words frequency: [('部門', 3), ('辨認', 2), ('報導', 1)]
+2024-11-05 23:03:20:INFO:__main__:Rank 3: PDF 359, Chunk 39, Final Score: 0.7846 (BM25: 0.7970, FAISS: 0.7721, Repeat Bonus: 0.0000), words frequency: [('文件', 2), ('辨認', 1)]
+2024-11-05 23:03:20:INFO:__main__:Rank 4: PDF 255, Chunk 2, Final Score: 0.7008 (BM25: 0.6542, FAISS: 0.7474, Repeat Bonus: 0.0000), words frequency: [('部門', 3), ('報導', 1)]
+2024-11-05 23:03:20:INFO:__main__:Rank 5: PDF 255, Chunk 5, Final Score: 0.6535 (BM25: 0.5723, FAISS: 0.7347, Repeat Bonus: 0.0000), words frequency: [('部門', 3), ('報導', 1)]
+2024-11-05 23:03:20:INFO:__main__:================================================================= QID: 66 =================================================================
+2024-11-05 23:03:22:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:22:INFO:__main__:query分詞結果: 季/一/BANDSPEED/利權/地區/哪/財報/LLC/專利權/瑞昱/提到/2022/法院/專利/控告/侵害
+2024-11-05 23:03:22:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:22:INFO:__main__:Rank 1: PDF 192, Chunk 0, Final Score: 0.8659 (BM25: 1.0000, FAISS: 0.7317, Repeat Bonus: 0.0000), words frequency: [('BANDSPEED', 1), ('LLC', 1), ('法院', 1), ('控告', 1), ('侵害', 1), ('專利', 1), ('利權', 1), ('專利權', 1), ('一', 1)]
+2024-11-05 23:03:22:INFO:__main__:Rank 2: PDF 396, Chunk 4, Final Score: 0.8127 (BM25: 0.8789, FAISS: 0.7465, Repeat Bonus: 0.0000), words frequency: [('LLC', 3), ('控告', 3), ('法院', 2), ('侵害', 2), ('專利', 2), ('利權', 2), ('專利權', 2), ('一', 1)]
+2024-11-05 23:03:22:INFO:__main__:Rank 3: PDF 396, Chunk 5, Final Score: 0.8090 (BM25: 0.8730, FAISS: 0.7451, Repeat Bonus: 0.0000), words frequency: [('LLC', 2), ('法院', 2), ('控告', 2), ('侵害', 2), ('專利', 2), ('利權', 2), ('專利權', 2)]
+2024-11-05 23:03:22:INFO:__main__:Rank 4: PDF 396, Chunk 6, Final Score: 0.7311 (BM25: 0.7207, FAISS: 0.7414, Repeat Bonus: 0.0000), words frequency: [('LLC', 1), ('法院', 1), ('控告', 1), ('侵害', 1), ('專利', 1), ('利權', 1), ('專利權', 1)]
+2024-11-05 23:03:22:INFO:__main__:Rank 5: PDF 545, Chunk 0, Final Score: 0.5248 (BM25: 0.0496, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('瑞昱', 1)]
+2024-11-05 23:03:22:INFO:__main__:================================================================= QID: 67 =================================================================
+2024-11-05 23:03:24:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:24:INFO:__main__:query分詞結果: 訴訟/處理/季度/目前/專利/瑞昱/哪些/案件/2022/提起/正在
+2024-11-05 23:03:24:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:24:INFO:__main__:Rank 1: PDF 1021, Chunk 1, Final Score: 0.8937 (BM25: 1.0000, FAISS: 0.7875, Repeat Bonus: 0.0000), words frequency: [('專利', 4), ('案件', 4), ('訴訟', 3), ('目前', 2)]
+2024-11-05 23:03:24:INFO:__main__:Rank 2: PDF 1021, Chunk 0, Final Score: 0.8738 (BM25: 0.9602, FAISS: 0.7875, Repeat Bonus: 0.0000), words frequency: [('專利', 6), ('訴訟', 4), ('案件', 3), ('目前', 1)]
+2024-11-05 23:03:24:INFO:__main__:Rank 3: PDF 386, Chunk 6, Final Score: 0.5548 (BM25: 0.2770, FAISS: 0.8326, Repeat Bonus: 0.0000), words frequency: [('處理', 1)]
+2024-11-05 23:03:24:INFO:__main__:Rank 4: PDF 386, Chunk 3, Final Score: 0.5454 (BM25: 0.1455, FAISS: 0.9453, Repeat Bonus: 0.0000), words frequency: [('瑞昱', 10)]
+2024-11-05 23:03:24:INFO:__main__:Rank 5: PDF 386, Chunk 4, Final Score: 0.5351 (BM25: 0.1302, FAISS: 0.9401, Repeat Bonus: 0.0000), words frequency: [('瑞昱', 3)]
+2024-11-05 23:03:24:INFO:__main__:================================================================= QID: 68 =================================================================
+2024-11-05 23:03:28:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:28:INFO:__main__:query分詞結果: 季/總資產/光寶/多少/科在/合併/合併資產負債表/2023/負債表/金額/請問/資產/負債
+2024-11-05 23:03:28:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:28:INFO:__main__:Rank 1: PDF 955, Chunk 0, Final Score: 0.8784 (BM25: 1.0000, FAISS: 0.7568, Repeat Bonus: 0.0000), words frequency: [('合併', 8), ('光寶', 3), ('資產', 1), ('負債', 1), ('負債表', 1), ('合併資產負債表', 1)]
+2024-11-05 23:03:28:INFO:__main__:Rank 2: PDF 942, Chunk 0, Final Score: 0.8419 (BM25: 0.9012, FAISS: 0.7826, Repeat Bonus: 0.0000), words frequency: [('資產', 19), ('負債', 16), ('金額', 3), ('合併', 2), ('光寶', 1), ('負債表', 1), ('合併資產負債表', 1)]
+2024-11-05 23:03:28:INFO:__main__:Rank 3: PDF 37, Chunk 1, Final Score: 0.7303 (BM25: 0.6851, FAISS: 0.7754, Repeat Bonus: 0.0000), words frequency: [('2023', 3), ('合併', 2), ('資產', 1)]
+2024-11-05 23:03:28:INFO:__main__:Rank 4: PDF 955, Chunk 1, Final Score: 0.6506 (BM25: 0.5454, FAISS: 0.7559, Repeat Bonus: 0.0000), words frequency: [('合併', 4), ('資產', 2), ('負債', 2)]
+2024-11-05 23:03:28:INFO:__main__:Rank 5: PDF 26, Chunk 0, Final Score: 0.6481 (BM25: 0.2961, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('合併', 7), ('光寶', 5)]
+2024-11-05 23:03:28:INFO:__main__:================================================================= QID: 69 =================================================================
+2024-11-05 23:03:30:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:30:INFO:__main__:query分詞結果: 報表/季/多少/合併/本期/財務/瑞昱/提到/2022/淨利/合併財務報表
+2024-11-05 23:03:30:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:30:INFO:__main__:Rank 1: PDF 545, Chunk 0, Final Score: 0.9847 (BM25: 0.5694, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('瑞昱', 1), ('合併', 1), ('本期', 1), ('淨利', 1)]
+2024-11-05 23:03:30:INFO:__main__:Rank 2: PDF 545, Chunk 1, Final Score: 0.9775 (BM25: 0.5619, FAISS: 0.9930, Repeat Bonus: 0.2000), words frequency: [('合併', 3), ('財務', 2), ('瑞昱', 1), ('本期', 1), ('報表', 1), ('合併財務報表', 1)]
+2024-11-05 23:03:30:INFO:__main__:Rank 3: PDF 981, Chunk 0, Final Score: 0.8439 (BM25: 1.0000, FAISS: 0.6878, Repeat Bonus: 0.0000), words frequency: [('本期', 6), ('合併', 3), ('財務', 3), ('報表', 2), ('淨利', 2), ('瑞昱', 1), ('合併財務報表', 1)]
+2024-11-05 23:03:30:INFO:__main__:Rank 4: PDF 978, Chunk 0, Final Score: 0.6282 (BM25: 0.5311, FAISS: 0.7254, Repeat Bonus: 0.0000), words frequency: [('財務', 8), ('瑞昱', 2), ('合併', 2), ('報表', 1), ('合併財務報表', 1)]
+2024-11-05 23:03:30:INFO:__main__:Rank 5: PDF 182, Chunk 8, Final Score: 0.6230 (BM25: 0.4862, FAISS: 0.7597, Repeat Bonus: 0.0000), words frequency: [('本期', 1), ('合併', 1), ('財務', 1), ('報表', 1), ('合併財務報表', 1)]
+2024-11-05 23:03:30:INFO:__main__:================================================================= QID: 70 =================================================================
+2024-11-05 23:03:34:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:34:INFO:__main__:query分詞結果: 智邦/季/總額/多少/科技股份/科技股/損益/2023/有限/科技/股份/綜合損益/綜合
+2024-11-05 23:03:34:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:34:INFO:__main__:Rank 1: PDF 272, Chunk 0, Final Score: 0.9701 (BM25: 0.6499, FAISS: 0.8902, Repeat Bonus: 0.2000), words frequency: [('智邦', 2), ('科技', 2), ('股份', 2), ('科技股', 2), ('科技股份', 2), ('有限', 2), ('綜合', 1), ('損益', 1)]
+2024-11-05 23:03:34:INFO:__main__:Rank 2: PDF 272, Chunk 1, Final Score: 0.9299 (BM25: 0.6354, FAISS: 0.8244, Repeat Bonus: 0.2000), words frequency: [('總額', 6), ('綜合', 2), ('損益', 2), ('綜合損益', 2)]
+2024-11-05 23:03:34:INFO:__main__:Rank 3: PDF 490, Chunk 0, Final Score: 0.8405 (BM25: 1.0000, FAISS: 0.6810, Repeat Bonus: 0.0000), words frequency: [('損益', 7), ('綜合', 6), ('綜合損益', 5), ('股份', 3), ('總額', 2), ('智邦', 1), ('科技', 1), ('科技股', 1), ('科技股份', 1), ('有限', 1)]
+2024-11-05 23:03:34:INFO:__main__:Rank 4: PDF 298, Chunk 0, Final Score: 0.7298 (BM25: 0.4596, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('智邦', 1), ('科技', 1), ('股份', 1), ('科技股', 1), ('科技股份', 1), ('有限', 1), ('損益', 1)]
+2024-11-05 23:03:34:INFO:__main__:Rank 5: PDF 272, Chunk 2, Final Score: 0.6844 (BM25: 0.5455, FAISS: 0.8234, Repeat Bonus: 0.0000), words frequency: [('損益', 1), ('智邦', 1), ('科技', 1), ('股份', 1), ('科技股', 1), ('科技股份', 1), ('有限', 1)]
+2024-11-05 23:03:34:INFO:__main__:================================================================= QID: 71 =================================================================
+2024-11-05 23:03:39:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:39:INFO:__main__:query分詞結果: 季/外部/部門/多少/收入/鋼鐵/來自/其他/2022/鋼
+2024-11-05 23:03:39:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:39:INFO:__main__:Rank 1: PDF 920, Chunk 1, Final Score: 0.9052 (BM25: 1.0000, FAISS: 0.8105, Repeat Bonus: 0.0000), words frequency: [('部門', 9), ('收入', 6), ('鋼鐵', 3), ('鋼', 1), ('其他', 1), ('來自', 1), ('外部', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 2: PDF 920, Chunk 2, Final Score: 0.8225 (BM25: 0.8406, FAISS: 0.8044, Repeat Bonus: 0.0000), words frequency: [('部門', 6), ('收入', 6), ('其他', 3), ('鋼鐵', 1), ('來自', 1), ('外部', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 3: PDF 920, Chunk 0, Final Score: 0.6487 (BM25: 0.4787, FAISS: 0.8186, Repeat Bonus: 0.0000), words frequency: [('部門', 5), ('鋼鐵', 2), ('其他', 1), ('鋼', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 4: PDF 321, Chunk 4, Final Score: 0.6222 (BM25: 0.3563, FAISS: 0.8881, Repeat Bonus: 0.0000), words frequency: [('其他', 6), ('收入', 3), ('鋼', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 5: PDF 920, Chunk 3, Final Score: 0.5975 (BM25: 0.3932, FAISS: 0.8017, Repeat Bonus: 0.0000), words frequency: [('部門', 10), ('鋼鐵', 2), ('其他', 2)]
+2024-11-05 23:03:39:INFO:__main__:================================================================= QID: 72 =================================================================
+2024-11-05 23:03:39:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:03:39:INFO:__main__:query分詞結果: 季/並發布/光寶/報告/科在/董事會/合併/財務報告/財務/何/2022/董事/時經/通過
+2024-11-05 23:03:39:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:39:INFO:__main__:Rank 1: PDF 204, Chunk 1, Final Score: 0.9668 (BM25: 1.0000, FAISS: 0.8893, Repeat Bonus: 0.0000), words frequency: [('合併', 8), ('財務', 3), ('報告', 3), ('財務報告', 3), ('光寶', 2), ('通過', 2), ('董事', 1), ('董事會', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 2: PDF 497, Chunk 2, Final Score: 0.7965 (BM25: 0.7450, FAISS: 0.9166, Repeat Bonus: 0.0000), words frequency: [('財務', 3), ('2022', 2), ('合併', 2), ('報告', 1), ('財務報告', 1), ('通過', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 3: PDF 497, Chunk 0, Final Score: 0.7118 (BM25: 0.3295, FAISS: 0.9371, Repeat Bonus: 0.2000), words frequency: [('並發布', 2), ('財務', 1), ('合併', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 4: PDF 92, Chunk 3, Final Score: 0.6799 (BM25: 0.6387, FAISS: 0.7761, Repeat Bonus: 0.0000), words frequency: [('董事', 2), ('董事會', 2), ('通過', 1), ('報告', 1)]
+2024-11-05 23:03:39:INFO:__main__:Rank 5: PDF 204, Chunk 0, Final Score: 0.6391 (BM25: 0.5229, FAISS: 0.9101, Repeat Bonus: 0.0000), words frequency: [('合併', 7), ('光寶', 5), ('財務', 1), ('報告', 1), ('財務報告', 1)]
+2024-11-05 23:03:39:INFO:__main__:================================================================= QID: 73 =================================================================
+2024-11-05 23:03:44:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:44:INFO:__main__:query分詞結果: 多少/權益/權益餘額/控制/餘額/季度/華碩/2022/非
+2024-11-05 23:03:44:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:44:INFO:__main__:Rank 1: PDF 295, Chunk 0, Final Score: 1.0329 (BM25: 0.6659, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('權益', 3), ('餘額', 2), ('華碩', 1), ('非', 1)]
+2024-11-05 23:03:44:INFO:__main__:Rank 2: PDF 235, Chunk 0, Final Score: 0.8500 (BM25: 1.0000, FAISS: 0.6999, Repeat Bonus: 0.0000), words frequency: [('權益', 12), ('餘額', 4), ('非', 3), ('控制', 3), ('華碩', 1)]
+2024-11-05 23:03:44:INFO:__main__:Rank 3: PDF 503, Chunk 3, Final Score: 0.7814 (BM25: 0.7858, FAISS: 0.7770, Repeat Bonus: 0.0000), words frequency: [('控制', 6), ('權益', 6), ('非', 2), ('餘額', 1)]
+2024-11-05 23:03:44:INFO:__main__:Rank 4: PDF 503, Chunk 11, Final Score: 0.7743 (BM25: 0.7866, FAISS: 0.7621, Repeat Bonus: 0.0000), words frequency: [('餘額', 3), ('非', 2), ('控制', 2), ('權益', 2)]
+2024-11-05 23:03:44:INFO:__main__:Rank 5: PDF 503, Chunk 17, Final Score: 0.6657 (BM25: 0.5743, FAISS: 0.7571, Repeat Bonus: 0.0000), words frequency: [('控制', 2), ('權益', 2), ('餘額', 1)]
+2024-11-05 23:03:44:INFO:__main__:================================================================= QID: 74 =================================================================
+2024-11-05 23:03:51:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:51:INFO:__main__:query分詞結果: 每股/基本/多少/盈餘/虧損/季度/2022/基本每股盈餘/泰車
+2024-11-05 23:03:51:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:51:INFO:__main__:Rank 1: PDF 569, Chunk 1, Final Score: 0.8524 (BM25: 1.0000, FAISS: 0.7049, Repeat Bonus: 0.0000), words frequency: [('每股', 5), ('虧損', 5), ('盈餘', 5), ('基本', 2), ('基本每股盈餘', 2)]
+2024-11-05 23:03:51:INFO:__main__:Rank 2: PDF 714, Chunk 3, Final Score: 0.7084 (BM25: 0.1309, FAISS: 0.8859, Repeat Bonus: 0.2000), words frequency: [('每股', 1)]
+2024-11-05 23:03:51:INFO:__main__:Rank 3: PDF 714, Chunk 3, Final Score: 0.7084 (BM25: 0.1309, FAISS: 0.8859, Repeat Bonus: 0.2000), words frequency: [('每股', 1)]
+2024-11-05 23:03:51:INFO:__main__:Rank 4: PDF 714, Chunk 0, Final Score: 0.5000 (BM25: 0.0000, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:03:51:INFO:__main__:Rank 5: PDF 714, Chunk 1, Final Score: 0.4925 (BM25: 0.0000, FAISS: 0.9850, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:03:51:INFO:__main__:================================================================= QID: 75 =================================================================
+2024-11-05 23:03:54:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:03:54:INFO:__main__:query分詞結果: 季/交易/從事/有無/衍生/2022/長榮/情事/工具
+2024-11-05 23:03:54:INFO:__main__:query擴展詞: 
+2024-11-05 23:03:54:INFO:__main__:Rank 1: PDF 71, Chunk 0, Final Score: 0.9286 (BM25: 1.0000, FAISS: 0.8573, Repeat Bonus: 0.0000), words frequency: [('交易', 4), ('從事', 1), ('衍生', 1), ('工具', 1)]
+2024-11-05 23:03:54:INFO:__main__:Rank 2: PDF 178, Chunk 0, Final Score: 0.8383 (BM25: 0.2766, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('長榮', 2), ('交易', 1)]
+2024-11-05 23:03:54:INFO:__main__:Rank 3: PDF 145, Chunk 1, Final Score: 0.6614 (BM25: 0.3502, FAISS: 0.9725, Repeat Bonus: 0.0000), words frequency: [('工具', 2), ('長榮', 1)]
+2024-11-05 23:03:54:INFO:__main__:Rank 4: PDF 344, Chunk 4, Final Score: 0.6084 (BM25: 0.3124, FAISS: 0.9044, Repeat Bonus: 0.0000), words frequency: [('長榮', 3), ('交易', 2)]
+2024-11-05 23:03:54:INFO:__main__:Rank 5: PDF 178, Chunk 0, Final Score: 0.8383 (BM25: 0.2766, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('長榮', 2), ('交易', 1)]
+2024-11-05 23:03:54:INFO:__main__:================================================================= QID: 76 =================================================================
+2024-11-05 23:04:03:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:03:INFO:__main__:query分詞結果: 股份/子公司/多少/收入/營業/有限/季度/營業收入/2022/研華
+2024-11-05 23:04:03:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:03:INFO:__main__:Rank 1: PDF 778, Chunk 0, Final Score: 1.0160 (BM25: 0.6320, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('股份', 2), ('有限', 2), ('研華', 2), ('子公司', 1)]
+2024-11-05 23:04:03:INFO:__main__:Rank 2: PDF 211, Chunk 0, Final Score: 0.8422 (BM25: 1.0000, FAISS: 0.6844, Repeat Bonus: 0.0000), words frequency: [('營業', 8), ('收入', 5), ('研華', 1), ('股份', 1), ('有限', 1), ('子公司', 1), ('營業收入', 1)]
+2024-11-05 23:04:03:INFO:__main__:Rank 3: PDF 696, Chunk 1, Final Score: 0.6324 (BM25: 0.5074, FAISS: 0.7575, Repeat Bonus: 0.0000), words frequency: [('有限', 15), ('股份', 13), ('子公司', 1)]
+2024-11-05 23:04:03:INFO:__main__:Rank 4: PDF 696, Chunk 2, Final Score: 0.6165 (BM25: 0.4764, FAISS: 0.7566, Repeat Bonus: 0.0000), words frequency: [('營業', 2), ('收入', 1), ('營業收入', 1)]
+2024-11-05 23:04:03:INFO:__main__:Rank 5: PDF 696, Chunk 6, Final Score: 0.5924 (BM25: 0.4518, FAISS: 0.7331, Repeat Bonus: 0.0000), words frequency: [('營業', 1), ('收入', 1), ('營業收入', 1)]
+2024-11-05 23:04:03:INFO:__main__:================================================================= QID: 77 =================================================================
+2024-11-05 23:04:06:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:06:INFO:__main__:query分詞結果: 利率/多少/5/季度/浮動/金額/第一季/第一季度/到期/金融/一季度/2022/所/台泥/年內/記錄/工具/負債/第一
+2024-11-05 23:04:06:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:06:INFO:__main__:Rank 1: PDF 843, Chunk 0, Final Score: 0.9000 (BM25: 1.0000, FAISS: 0.8000, Repeat Bonus: 0.0000), words frequency: [('5', 7), ('負債', 6), ('利率', 4), ('工具', 4), ('金融', 3), ('浮動', 2), ('到期', 1), ('所', 1)]
+2024-11-05 23:04:06:INFO:__main__:Rank 2: PDF 977, Chunk 3, Final Score: 0.7839 (BM25: 0.3173, FAISS: 0.8505, Repeat Bonus: 0.2000), words frequency: [('負債', 2), ('所', 1), ('金融', 1), ('工具', 1)]
+2024-11-05 23:04:06:INFO:__main__:Rank 3: PDF 977, Chunk 2, Final Score: 0.7751 (BM25: 0.2762, FAISS: 0.8740, Repeat Bonus: 0.2000), words frequency: [('所', 2), ('2022', 2), ('負債', 1)]
+2024-11-05 23:04:06:INFO:__main__:Rank 4: PDF 977, Chunk 0, Final Score: 0.6012 (BM25: 0.2024, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('金額', 1), ('5', 1), ('金融', 1)]
+2024-11-05 23:04:06:INFO:__main__:Rank 5: PDF 977, Chunk 3, Final Score: 0.7839 (BM25: 0.3173, FAISS: 0.8505, Repeat Bonus: 0.2000), words frequency: [('負債', 2), ('所', 1), ('金融', 1), ('工具', 1)]
+2024-11-05 23:04:06:INFO:__main__:================================================================= QID: 78 =================================================================
+2024-11-05 23:04:10:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:10:INFO:__main__:query分詞結果: 智邦/多少/科技股份/科技股/損益/2023/第三/金額/有限/第三季/科技/淨利/股份/稅前/損益表/綜合/顯示
+2024-11-05 23:04:10:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:10:INFO:__main__:Rank 1: PDF 410, Chunk 0, Final Score: 0.9914 (BM25: 0.5829, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('智邦', 2), ('科技', 2), ('股份', 2), ('科技股', 2), ('科技股份', 2), ('有限', 2), ('綜合', 1), ('損益', 1), ('損益表', 1)]
+2024-11-05 23:04:10:INFO:__main__:Rank 2: PDF 642, Chunk 0, Final Score: 0.8950 (BM25: 0.5584, FAISS: 0.8315, Repeat Bonus: 0.2000), words frequency: [('損益', 7), ('綜合', 6), ('股份', 3), ('淨利', 2), ('智邦', 1), ('科技', 1), ('科技股', 1), ('科技股份', 1), ('有限', 1)]
+2024-11-05 23:04:10:INFO:__main__:Rank 3: PDF 119, Chunk 0, Final Score: 0.8467 (BM25: 1.0000, FAISS: 0.6933, Repeat Bonus: 0.0000), words frequency: [('損益', 9), ('綜合', 5), ('金額', 4), ('淨利', 3), ('智邦', 1), ('科技', 1), ('股份', 1), ('科技股', 1), ('科技股份', 1), ('有限', 1)]
+2024-11-05 23:04:10:INFO:__main__:Rank 4: PDF 960, Chunk 0, Final Score: 0.6249 (BM25: 0.4399, FAISS: 0.8099, Repeat Bonus: 0.0000), words frequency: [('智邦', 5), ('科技', 2), ('股份', 2), ('科技股', 2), ('科技股份', 2), ('有限', 2), ('金額', 1)]
+2024-11-05 23:04:10:INFO:__main__:Rank 5: PDF 796, Chunk 0, Final Score: 0.5652 (BM25: 0.4107, FAISS: 0.7197, Repeat Bonus: 0.0000), words frequency: [('金額', 6), ('損益', 4), ('綜合', 2), ('智邦', 1), ('科技', 1), ('股份', 1), ('科技股', 1), ('科技股份', 1), ('有限', 1)]
+2024-11-05 23:04:10:INFO:__main__:================================================================= QID: 79 =================================================================
+2024-11-05 23:04:13:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:13:INFO:__main__:query分詞結果: 季/出售/列為/銷貨收入/之何/收入/當期/2022/泰車/銷貨
+2024-11-05 23:04:13:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:13:INFO:__main__:Rank 1: PDF 65, Chunk 0, Final Score: 0.9401 (BM25: 1.0000, FAISS: 0.8801, Repeat Bonus: 0.0000), words frequency: [('收入', 4), ('銷貨', 3), ('銷貨收入', 3), ('出售', 1), ('當期', 1), ('列為', 1)]
+2024-11-05 23:04:13:INFO:__main__:Rank 2: PDF 300, Chunk 2, Final Score: 0.6542 (BM25: 0.3751, FAISS: 0.9333, Repeat Bonus: 0.0000), words frequency: [('銷貨', 2), ('收入', 1), ('銷貨收入', 1)]
+2024-11-05 23:04:13:INFO:__main__:Rank 3: PDF 300, Chunk 9, Final Score: 0.6395 (BM25: 0.3714, FAISS: 0.9076, Repeat Bonus: 0.0000), words frequency: [('銷貨', 4), ('收入', 2), ('銷貨收入', 1)]
+2024-11-05 23:04:13:INFO:__main__:Rank 4: PDF 300, Chunk 1, Final Score: 0.6137 (BM25: 0.2899, FAISS: 0.9376, Repeat Bonus: 0.0000), words frequency: [('收入', 2), ('銷貨', 1), ('銷貨收入', 1)]
+2024-11-05 23:04:13:INFO:__main__:Rank 5: PDF 300, Chunk 4, Final Score: 0.5697 (BM25: 0.2168, FAISS: 0.9225, Repeat Bonus: 0.0000), words frequency: [('收入', 6), ('銷貨', 2)]
+2024-11-05 23:04:13:INFO:__main__:================================================================= QID: 80 =================================================================
+2024-11-05 23:04:16:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:04:16:INFO:__main__:query分詞結果: 半導/季/導體/多少/半導體/有限/淨利/瑞昱/股份/2022
+2024-11-05 23:04:16:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:16:INFO:__main__:Rank 1: PDF 386, Chunk 3, Final Score: 0.9396 (BM25: 1.0000, FAISS: 0.7986, Repeat Bonus: 0.0000), words frequency: [('股份', 14), ('有限', 14), ('瑞昱', 10), ('半導', 10), ('導體', 10), ('半導體', 10)]
+2024-11-05 23:04:16:INFO:__main__:Rank 2: PDF 386, Chunk 4, Final Score: 0.8621 (BM25: 0.9111, FAISS: 0.7478, Repeat Bonus: 0.0000), words frequency: [('有限', 8), ('股份', 4), ('瑞昱', 3), ('半導', 3), ('導體', 3), ('半導體', 3)]
+2024-11-05 23:04:16:INFO:__main__:Rank 3: PDF 213, Chunk 1, Final Score: 0.8192 (BM25: 0.8680, FAISS: 0.7053, Repeat Bonus: 0.0000), words frequency: [('淨利', 3), ('瑞昱', 1), ('半導', 1), ('導體', 1), ('半導體', 1), ('股份', 1), ('有限', 1)]
+2024-11-05 23:04:16:INFO:__main__:Rank 4: PDF 837, Chunk 0, Final Score: 0.8002 (BM25: 0.8351, FAISS: 0.7188, Repeat Bonus: 0.0000), words frequency: [('瑞昱', 2), ('半導', 2), ('導體', 2), ('半導體', 2), ('股份', 2), ('有限', 2)]
+2024-11-05 23:04:16:INFO:__main__:Rank 5: PDF 213, Chunk 0, Final Score: 0.7529 (BM25: 0.7726, FAISS: 0.7070, Repeat Bonus: 0.0000), words frequency: [('淨利', 2), ('瑞昱', 1), ('半導', 1), ('導體', 1), ('半導體', 1), ('股份', 1), ('有限', 1)]
+2024-11-05 23:04:16:INFO:__main__:================================================================= QID: 81 =================================================================
+2024-11-05 23:04:18:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:18:INFO:__main__:query分詞結果: 季/現金/多少/合併/約當現金/合併資產負債表/2023/負債表/金額/資產/台達電/負債
+2024-11-05 23:04:18:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:18:INFO:__main__:Rank 1: PDF 671, Chunk 0, Final Score: 0.8756 (BM25: 1.0000, FAISS: 0.7512, Repeat Bonus: 0.0000), words frequency: [('資產', 20), ('金額', 3), ('現金', 2), ('合併', 1), ('負債', 1), ('負債表', 1), ('合併資產負債表', 1), ('約當現金', 1)]
+2024-11-05 23:04:18:INFO:__main__:Rank 2: PDF 849, Chunk 0, Final Score: 0.7227 (BM25: 0.2356, FAISS: 0.8098, Repeat Bonus: 0.2000), words frequency: [('資產', 5), ('負債', 1)]
+2024-11-05 23:04:18:INFO:__main__:Rank 3: PDF 671, Chunk 1, Final Score: 0.6969 (BM25: 0.6743, FAISS: 0.7195, Repeat Bonus: 0.0000), words frequency: [('負債', 17), ('合併', 3), ('金額', 3), ('資產', 1), ('負債表', 1), ('合併資產負債表', 1)]
+2024-11-05 23:04:18:INFO:__main__:Rank 4: PDF 58, Chunk 0, Final Score: 0.5000 (BM25: 0.0000, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:04:18:INFO:__main__:Rank 5: PDF 849, Chunk 1, Final Score: 0.4997 (BM25: 0.2043, FAISS: 0.7952, Repeat Bonus: 0.0000), words frequency: [('資產', 4), ('金額', 1)]
+2024-11-05 23:04:18:INFO:__main__:================================================================= QID: 82 =================================================================
+2024-11-05 23:04:22:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:22:INFO:__main__:query分詞結果: 季/多少/合併/損益/總/2022/研華
+2024-11-05 23:04:22:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:22:INFO:__main__:Rank 1: PDF 590, Chunk 0, Final Score: 0.9762 (BM25: 0.5523, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('損益', 6), ('合併', 3), ('研華', 1)]
+2024-11-05 23:04:22:INFO:__main__:Rank 2: PDF 831, Chunk 0, Final Score: 0.8907 (BM25: 1.0000, FAISS: 0.7813, Repeat Bonus: 0.0000), words frequency: [('損益', 9), ('合併', 5), ('總', 2), ('研華', 1)]
+2024-11-05 23:04:22:INFO:__main__:Rank 3: PDF 838, Chunk 0, Final Score: 0.7392 (BM25: 0.6706, FAISS: 0.8079, Repeat Bonus: 0.0000), words frequency: [('合併', 8), ('研華', 2), ('損益', 1)]
+2024-11-05 23:04:22:INFO:__main__:Rank 4: PDF 679, Chunk 0, Final Score: 0.6875 (BM25: 0.4516, FAISS: 0.9235, Repeat Bonus: 0.0000), words frequency: [('研華', 5), ('合併', 3)]
+2024-11-05 23:04:22:INFO:__main__:Rank 5: PDF 679, Chunk 1, Final Score: 0.6815 (BM25: 0.4472, FAISS: 0.9158, Repeat Bonus: 0.0000), words frequency: [('合併', 3), ('研華', 2)]
+2024-11-05 23:04:22:INFO:__main__:================================================================= QID: 83 =================================================================
+2024-11-05 23:04:25:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:25:INFO:__main__:query分詞結果: 季/現金/活動/之淨/多少/現金流/營業/台達電/2022/流入/金流/現金流入
+2024-11-05 23:04:25:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:25:INFO:__main__:Rank 1: PDF 155, Chunk 0, Final Score: 0.8488 (BM25: 1.0000, FAISS: 0.6976, Repeat Bonus: 0.0000), words frequency: [('營業', 5), ('活動', 5), ('現金', 4), ('金流', 4), ('現金流', 4), ('之淨', 4), ('流入', 2), ('現金流入', 2)]
+2024-11-05 23:04:25:INFO:__main__:Rank 2: PDF 155, Chunk 1, Final Score: 0.6897 (BM25: 0.6819, FAISS: 0.6976, Repeat Bonus: 0.0000), words frequency: [('現金', 12), ('金流', 5), ('現金流', 5), ('活動', 4), ('之淨', 2)]
+2024-11-05 23:04:25:INFO:__main__:Rank 3: PDF 74, Chunk 0, Final Score: 0.5000 (BM25: 0.0000, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:04:25:INFO:__main__:Rank 4: PDF 974, Chunk 0, Final Score: 0.4839 (BM25: 0.0350, FAISS: 0.9328, Repeat Bonus: 0.0000), words frequency: [('營業', 1)]
+2024-11-05 23:04:25:INFO:__main__:Rank 5: PDF 74, Chunk 1, Final Score: 0.4717 (BM25: 0.0000, FAISS: 0.9433, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:04:25:INFO:__main__:================================================================= QID: 84 =================================================================
+2024-11-05 23:04:31:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:31:INFO:__main__:query分詞結果: 部分/權益法/採用/季度/會計/指出/影響/2022/結論/權益/財務報表/財務/報表/子公司/保留/投資/未經/會計師/核閱/非/泰車/重要
+2024-11-05 23:04:31:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:31:INFO:__main__:Rank 1: PDF 745, Chunk 1, Final Score: 0.8568 (BM25: 1.0000, FAISS: 0.7136, Repeat Bonus: 0.0000), words frequency: [('財務', 3), ('報表', 3), ('核閱', 2), ('會計', 2), ('會計師', 2), ('子公司', 2), ('採用', 2), ('權益', 2), ('權益法', 2), ('投資', 2)]
+2024-11-05 23:04:31:INFO:__main__:Rank 2: PDF 745, Chunk 2, Final Score: 0.8234 (BM25: 0.9378, FAISS: 0.7090, Repeat Bonus: 0.0000), words frequency: [('財務', 8), ('會計', 5), ('會計師', 4), ('報表', 3), ('保留', 2), ('結論', 2), ('核閱', 2), ('部分', 1), ('非', 1), ('重要', 1)]
+2024-11-05 23:04:31:INFO:__main__:Rank 3: PDF 745, Chunk 0, Final Score: 0.6732 (BM25: 0.6328, FAISS: 0.7137, Repeat Bonus: 0.0000), words frequency: [('財務', 9), ('核閱', 8), ('會計', 7), ('會計師', 5), ('報表', 5), ('結論', 2), ('子公司', 1), ('權益', 1), ('保留', 1), ('財務報表', 1)]
+2024-11-05 23:04:31:INFO:__main__:Rank 4: PDF 249, Chunk 1, Final Score: 0.6490 (BM25: 0.4067, FAISS: 0.8914, Repeat Bonus: 0.0000), words frequency: [('權益', 4), ('財務', 3), ('報表', 2), ('採用', 2), ('非', 2), ('子公司', 1), ('核閱', 1), ('財務報表', 1), ('權益法', 1), ('部分', 1)]
+2024-11-05 23:04:31:INFO:__main__:Rank 5: PDF 723, Chunk 2, Final Score: 0.6389 (BM25: 0.4236, FAISS: 0.8541, Repeat Bonus: 0.0000), words frequency: [('權益', 7), ('子公司', 5), ('非', 3), ('投資', 2), ('會計', 2), ('財務', 2), ('會計師', 1), ('報表', 1), ('財務報表', 1)]
+2024-11-05 23:04:31:INFO:__main__:================================================================= QID: 85 =================================================================
+2024-11-05 23:04:32:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:32:INFO:__main__:query分詞結果: 股東/9/季/110/有限/臨時/股份/2022/有關/通過/哪家/並在/簽署/契約/財務/董事/報表/董事會/合併/6/國巨/月/會/轉換/合併財務報表
+2024-11-05 23:04:32:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:32:INFO:__main__:Rank 1: PDF 891, Chunk 0, Final Score: 1.1343 (BM25: 1.0000, FAISS: 0.8686, Repeat Bonus: 0.2000), words frequency: [('股份', 8), ('有限', 4), ('月', 4), ('轉換', 4), ('國巨', 2), ('110', 2), ('9', 2), ('6', 2), ('通過', 2), ('合併', 1)]
+2024-11-05 23:04:32:INFO:__main__:Rank 2: PDF 760, Chunk 1, Final Score: 0.9223 (BM25: 0.5321, FAISS: 0.9125, Repeat Bonus: 0.2000), words frequency: [('月', 4), ('合併', 3), ('股份', 3), ('通過', 2), ('轉換', 2), ('董事', 1), ('董事會', 1), ('110', 1), ('9', 1), ('股東', 1)]
+2024-11-05 23:04:32:INFO:__main__:Rank 3: PDF 1003, Chunk 0, Final Score: 0.8375 (BM25: 0.3984, FAISS: 0.8766, Repeat Bonus: 0.2000), words frequency: [('合併', 6), ('月', 4), ('財務', 3), ('報表', 2), ('股東', 2), ('110', 2), ('9', 2), ('6', 1), ('合併財務報表', 1)]
+2024-11-05 23:04:32:INFO:__main__:Rank 4: PDF 760, Chunk 0, Final Score: 0.8211 (BM25: 0.2421, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('合併', 8), ('月', 5), ('有限', 3), ('財務', 2), ('股份', 2)]
+2024-11-05 23:04:32:INFO:__main__:Rank 5: PDF 891, Chunk 1, Final Score: 0.8036 (BM25: 0.3427, FAISS: 0.8645, Repeat Bonus: 0.2000), words frequency: [('財務', 4), ('股份', 2), ('轉換', 2), ('月', 2), ('合併', 2), ('通過', 2), ('董事', 1), ('董事會', 1)]
+2024-11-05 23:04:32:INFO:__main__:================================================================= QID: 86 =================================================================
+2024-11-05 23:04:34:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:04:34:INFO:__main__:query分詞結果: 進展/訴訟/關涉/2023/這些/目前/瑞昱/專利/哪些/季有/案件
+2024-11-05 23:04:34:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:34:INFO:__main__:Rank 1: PDF 525, Chunk 0, Final Score: 0.9489 (BM25: 1.0000, FAISS: 0.8295, Repeat Bonus: 0.0000), words frequency: [('專利', 2), ('訴訟', 1), ('案件', 1), ('目前', 1)]
+2024-11-05 23:04:34:INFO:__main__:Rank 2: PDF 189, Chunk 0, Final Score: 0.7300 (BM25: 0.6925, FAISS: 0.8174, Repeat Bonus: 0.0000), words frequency: [('案件', 4), ('目前', 4), ('專利', 3)]
+2024-11-05 23:04:34:INFO:__main__:Rank 3: PDF 525, Chunk 1, Final Score: 0.7127 (BM25: 0.6668, FAISS: 0.8198, Repeat Bonus: 0.0000), words frequency: [('目前', 4), ('專利', 3), ('案件', 2)]
+2024-11-05 23:04:34:INFO:__main__:Rank 4: PDF 189, Chunk 1, Final Score: 0.6564 (BM25: 0.5890, FAISS: 0.8137, Repeat Bonus: 0.0000), words frequency: [('專利', 1), ('案件', 1), ('目前', 1)]
+2024-11-05 23:04:34:INFO:__main__:Rank 5: PDF 658, Chunk 1, Final Score: 0.3838 (BM25: 0.1210, FAISS: 0.9969, Repeat Bonus: 0.0000), words frequency: [('瑞昱', 1)]
+2024-11-05 23:04:34:INFO:__main__:================================================================= QID: 87 =================================================================
+2024-11-05 23:04:37:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:37:INFO:__main__:query分詞結果: 季/部門/一個/營運/負數/台泥/哪/合併/損益/2023
+2024-11-05 23:04:37:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:37:INFO:__main__:Rank 1: PDF 747, Chunk 1, Final Score: 0.9581 (BM25: 0.5620, FAISS: 0.9542, Repeat Bonus: 0.2000), words frequency: [('2023', 3)]
+2024-11-05 23:04:37:INFO:__main__:Rank 2: PDF 129, Chunk 1, Final Score: 0.9542 (BM25: 0.5964, FAISS: 0.9121, Repeat Bonus: 0.2000), words frequency: [('合併', 5), ('損益', 2), ('營運', 1)]
+2024-11-05 23:04:37:INFO:__main__:Rank 3: PDF 701, Chunk 2, Final Score: 0.9013 (BM25: 1.0000, FAISS: 0.8026, Repeat Bonus: 0.0000), words frequency: [('部門', 3), ('營運', 2), ('損益', 2), ('合併', 1)]
+2024-11-05 23:04:37:INFO:__main__:Rank 4: PDF 701, Chunk 1, Final Score: 0.8596 (BM25: 0.9161, FAISS: 0.8031, Repeat Bonus: 0.0000), words frequency: [('部門', 7), ('損益', 1), ('營運', 1), ('合併', 1)]
+2024-11-05 23:04:37:INFO:__main__:Rank 5: PDF 701, Chunk 3, Final Score: 0.8155 (BM25: 0.8392, FAISS: 0.7919, Repeat Bonus: 0.0000), words frequency: [('部門', 9), ('損益', 6), ('合併', 1), ('營運', 1)]
+2024-11-05 23:04:37:INFO:__main__:================================================================= QID: 88 =================================================================
+2024-11-05 23:04:38:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:38:INFO:__main__:query分詞結果: 信用狀/多少/止/2023/聯電/一二年/金額/季/一/十日/提到/二年/三十日/九月/報告/財務報告/財務/三十/信用/開立/使用/子公司/一二/合併/截至
+2024-11-05 23:04:38:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:38:INFO:__main__:Rank 1: PDF 256, Chunk 0, Final Score: 0.9072 (BM25: 1.0000, FAISS: 0.8144, Repeat Bonus: 0.0000), words frequency: [('子公司', 6), ('金額', 5), ('一', 5), ('截至', 4), ('一二', 4), ('二年', 4), ('一二年', 4), ('九月', 4), ('三十', 4), ('十日', 4)]
+2024-11-05 23:04:38:INFO:__main__:Rank 2: PDF 328, Chunk 0, Final Score: 0.8834 (BM25: 0.3668, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('一', 2), ('子公司', 1), ('合併', 1), ('財務', 1), ('報告', 1), ('財務報告', 1), ('金額', 1), ('九月', 1), ('三十', 1), ('十日', 1)]
+2024-11-05 23:04:38:INFO:__main__:Rank 3: PDF 112, Chunk 0, Final Score: 0.8273 (BM25: 0.3239, FAISS: 0.9307, Repeat Bonus: 0.2000), words frequency: [('九月', 3), ('三十', 3), ('十日', 3), ('三十日', 3), ('一', 2), ('一二', 2), ('二年', 2), ('一二年', 2), ('子公司', 1), ('合併', 1)]
+2024-11-05 23:04:38:INFO:__main__:Rank 4: PDF 329, Chunk 0, Final Score: 0.6402 (BM25: 0.4434, FAISS: 0.8370, Repeat Bonus: 0.0000), words frequency: [('財務', 5), ('子公司', 4), ('一', 4), ('報告', 3), ('財務報告', 3), ('一二', 3), ('二年', 3), ('一二年', 3), ('九月', 3), ('合併', 2)]
+2024-11-05 23:04:38:INFO:__main__:Rank 5: PDF 794, Chunk 0, Final Score: 0.5797 (BM25: 0.2708, FAISS: 0.8886, Repeat Bonus: 0.0000), words frequency: [('一', 3), ('子公司', 1), ('合併', 1), ('財務', 1), ('報告', 1), ('財務報告', 1), ('金額', 1), ('使用', 1)]
+2024-11-05 23:04:38:INFO:__main__:================================================================= QID: 89 =================================================================
+2024-11-05 23:04:47:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:47:INFO:__main__:query分詞結果: 中華電信/季/中華/多少/合併/電信/流動/合併資產負債表/2023/負債表/有限/資產/華電/股份/流動資產/總計/負債
+2024-11-05 23:04:47:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:47:INFO:__main__:Rank 1: PDF 793, Chunk 0, Final Score: 0.8693 (BM25: 1.0000, FAISS: 0.7385, Repeat Bonus: 0.0000), words frequency: [('負債', 21), ('資產', 20), ('流動', 12), ('總計', 10), ('流動資產', 6), ('合併', 2), ('中華', 1), ('華電', 1), ('電信', 1), ('中華電信', 1)]
+2024-11-05 23:04:47:INFO:__main__:Rank 2: PDF 902, Chunk 0, Final Score: 0.7578 (BM25: 0.5156, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('股份', 3), ('合併', 2), ('中華', 1), ('華電', 1), ('電信', 1), ('中華電信', 1), ('有限', 1), ('資產', 1), ('總計', 1)]
+2024-11-05 23:04:47:INFO:__main__:Rank 3: PDF 1008, Chunk 0, Final Score: 0.7094 (BM25: 0.6577, FAISS: 0.7611, Repeat Bonus: 0.0000), words frequency: [('資產', 5), ('負債', 3), ('股份', 2), ('中華', 1), ('華電', 1), ('電信', 1), ('中華電信', 1), ('有限', 1), ('合併', 1), ('流動', 1)]
+2024-11-05 23:04:47:INFO:__main__:Rank 4: PDF 999, Chunk 1, Final Score: 0.7076 (BM25: 0.5457, FAISS: 0.8695, Repeat Bonus: 0.0000), words frequency: [('有限', 12), ('股份', 11), ('中華', 6), ('電信', 4), ('合併', 2), ('華電', 2), ('中華電信', 2)]
+2024-11-05 23:04:47:INFO:__main__:Rank 5: PDF 613, Chunk 0, Final Score: 0.6678 (BM25: 0.3940, FAISS: 0.9416, Repeat Bonus: 0.0000), words frequency: [('電信', 3), ('中華', 2), ('華電', 2), ('中華電信', 2), ('負債', 1), ('資產', 1), ('流動', 1)]
+2024-11-05 23:04:47:INFO:__main__:================================================================= QID: 90 =================================================================
+2024-11-05 23:04:51:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:51:INFO:__main__:query分詞結果: 每股/基本/第一季度/多少/盈餘/泰車/2023/季度/一季度/基本每股盈餘/第一季/第一
+2024-11-05 23:04:51:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:51:INFO:__main__:Rank 1: PDF 761, Chunk 0, Final Score: 1.0794 (BM25: 0.7763, FAISS: 0.9826, Repeat Bonus: 0.2000), words frequency: [('盈餘', 6), ('第一', 6), ('第一季', 6)]
+2024-11-05 23:04:51:INFO:__main__:Rank 2: PDF 710, Chunk 1, Final Score: 0.8612 (BM25: 1.0000, FAISS: 0.7225, Repeat Bonus: 0.0000), words frequency: [('每股', 5), ('盈餘', 5), ('基本', 2), ('基本每股盈餘', 2)]
+2024-11-05 23:04:51:INFO:__main__:Rank 3: PDF 161, Chunk 0, Final Score: 0.6042 (BM25: 0.4193, FAISS: 0.7891, Repeat Bonus: 0.0000), words frequency: [('第一', 1), ('第一季', 1)]
+2024-11-05 23:04:51:INFO:__main__:Rank 4: PDF 710, Chunk 0, Final Score: 0.5015 (BM25: 0.2783, FAISS: 0.7247, Repeat Bonus: 0.0000), words frequency: [('每股', 1), ('盈餘', 1)]
+2024-11-05 23:04:51:INFO:__main__:Rank 5: PDF 429, Chunk 0, Final Score: 0.5000 (BM25: 0.0000, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: []
+2024-11-05 23:04:51:INFO:__main__:================================================================= QID: 91 =================================================================
+2024-11-05 23:04:52:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:52:INFO:__main__:query分詞結果: 聯發科/百分/資本額/2023/詳細/台幣/季/一/二十/包含/附表/以上/提到/關係人/資本/實收/關係/款項/財務/之二/百分之二十/資訊/報表/合併/哪個/百分之/合併財務報表/應收/達新/億元
+2024-11-05 23:04:52:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:52:INFO:__main__:Rank 1: PDF 22, Chunk 0, Final Score: 0.9398 (BM25: 1.0000, FAISS: 0.8795, Repeat Bonus: 0.0000), words frequency: [('附表', 6), ('資訊', 4), ('台幣', 3), ('關係', 3), ('實收', 3), ('資本', 3), ('資本額', 3), ('財務', 2), ('關係人', 2), ('達新', 2)]
+2024-11-05 23:04:52:INFO:__main__:Rank 2: PDF 284, Chunk 0, Final Score: 0.7672 (BM25: 0.2013, FAISS: 0.9330, Repeat Bonus: 0.2000), words frequency: [('財務', 6), ('一', 4), ('合併', 2), ('二十', 2), ('報表', 1), ('合併財務報表', 1), ('台幣', 1), ('聯發科', 1)]
+2024-11-05 23:04:52:INFO:__main__:Rank 3: PDF 930, Chunk 1, Final Score: 0.7512 (BM25: 0.1610, FAISS: 0.9413, Repeat Bonus: 0.2000), words frequency: [('財務', 7), ('合併', 3), ('報表', 2), ('合併財務報表', 2), ('以上', 1), ('台幣', 1)]
+2024-11-05 23:04:52:INFO:__main__:Rank 4: PDF 930, Chunk 0, Final Score: 0.7361 (BM25: 0.1278, FAISS: 0.9443, Repeat Bonus: 0.2000), words frequency: [('財務', 9), ('合併', 3), ('報表', 3), ('合併財務報表', 3), ('台幣', 1)]
+2024-11-05 23:04:52:INFO:__main__:Rank 5: PDF 284, Chunk 1, Final Score: 0.7334 (BM25: 0.1553, FAISS: 0.9115, Repeat Bonus: 0.2000), words frequency: [('財務', 7), ('報表', 3), ('合併', 1), ('合併財務報表', 1), ('2023', 1)]
+2024-11-05 23:04:52:INFO:__main__:================================================================= QID: 92 =================================================================
+2024-11-05 23:04:59:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:04:59:INFO:__main__:query分詞結果: 多少/112/歸屬/2023/屬於/30/9/季/變動表/有限/股份/業主/權益/歸屬於/日/總額/合併/國巨/本公司/月/變動
+2024-11-05 23:04:59:INFO:__main__:query擴展詞: 
+2024-11-05 23:04:59:INFO:__main__:Rank 1: PDF 428, Chunk 0, Final Score: 1.1127 (BM25: 0.8253, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('權益', 11), ('9', 8), ('月', 6), ('30', 6), ('日', 5), ('合併', 2), ('112', 2), ('本公司', 2), ('業主', 2), ('國巨', 1)]
+2024-11-05 23:04:59:INFO:__main__:Rank 2: PDF 450, Chunk 0, Final Score: 0.9908 (BM25: 0.6891, FAISS: 0.8925, Repeat Bonus: 0.2000), words frequency: [('股份', 7), ('本公司', 6), ('月', 5), ('合併', 4), ('有限', 3), ('112', 3), ('國巨', 2), ('9', 2), ('30', 1), ('日', 1)]
+2024-11-05 23:04:59:INFO:__main__:Rank 3: PDF 55, Chunk 0, Final Score: 0.8695 (BM25: 1.0000, FAISS: 0.7391, Repeat Bonus: 0.0000), words frequency: [('月', 15), ('9', 14), ('權益', 12), ('日', 9), ('112', 7), ('30', 7), ('股份', 3), ('變動', 3), ('本公司', 3), ('合併', 2)]
+2024-11-05 23:04:59:INFO:__main__:Rank 4: PDF 450, Chunk 0, Final Score: 0.9908 (BM25: 0.6891, FAISS: 0.8925, Repeat Bonus: 0.2000), words frequency: [('股份', 7), ('本公司', 6), ('月', 5), ('合併', 4), ('有限', 3), ('112', 3), ('國巨', 2), ('9', 2), ('30', 1), ('日', 1)]
+2024-11-05 23:04:59:INFO:__main__:Rank 5: PDF 450, Chunk 11, Final Score: 0.7210 (BM25: 0.6698, FAISS: 0.7723, Repeat Bonus: 0.0000), words frequency: [('合併', 7), ('權益', 7), ('本公司', 3), ('變動', 2), ('總額', 1), ('歸屬', 1), ('業主', 1)]
+2024-11-05 23:04:59:INFO:__main__:================================================================= QID: 93 =================================================================
+2024-11-05 23:05:04:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:05:04:INFO:__main__:query分詞結果: 中鋼/季/提供/價值/多少/予/帳面/帳面價值/銀行/總/資產/2022/作為/擔保
+2024-11-05 23:05:04:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:04:INFO:__main__:Rank 1: PDF 660, Chunk 0, Final Score: 0.8942 (BM25: 1.0000, FAISS: 0.7885, Repeat Bonus: 0.0000), words frequency: [('資產', 3), ('銀行', 3), ('擔保', 2), ('帳面', 1), ('價值', 1), ('帳面價值', 1), ('提供', 1), ('予', 1), ('作為', 1)]
+2024-11-05 23:05:04:INFO:__main__:Rank 2: PDF 321, Chunk 6, Final Score: 0.6085 (BM25: 0.2804, FAISS: 0.9366, Repeat Bonus: 0.0000), words frequency: [('中鋼', 1), ('提供', 1), ('擔保', 1)]
+2024-11-05 23:05:04:INFO:__main__:Rank 3: PDF 366, Chunk 0, Final Score: 0.5902 (BM25: 0.2751, FAISS: 0.9053, Repeat Bonus: 0.0000), words frequency: [('資產', 24), ('價值', 5), ('銀行', 3)]
+2024-11-05 23:05:04:INFO:__main__:Rank 4: PDF 321, Chunk 0, Final Score: 0.5687 (BM25: 0.1373, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('銀行', 2)]
+2024-11-05 23:05:04:INFO:__main__:Rank 5: PDF 920, Chunk 3, Final Score: 0.5643 (BM25: 0.2607, FAISS: 0.8679, Repeat Bonus: 0.0000), words frequency: [('資產', 3), ('予', 2), ('提供', 1)]
+2024-11-05 23:05:04:INFO:__main__:================================================================= QID: 94 =================================================================
+2024-11-05 23:05:06:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:05:06:INFO:__main__:query分詞結果: 智邦/季/現金/報告/多少/股東/合併/110/財務報告/金額/財務/2022/年度/股利
+2024-11-05 23:05:06:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:06:INFO:__main__:Rank 1: PDF 350, Chunk 0, Final Score: 1.0591 (BM25: 0.8503, FAISS: 0.8794, Repeat Bonus: 0.2000), words frequency: [('智邦', 5), ('財務', 4), ('合併', 3), ('報告', 3), ('財務報告', 3), ('110', 1), ('金額', 1)]
+2024-11-05 23:05:06:INFO:__main__:Rank 2: PDF 695, Chunk 0, Final Score: 0.9496 (BM25: 1.0000, FAISS: 0.8320, Repeat Bonus: 0.0000), words frequency: [('110', 2), ('股利', 2), ('財務', 1), ('年度', 1), ('股東', 1), ('現金', 1)]
+2024-11-05 23:05:06:INFO:__main__:Rank 3: PDF 695, Chunk 2, Final Score: 0.9452 (BM25: 0.9958, FAISS: 0.8270, Repeat Bonus: 0.0000), words frequency: [('股利', 2), ('年度', 1), ('股東', 1), ('現金', 1), ('合併', 1), ('財務', 1), ('報告', 1), ('財務報告', 1)]
+2024-11-05 23:05:06:INFO:__main__:Rank 4: PDF 699, Chunk 1, Final Score: 0.8533 (BM25: 0.8606, FAISS: 0.8362, Repeat Bonus: 0.0000), words frequency: [('現金', 13), ('股利', 2), ('110', 1), ('股東', 1), ('合併', 1), ('財務', 1), ('報告', 1), ('財務報告', 1)]
+2024-11-05 23:05:06:INFO:__main__:Rank 5: PDF 456, Chunk 0, Final Score: 0.7417 (BM25: 0.6309, FAISS: 1.0000, Repeat Bonus: 0.0000), words frequency: [('金額', 6), ('110', 4), ('現金', 2)]
+2024-11-05 23:05:06:INFO:__main__:================================================================= QID: 95 =================================================================
+2024-11-05 23:05:08:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:05:08:INFO:__main__:query分詞結果: 季/交換/分別/流出/合約/光寶/報告/科在/多少/合併/匯率/關於/金額/2021/流入
+2024-11-05 23:05:08:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:08:INFO:__main__:Rank 1: PDF 307, Chunk 0, Final Score: 0.8918 (BM25: 1.0000, FAISS: 0.7836, Repeat Bonus: 0.0000), words frequency: [('合約', 4), ('流入', 4), ('流出', 4), ('合併', 3), ('匯率', 2), ('交換', 2)]
+2024-11-05 23:05:08:INFO:__main__:Rank 2: PDF 332, Chunk 0, Final Score: 0.7884 (BM25: 0.1768, FAISS: 1.0000, Repeat Bonus: 0.2000), words frequency: [('合併', 2), ('金額', 1)]
+2024-11-05 23:05:08:INFO:__main__:Rank 3: PDF 998, Chunk 1, Final Score: 0.5241 (BM25: 0.2249, FAISS: 0.8233, Repeat Bonus: 0.0000), words frequency: [('合併', 2), ('報告', 1), ('合約', 1)]
+2024-11-05 23:05:08:INFO:__main__:Rank 4: PDF 940, Chunk 0, Final Score: 0.5163 (BM25: 0.1726, FAISS: 0.8599, Repeat Bonus: 0.0000), words frequency: [('合併', 1), ('光寶', 1)]
+2024-11-05 23:05:08:INFO:__main__:Rank 5: PDF 998, Chunk 1, Final Score: 0.5241 (BM25: 0.2249, FAISS: 0.8233, Repeat Bonus: 0.0000), words frequency: [('合併', 2), ('報告', 1), ('合約', 1)]
+2024-11-05 23:05:08:INFO:__main__:================================================================= QID: 96 =================================================================
+2024-11-05 23:05:10:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:05:10:INFO:__main__:query分詞結果: 公允/價值/金融資產/多少/衡量/融資/損益/透過/金融/流動/季度/請問/資產/金額/台達電/2022/按
+2024-11-05 23:05:10:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:10:INFO:__main__:Rank 1: PDF 435, Chunk 0, Final Score: 0.9229 (BM25: 1.0000, FAISS: 0.7430, Repeat Bonus: 0.0000), words frequency: [('資產', 20), ('流動', 13), ('按', 4), ('衡量', 4), ('融資', 4), ('金額', 3), ('透過', 3), ('損益', 3), ('公允', 3), ('金融', 3)]
+2024-11-05 23:05:10:INFO:__main__:Rank 2: PDF 750, Chunk 2, Final Score: 0.7912 (BM25: 0.8004, FAISS: 0.7698, Repeat Bonus: 0.0000), words frequency: [('按', 6), ('公允', 4), ('價值', 4), ('衡量', 4), ('資產', 3), ('透過', 2), ('損益', 2), ('金融', 2), ('融資', 2), ('金融資產', 2)]
+2024-11-05 23:05:10:INFO:__main__:Rank 3: PDF 750, Chunk 3, Final Score: 0.7383 (BM25: 0.7249, FAISS: 0.7698, Repeat Bonus: 0.0000), words frequency: [('按', 3), ('公允', 2), ('價值', 2), ('衡量', 2), ('資產', 2), ('透過', 1), ('損益', 1), ('金融', 1), ('融資', 1), ('金融資產', 1)]
+2024-11-05 23:05:10:INFO:__main__:Rank 4: PDF 435, Chunk 1, Final Score: 0.6208 (BM25: 0.5701, FAISS: 0.7391, Repeat Bonus: 0.0000), words frequency: [('流動', 9), ('金額', 3), ('資產', 2), ('透過', 1), ('損益', 1), ('按', 1), ('公允', 1), ('價值', 1), ('衡量', 1), ('金融', 1)]
+2024-11-05 23:05:10:INFO:__main__:Rank 5: PDF 137, Chunk 1, Final Score: 0.5214 (BM25: 0.3876, FAISS: 0.8336, Repeat Bonus: 0.0000), words frequency: [('損益', 14), ('金額', 2), ('衡量', 2), ('透過', 1), ('按', 1), ('公允', 1), ('價值', 1)]
+2024-11-05 23:05:10:INFO:__main__:================================================================= QID: 97 =================================================================
+2024-11-05 23:05:15:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:05:15:INFO:__main__:query分詞結果: 季/總額/多少/合併/國巨/2023/損益/本期/綜合損益/損益表/綜合
+2024-11-05 23:05:15:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:15:INFO:__main__:Rank 1: PDF 579, Chunk 1, Final Score: 1.1117 (BM25: 0.8969, FAISS: 0.9265, Repeat Bonus: 0.2000), words frequency: [('合併', 6), ('總額', 6), ('綜合', 2), ('損益', 2), ('綜合損益', 2)]
+2024-11-05 23:05:15:INFO:__main__:Rank 2: PDF 579, Chunk 0, Final Score: 1.0592 (BM25: 0.7799, FAISS: 0.9385, Repeat Bonus: 0.2000), words frequency: [('合併', 8), ('國巨', 3), ('綜合', 1), ('損益', 1), ('損益表', 1)]
+2024-11-05 23:05:15:INFO:__main__:Rank 3: PDF 282, Chunk 1, Final Score: 0.8702 (BM25: 1.0000, FAISS: 0.7405, Repeat Bonus: 0.0000), words frequency: [('損益', 10), ('綜合', 6), ('綜合損益', 6), ('本期', 3), ('總額', 1)]
+2024-11-05 23:05:15:INFO:__main__:Rank 4: PDF 789, Chunk 0, Final Score: 0.7887 (BM25: 0.7183, FAISS: 0.8591, Repeat Bonus: 0.0000), words frequency: [('損益', 6), ('綜合', 4), ('綜合損益', 4), ('合併', 2), ('國巨', 1), ('總額', 1)]
+2024-11-05 23:05:15:INFO:__main__:Rank 5: PDF 282, Chunk 2, Final Score: 0.7258 (BM25: 0.7134, FAISS: 0.7382, Repeat Bonus: 0.0000), words frequency: [('綜合', 1), ('損益', 1), ('綜合損益', 1), ('總額', 1), ('合併', 1)]
+2024-11-05 23:05:15:INFO:__main__:================================================================= QID: 98 =================================================================
+2024-11-05 23:05:20:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:05:20:INFO:__main__:query分詞結果: 活動/第三季度/總額/多少/所得稅/第三/2023/營業/季度/第三季/三季度/台達電/所得/支付
+2024-11-05 23:05:20:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:20:INFO:__main__:Rank 1: PDF 439, Chunk 24, Final Score: 0.8998 (BM25: 1.0000, FAISS: 0.7997, Repeat Bonus: 0.0000), words frequency: [('總額', 4), ('營業', 3), ('活動', 3), ('所得', 2), ('所得稅', 2), ('支付', 2)]
+2024-11-05 23:05:20:INFO:__main__:Rank 2: PDF 439, Chunk 23, Final Score: 0.7849 (BM25: 0.7645, FAISS: 0.8053, Repeat Bonus: 0.0000), words frequency: [('總額', 6), ('所得', 2), ('所得稅', 2), ('營業', 2), ('支付', 2)]
+2024-11-05 23:05:20:INFO:__main__:Rank 3: PDF 692, Chunk 0, Final Score: 0.7249 (BM25: 0.6872, FAISS: 0.7626, Repeat Bonus: 0.0000), words frequency: [('營業', 5), ('活動', 5), ('支付', 2), ('所得', 1), ('所得稅', 1)]
+2024-11-05 23:05:20:INFO:__main__:Rank 4: PDF 566, Chunk 0, Final Score: 0.6597 (BM25: 0.4327, FAISS: 0.8868, Repeat Bonus: 0.0000), words frequency: [('所得', 2), ('所得稅', 2), ('支付', 1)]
+2024-11-05 23:05:20:INFO:__main__:Rank 5: PDF 835, Chunk 0, Final Score: 0.6529 (BM25: 0.5664, FAISS: 0.7395, Repeat Bonus: 0.0000), words frequency: [('第三', 1), ('第三季', 1), ('營業', 1)]
+2024-11-05 23:05:20:INFO:__main__:================================================================= QID: 99 =================================================================
+2024-11-05 23:05:24:INFO:__main__:Dynamic Weights - BM25: 0.70, FAISS: 0.30
+2024-11-05 23:05:24:INFO:__main__:query分詞結果: 中鋼/季/總額/多少/損益/2022/綜合損益/綜合
+2024-11-05 23:05:24:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:24:INFO:__main__:Rank 1: PDF 693, Chunk 1, Final Score: 0.9515 (BM25: 1.0000, FAISS: 0.8385, Repeat Bonus: 0.0000), words frequency: [('綜合', 4), ('損益', 4), ('綜合損益', 4), ('總額', 2)]
+2024-11-05 23:05:24:INFO:__main__:Rank 2: PDF 372, Chunk 0, Final Score: 0.8559 (BM25: 0.8944, FAISS: 0.7663, Repeat Bonus: 0.0000), words frequency: [('損益', 9), ('綜合', 7), ('綜合損益', 6), ('總額', 2)]
+2024-11-05 23:05:24:INFO:__main__:Rank 3: PDF 483, Chunk 2, Final Score: 0.8170 (BM25: 0.4854, FAISS: 0.9240, Repeat Bonus: 0.2000), words frequency: [('2022', 2)]
+2024-11-05 23:05:24:INFO:__main__:Rank 4: PDF 693, Chunk 0, Final Score: 0.6265 (BM25: 0.5278, FAISS: 0.8568, Repeat Bonus: 0.0000), words frequency: [('損益', 12), ('綜合', 5), ('綜合損益', 4)]
+2024-11-05 23:05:24:INFO:__main__:Rank 5: PDF 631, Chunk 1, Final Score: 0.6094 (BM25: 0.5256, FAISS: 0.8048, Repeat Bonus: 0.0000), words frequency: [('損益', 5), ('綜合', 3), ('綜合損益', 3)]
+2024-11-05 23:05:24:INFO:__main__:================================================================= QID: 100 =================================================================
+2024-11-05 23:05:29:INFO:__main__:Dynamic Weights - BM25: 0.50, FAISS: 0.50
+2024-11-05 23:05:29:INFO:__main__:query分詞結果: 季/外部/部門/分別/多少/收入/各/鴻海/2022/外部收入
+2024-11-05 23:05:29:INFO:__main__:query擴展詞: 
+2024-11-05 23:05:29:INFO:__main__:Rank 1: PDF 273, Chunk 0, Final Score: 0.8753 (BM25: 1.0000, FAISS: 0.7506, Repeat Bonus: 0.0000), words frequency: [('部門', 9), ('各', 2), ('收入', 1)]
+2024-11-05 23:05:29:INFO:__main__:Rank 2: PDF 273, Chunk 1, Final Score: 0.7491 (BM25: 0.7528, FAISS: 0.7455, Repeat Bonus: 0.0000), words frequency: [('部門', 9), ('各', 1)]
+2024-11-05 23:05:29:INFO:__main__:Rank 3: PDF 944, Chunk 8, Final Score: 0.6963 (BM25: 0.5490, FAISS: 0.8436, Repeat Bonus: 0.0000), words frequency: [('收入', 1), ('分別', 1)]
+2024-11-05 23:05:29:INFO:__main__:Rank 4: PDF 63, Chunk 53, Final Score: 0.6284 (BM25: 0.5048, FAISS: 0.7519, Repeat Bonus: 0.0000), words frequency: [('收入', 3), ('各', 1)]
+2024-11-05 23:05:29:INFO:__main__:Rank 5: PDF 273, Chunk 2, Final Score: 0.6165 (BM25: 0.4875, FAISS: 0.7455, Repeat Bonus: 0.0000), words frequency: [('部門', 5)]
+2024-11-05 23:05:29:INFO:__main__:已成功儲存檔案於 ../競賽資料集/dataset/preliminary/pred_retrieve.json
+
