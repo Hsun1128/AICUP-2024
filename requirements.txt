@@ -10,3 +10,4 @@ langchain-huggingface
 langchain-text-splitters
 numpy
 sklearn
+dotenv

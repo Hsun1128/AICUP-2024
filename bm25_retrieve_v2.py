@@ -8,7 +8,7 @@ from typing import List, Set
 from collections import Counter
 import logging
 
-from env import load_env
+from utils.env import load_env
 
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
