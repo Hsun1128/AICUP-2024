@@ -58,7 +58,7 @@ if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Create paths relative to the script location
-    ground_truth_file = os.path.join(current_dir, '競賽資料集/dataset/preliminary/ground_truths_example.json')
-    prediction_file = os.path.join(current_dir, '競賽資料集/dataset/preliminary/pred_retrieve.json')
+    ground_truth_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/ground_truths_example.json')
+    prediction_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/pred_retrieve.json')
 
     main(ground_truth_file, prediction_file)

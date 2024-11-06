@@ -3,3 +3,10 @@ tqdm
 rank_bm25
 jieba
 pytesseract
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+langchain-text-splitters
+numpy
+sklearn
