@@ -1,3 +1,4 @@
+# 導入所需的套件
 import os
 import re
 import json
@@ -8,8 +9,10 @@ from typing import List, Set
 from collections import Counter
 import logging
 
+# 導入自定義環境設定
 from utils.env import load_env
 
+# 導入數據處理相關套件
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
@@ -18,31 +21,33 @@ import pdfplumber  # 用於從PDF文件中提取文字的工具
 from rank_bm25 import BM25Okapi  # 使用BM25演算法進行文件檢索
 from gensim.models import KeyedVectors  # 確保引入gensim
 
+# 導入LangChain相關套件
 from langchain.document_loaders import PDFPlumberLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 
-# Configure logging
+# 設定日誌記錄
 logging.basicConfig(level=logging.INFO, filename='retrieve.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
+# 載入環境變數
 load_env()
 
 # 設置全局參數
-RANGE = range(0, 150)
+RANGE = range(0, 150)  # 處理問題的範圍
 
-USE_EXPANSION = 0
-EXPANSION_MODEL_PATH = './word2vec/wiki.zh.bin'
-EXPANDED_TOPN = 2
+USE_EXPANSION = 0  # 是否使用查詢擴展
+EXPANSION_MODEL_PATH = './word2vec/wiki.zh.bin'  # word2vec模型路徑
+EXPANDED_TOPN = 2  # 查詢擴展時每個詞的相似詞數量
 
-USE_FAISS = 1
+USE_FAISS = 1  # 是否使用FAISS向量檢索
 
-BM25_K1 = 0.5
-BM25_B = 0.7
+BM25_K1 = 0.5  # BM25算法的k1參數
+BM25_B = 0.7  # BM25算法的b參數
 
-CHUNK_SIZE = 500
-OVERLAP = 100
+CHUNK_SIZE = 500  # 文本分塊大小
+OVERLAP = 100  # 文本分塊重疊大小
 
 
 # 載入參考資料，返回一個字典，key為檔案名稱，value為PDF檔內容的文本
@@ -51,6 +56,7 @@ def load_data(source_path, files_to_load):
     masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
     corpus_dict = {}
     
+    # 使用多進程處理PDF文件
     with ProcessPoolExecutor() as executor:
         futures = {executor.submit(read_pdf, os.path.join(source_path, f'{file}.pdf')): file for file in masked_file_ls}
         for future in concurrent.futures.as_completed(futures):
@@ -63,19 +69,20 @@ def load_data(source_path, files_to_load):
     return corpus_dict
 
 
+# 設定文本分割器
 splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=OVERLAP, length_function=len, is_separator_regex=False, keep_separator=False, separators=['\n\n', '\n', '!', '?', '。', ';'])
+
 # 讀取單個PDF文件並返回其文本內容
 def read_pdf(pdf_loc, splitter=splitter, page_infos: list=None):
     #pdf = pdfplumber.open(pdf_loc)  # 打開指定的PDF文件
     pdf_text = PDFPlumberLoader(pdf_loc).load()
     for doc in pdf_text:
         # 清理內容
-        clean_content = re.sub(r'(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])', '', doc.page_content).replace('\n', '').strip()
-        clean_content = re.sub(r'\b[0-9, \(\)\$\u4e00-\u9fff]{20,}\b', '', clean_content)
-        clean_content = re.sub(r'([,、\$]){3,}', '', clean_content)
-        clean_content = re.sub(r'([\u4e00-\u9fff])\1+', r'\1', clean_content)
-        clean_content = re.sub(r'-\s*\d+\s*-', '', clean_content)
-        clean_content = re.sub(r'第\s*\d+\s*頁，\s*共\s*\d+\s*頁', '', clean_content)
+        clean_content = re.sub(r'(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])', '', doc.page_content).replace('\n', '').strip()  # 移除中文字之間的空白
+        clean_content = re.sub(r'([,、\$]){3,}', '', clean_content)  # 移除連續3個以上的標點符號
+        clean_content = re.sub(r'([\u4e00-\u9fff])\1+', r'\1', clean_content)  # 移除連續重複的中文字
+        clean_content = re.sub(r'-\s*\d+\s*-', '', clean_content)  # 移除頁碼格式
+        clean_content = re.sub(r'第\s*\d+\s*頁，\s*共\s*\d+\s*頁', '', clean_content)  # 移除頁碼說明
         doc.page_content = clean_content
     pdf_text = splitter.split_documents(pdf_text)
     """
@@ -92,24 +99,26 @@ def read_pdf(pdf_loc, splitter=splitter, page_infos: list=None):
 
 class TextProcessor:
     def __init__(self, stopwords_filepath: str, bm25_k1: float=BM25_K1, bm25_b: float=BM25_B, use_expansion: bool=USE_EXPANSION, expanded_topn: int=EXPANDED_TOPN, chunk_size: int=CHUNK_SIZE, overlap: int=OVERLAP, expansion_model_path: str=EXPANSION_MODEL_PATH, use_faiss: bool=USE_FAISS):
-        self.stopwords = self.load_stopwords(stopwords_filepath)
-        self.bm25_k1 = bm25_k1
-        self.bm25_b = bm25_b
-        self.expanded_topn = expanded_topn
-        self.use_expansion = use_expansion
+        self.stopwords = self.load_stopwords(stopwords_filepath)  # 載入停用詞
+        self.bm25_k1 = bm25_k1  # BM25參數k1
+        self.bm25_b = bm25_b    # BM25參數b
+        self.expanded_topn = expanded_topn  # 查詢擴展時每個詞的相似詞數量
+        self.use_expansion = use_expansion  # 是否使用查詢擴展
         self.word2vec_model = self.load_word2vec_model(os.path.join(os.path.dirname(__file__), expansion_model_path))  # 載入word2vec模型
-        self.chunk_size = chunk_size
-        self.overlap = overlap
+        self.chunk_size = chunk_size  # 文本分塊大小
+        self.overlap = overlap    # 文本分塊重疊大小
         self.splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=overlap, length_function=len, is_separator_regex=False, keep_separator=False, separators=['\n\n', '\n', '!', '?', '。', ';'])
-        self.use_faiss = use_faiss
+        self.use_faiss = use_faiss  # 是否使用FAISS
         if self.use_faiss:
             self.embeddings = HuggingFaceBgeEmbeddings(model_name='BAAI/bge-m3', model_kwargs = {'device': 'cuda'}, encode_kwargs = {'normalize_embeddings': True})
 
+    # 載入word2vec模型
     def load_word2vec_model(self, model_path: str):
         model = KeyedVectors.load(model_path)  # 載入二進制格式的word2vec模型
         logger.info('Word2Vec model loaded successfully')
         return model
 
+    # 載入停用詞
     def load_stopwords(self, filepath: str) -> set[str]:
         with open(filepath, 'r', encoding='utf-8') as file:
             stopwords = set(line.strip() for line in file)
@@ -117,6 +126,7 @@ class TextProcessor:
         logger.info(f'stopwords: {stopwords}')
         return stopwords
 
+    # 使用jieba進行分詞並移除停用詞
     def jieba_cut_with_stopwords(self, text: str) -> List[str]:
         words = jieba.cut_for_search(text)
         return [word for word in words if word not in self.stopwords and word.strip()]  # clean stopwords
@@ -134,6 +144,7 @@ class TextProcessor:
                 break
         return chunks
 
+    # 查詢擴展
     def expanded_query(self, tokenized_query: Set[str]) -> Set[str]:
         if not self.use_expansion:
             return tokenized_query  # 如果不使用擴展，返回原始查詢
@@ -154,16 +165,16 @@ class TextProcessor:
         for file_key in source:
             corpus = corpus_dict[int(file_key)]
             for idx, chunk in enumerate(corpus):
-                print('-'*100)
+                #print('-'*100)
                 key_idx_map.append((file_key, idx))
                 try:    
                     chunked_corpus.append(chunk.page_content)
-                    print(chunk)
-                    input(...)
+                    #print(chunk)
+                    #input(...)
                 except:
                     chunked_corpus.append(corpus)
-                    print(corpus)
-                    input(...)
+                    #print(corpus)
+                    #input(...)
                     break
                 
         # 分詞並建立 BM25 模型
@@ -218,6 +229,7 @@ class TextProcessor:
         query_length = len(tokenized_query)
         query_diversity = len(expanded_query) / (len(tokenized_query) + 1)  # 查詢擴展的多樣性
         
+        # 對每個檢索結果計算多個指標
         for index, a in enumerate(ans):
             try:
                 actual_index = chunked_corpus.index(a)
@@ -296,6 +308,7 @@ class TextProcessor:
                 score = scores[actual_index]
                 bm25_results[chunk_key] = score
                 
+                # 記錄檢索結果的詳細信息
                 logger.info(f'BM25 Rank {index + 1}: PDF {chunk_key[0]}, Chunk {chunk_key[1]}, '
                           f'Score: {score:.4f}, Term Importance: {importance_score:.4f}, '
                           f'Semantic Similarity: {semantic_similarity.get(chunk_key, 0):.4f}, '
@@ -308,6 +321,7 @@ class TextProcessor:
             except ValueError:
                 logger.error(f'Chunk not found in chunked_corpus: {a}')
 
+        # FAISS向量檢索結果
         faiss_results = {}
         if self.use_faiss:
             vector_store = FAISS.from_texts(chunked_corpus, self.embeddings, normalize_L2=True)
@@ -323,6 +337,7 @@ class TextProcessor:
 
         # 使用多指標排序和自適應權重系統
         if bm25_results and faiss_results:
+            # 正規化分數的輔助函數
             def normalize_scores(scores):
                 max_score = max(scores.values())
                 min_score = min(scores.values())
@@ -370,6 +385,7 @@ class TextProcessor:
             weight_sum = sum(adjusted_weights.values())
             adjusted_weights = {k: v/weight_sum for k, v in adjusted_weights.items()}
             
+            # 計算加權分數
             weighted_scores = {}
             for key in set(bm25_results.keys()) | set(faiss_results.keys()):
                 score = (
@@ -384,6 +400,7 @@ class TextProcessor:
                 )
                 weighted_scores[key] = score
 
+            # 記錄最終排序結果
             logger.info('-'*100)
             logger.info('Final Rankings (Adaptive Weights):')
             logger.info(f'Query Features - Length: {query_length}, Diversity: {query_diversity:.2f}')
@@ -439,11 +456,13 @@ if __name__ == "__main__":
             else:
                 logger.info(f"沒有自定義字典，只載入原始字典")
 
+    # 初始化文本處理器
     processor = TextProcessor('./custom_dicts/stopwords.txt')
 
     logger.info(f'BM25_K1: {BM25_K1}')
     logger.info(f'BM25_B: {BM25_B}')
 
+    # 讀取問題文件
     with open(args.question_path, 'rb') as f:
         qs_ref = json.load(f)  # 讀取問題檔案
 
@@ -456,10 +475,12 @@ if __name__ == "__main__":
     corpus_dict_finance = load_data(source_path_finance)
     """
 
+    # 讀取FAQ映射文件
     with open(os.path.join(args.source_path, 'faq/pid_map_content.json'), 'rb') as f_s:
         key_to_source_dict = json.load(f_s)  # 讀取參考資料文件
         key_to_source_dict = {int(key): value for key, value in key_to_source_dict.items()}
 
+    # 處理每個問題
     for q_dict in tqdm((q for q in qs_ref['questions'] if q['qid']-1 in RANGE), total=len(RANGE), desc="Processing questions"):
         logger.info(f'{"="*65} QID: {q_dict["qid"]} {"="*65}')
         if q_dict['category'] == 'finance':
