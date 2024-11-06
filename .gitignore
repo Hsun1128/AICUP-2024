@@ -1,5 +1,8 @@
 競賽資料集/*
 word2vec/wiki.zh.bin.vectors.npy
 word2vec/wiki.zh.vec
-*.npy
-*.vec
+word2vec/wiki.zh.bin
+word2vec/model.bin.syn1neg.npy
+word2vec/model.bin.wv.vectors.npy
+*npy
+*vec
