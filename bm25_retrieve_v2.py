@@ -333,9 +333,9 @@ class TextProcessor:
             # 根據查詢特徵動態調整權重
             base_weights = {
                 'bm25': 0.2,
-                'faiss': 0.2,
-                'importance': 0.15,
-                'semantic': 0.15,
+                'faiss': 0.3,
+                'importance': 0.10,
+                'semantic': 0.10,
                 'coverage': 0.1,
                 'position': 0.1,
                 'density': 0.05,
