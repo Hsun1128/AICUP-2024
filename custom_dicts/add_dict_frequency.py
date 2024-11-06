@@ -5,8 +5,8 @@ default_frequency = 500
 
 # 讀取load_path中的所有.txt文件，為每個詞添加詞頻
 current_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory of the current script
-load_path = os.path.join(current_dir,'./custom_dicts/origin_dict')
-save_path = os.path.join(current_dir,'./custom_dicts/with_frequency')
+load_path = os.path.join(current_dir,'./origin_dict')
+save_path = os.path.join(current_dir,'./with_frequency')
 
 # 確保保存的目錄存在
 os.makedirs(save_path, exist_ok=True)

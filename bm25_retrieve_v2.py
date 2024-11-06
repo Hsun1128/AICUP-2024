@@ -7,9 +7,11 @@ import concurrent.futures
 from typing import List, Set
 from collections import Counter
 import logging
+
+from env import load_env
+
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-
 from tqdm import tqdm
 import jieba  # 用於中文文本分詞
 import pdfplumber  # 用於從PDF文件中提取文字的工具
@@ -25,11 +27,13 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 logging.basicConfig(level=logging.INFO, filename='retrieve.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
+load_env()
+
 # 設置全局參數
 RANGE = range(0, 150)
 
 USE_EXPANSION = 0
-EXPANSION_MODEL_PATH = '../word2vec/wiki.zh.bin'
+EXPANSION_MODEL_PATH = './word2vec/wiki.zh.bin'
 EXPANDED_TOPN = 2
 
 USE_FAISS = 1
@@ -63,10 +67,11 @@ splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=O
 # 讀取單個PDF文件並返回其文本內容
 def read_pdf(pdf_loc, splitter=splitter, page_infos: list=None):
     #pdf = pdfplumber.open(pdf_loc)  # 打開指定的PDF文件
-    pdf_text = PDFPlumberLoader(pdf_loc, extract_images = True).load()
+    pdf_text = PDFPlumberLoader(pdf_loc).load()
     for doc in pdf_text:
         # 清理內容
         clean_content = re.sub(r'(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])', '', doc.page_content).replace('\n', '').strip()
+        clean_content = re.sub(r'([^\d\W_])\1+', r'\1', doc.page_content)
         doc.page_content = clean_content
     pdf_text = splitter.split_documents(pdf_text)
     """
@@ -405,8 +410,8 @@ if __name__ == "__main__":
     parser.add_argument('--question_path', type=str, required=True, help='讀取發布題目路徑')  # 問題文件的路徑
     parser.add_argument('--source_path', type=str, required=True, help='讀取參考資料路徑')  # 參考資料的路徑
     parser.add_argument('--output_path', type=str, required=True, help='輸出符合參賽格式的答案路徑')  # 答案輸出的路徑
-    parser.add_argument('--load_path', type=str, default="../custom_dicts/with_frequency", help='自定義字典的路徑（可選）')  # 自定義字典的路徑
-    parser.add_argument('--zhTW_dict_path', type=str, default="../custom_dicts/dict.txt.big", help='繁中字典的路徑（可選）')  # 繁中字典的路徑
+    parser.add_argument('--load_path', type=str, default="./custom_dicts/with_frequency", help='自定義字典的路徑（可選）')  # 自定義字典的路徑
+    parser.add_argument('--zhTW_dict_path', type=str, default="./custom_dicts/dict.txt.big", help='繁中字典的路徑（可選）')  # 繁中字典的路徑
 
     args = parser.parse_args()  # 解析參數
 
@@ -425,7 +430,7 @@ if __name__ == "__main__":
             else:
                 logger.info(f"沒有自定義字典，只載入原始字典")
 
-    processor = TextProcessor('../custom_dicts/stopwords.txt')
+    processor = TextProcessor('./custom_dicts/stopwords.txt')
 
     logger.info(f'BM25_K1: {BM25_K1}')
     logger.info(f'BM25_B: {BM25_B}')
