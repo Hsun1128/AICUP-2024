@@ -1,0 +1,6 @@
+2024-11-04 16:40:39,266:Building prefix dict from /home/s1136102/python/AICUP/custom_dicts/dict.txt.big ...
+2024-11-04 16:40:39,266:Loading model from cache /tmp/jieba.ua6683cd5b6b7d5b3ab16049ce5b543c6.cache
+2024-11-04 16:40:40,481:Loading model cost 1.215 seconds.
+2024-11-04 16:40:40,481:Prefix dict has been built successfully.
+2024-11-04 16:40:40,483:載入自定義字典: /home/s1136102/python/AICUP/word2vec/../custom_dicts/with_frequency/common_use_dict_with_frequency.txt
+2024-11-04 16:40:40,487:載入自定義字典: /home/s1136102/python/AICUP/word2vec/../custom_dicts/with_frequency/insurance_dict_with_frequency.txt
