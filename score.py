@@ -49,6 +49,9 @@ def main(ground_truth_file_path, prediction_file_path):
         logger.info(f"預測值: {wrong['predicted']}")
         logger.info(f"正確答案: {wrong['correct']}")
         logger.info("-" * 50)
+    logger.info('end\n')
+    print(f"Total Score: {score}")
+    print(f"Average Score: {average_score:.2f}")
 
 if __name__ == "__main__":
     # Get the directory of the current script
@@ -59,5 +62,3 @@ if __name__ == "__main__":
     prediction_file = os.path.join(current_dir, '競賽資料集/dataset/preliminary/pred_retrieve.json')
 
     main(ground_truth_file, prediction_file)
-
-    logger.info('end\n')

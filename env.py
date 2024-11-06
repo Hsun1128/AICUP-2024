@@ -10,14 +10,13 @@ def load_env(start_path=None):
     # 查找 .env 文件直到達到根目錄
     current_path = start_path
     while current_path != current_path.root:
-        env_file = currnet_path / '.env'
+        env_file = current_path / '.env'
         if env_file.exists():
             print(f'Found .env at: {env_file}')
             load_dotenv(env_file)
             return True
+        current_path = current_path.parent
 
-         current_path = current_path.parent
-
-     # 如果找不到 .env 文件，返回 False
-     print('.env file not found.')
-     return False
+    # 如果找不到 .env 文件，返回 False
+    print('.env file not found.')
+    return False
