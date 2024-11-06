@@ -1,2 +1,4 @@
 競賽資料集/*word2vec/wiki.zh.bin.vectors.npy
 word2vec/wiki.zh.vec
+*.npy
+*.vec

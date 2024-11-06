@@ -1,5 +1,0 @@
-pdfplumber
-tqdm
-rank_bm25
-jieba
-pytesseract
