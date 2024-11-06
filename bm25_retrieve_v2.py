@@ -71,7 +71,11 @@ def read_pdf(pdf_loc, splitter=splitter, page_infos: list=None):
     for doc in pdf_text:
         # 清理內容
         clean_content = re.sub(r'(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])', '', doc.page_content).replace('\n', '').strip()
-        clean_content = re.sub(r'([^\d\W_])\1+', r'\1', doc.page_content)
+        clean_content = re.sub(r'\b[0-9, \(\)\$\u4e00-\u9fff]{20,}\b', '', clean_content)
+        clean_content = re.sub(r'([,、\$]){3,}', '', clean_content)
+        clean_content = re.sub(r'([\u4e00-\u9fff])\1+', r'\1', clean_content)
+        clean_content = re.sub(r'-\s*\d+\s*-', '', clean_content)
+        clean_content = re.sub(r'第\s*\d+\s*頁，\s*共\s*\d+\s*頁', '', clean_content)
         doc.page_content = clean_content
     pdf_text = splitter.split_documents(pdf_text)
     """
@@ -150,11 +154,16 @@ class TextProcessor:
         for file_key in source:
             corpus = corpus_dict[int(file_key)]
             for idx, chunk in enumerate(corpus):
+                print('-'*100)
                 key_idx_map.append((file_key, idx))
                 try:    
                     chunked_corpus.append(chunk.page_content)
+                    print(chunk)
+                    input(...)
                 except:
                     chunked_corpus.append(corpus)
+                    print(corpus)
+                    input(...)
                     break
                 
         # 分詞並建立 BM25 模型
