@@ -11,7 +11,7 @@ import logging
 
 # 導入自定義環境設定
 from utils.env import load_env
-from utils.processor import TextProcessor, TextProcessorConfig
+from utils.RAGProcessor import Retrieval, TextProcessorConfig
 
 # 導入數據處理相關套件
 import numpy as np
@@ -1422,7 +1422,7 @@ if __name__ == "__main__":
                 logger.info(f"沒有自定義字典，只載入原始字典")
 
     # 初始化文本處理器
-    processor = TextProcessor()
+    retrieval = Retrieval()
 
     logger.info(f'BM25_K1: {BM25_K1}')
     logger.info(f'BM25_B: {BM25_B}')
@@ -1452,19 +1452,19 @@ if __name__ == "__main__":
             source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
             corpus_dict_finance = load_data(source_path_finance, q_dict['source'])
             # 進行檢索
-            retrieved = processor.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_finance)
+            retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_finance)
             # 將結果加入字典
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
         elif q_dict['category'] == 'insurance':
             source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定考資料路徑
             corpus_dict_insurance = load_data(source_path_insurance, q_dict['source'])
-            retrieved = processor.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_insurance)
+            retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_insurance)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
         elif q_dict['category'] == 'faq':
             corpus_dict_faq = {key: str(value) for key, value in key_to_source_dict.items() if key in q_dict['source']}
-            retrieved = processor.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_faq)
+            retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_faq)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
         else:

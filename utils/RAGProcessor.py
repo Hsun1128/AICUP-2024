@@ -17,7 +17,7 @@ import logging
 logging.basicConfig(level=logging.INFO, filename='retrieve.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 logger = logging.getLogger(__name__)
 
-class TextProcessor:
+class Retrieval:
     """
     文本處理器主類，負責文本處理的核心功能
     """
@@ -60,7 +60,7 @@ class TextProcessor:
             separators=['\n\n', '\n', '!', '?', '。', ';']
         )
         # 初始化文檔評分計算器
-        self.score_calculator = DocumentScoreCalculator(word2vec_model=self.word2vec_model)
+        self.score_calculator = DocumentScoreCalculator(word2vec_model=self.word2vec_model, embedding_model=self.embeddings)
 
         # 初始化文檔處理器
         self.doc_processor = DocumentProcessor(word2vec_model=self.word2vec_model, score_calculator=self.score_calculator)
