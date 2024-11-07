@@ -11,7 +11,7 @@ import logging
 
 # 導入自定義環境設定
 from utils.env import load_env
-#from utils.text_processor import TextProcessor
+from utils.text_processor import TextProcessor
 
 # 導入數據處理相關套件
 import numpy as np
@@ -39,6 +39,7 @@ load_env()
 # 設置全局參數
 RANGE = range(0, 150)  # 處理問題的範圍
 
+STOPWORDS_FILEPATH = './custom_dicts/stopwords.txt'  # 停用詞文件路徑
 USE_EXPANSION = 0  # 是否使用查詢擴展
 EXPANSION_MODEL_PATH = './word2vec/wiki.zh.bin'  # word2vec模型路徑
 EXPANDED_TOPN = 2  # 查詢擴展時每個詞的相似詞數量
@@ -133,8 +134,8 @@ def read_pdf(pdf_loc: str, splitter: RecursiveCharacterTextSplitter=splitter, pa
     """
     return pdf_text  # 返回萃取出的文本
 
-class TextProcessor:
-    def __init__(self, stopwords_filepath: str, bm25_k1: float=BM25_K1, bm25_b: float=BM25_B, use_expansion: bool=USE_EXPANSION, expanded_topn: int=EXPANDED_TOPN, chunk_size: int=CHUNK_SIZE, overlap: int=OVERLAP, expansion_model_path: str=EXPANSION_MODEL_PATH, use_faiss: bool=USE_FAISS):
+#class TextProcessor:
+    def __init__(self, stopwords_filepath: str=STOPWORDS_FILEPATH, bm25_k1: float=BM25_K1, bm25_b: float=BM25_B, use_expansion: bool=USE_EXPANSION, expanded_topn: int=EXPANDED_TOPN, chunk_size: int=CHUNK_SIZE, overlap: int=OVERLAP, expansion_model_path: str=EXPANSION_MODEL_PATH, use_faiss: bool=USE_FAISS):
         """
         初始化文本處理器
         
@@ -1421,7 +1422,7 @@ if __name__ == "__main__":
                 logger.info(f"沒有自定義字典，只載入原始字典")
 
     # 初始化文本處理器
-    processor = TextProcessor('./custom_dicts/stopwords.txt')
+    processor = TextProcessor()
 
     logger.info(f'BM25_K1: {BM25_K1}')
     logger.info(f'BM25_B: {BM25_B}')
