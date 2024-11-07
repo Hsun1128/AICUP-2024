@@ -11,7 +11,7 @@ import logging
 
 # 導入自定義環境設定
 from utils.env import load_env
-from utils.text_processor import TextProcessor
+from utils.processor import TextProcessor, TextProcessorConfig
 
 # 導入數據處理相關套件
 import numpy as np
