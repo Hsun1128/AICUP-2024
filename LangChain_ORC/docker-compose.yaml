@@ -1,0 +1,15 @@
+services:
+  langchain_ocr:
+    image: esun/ocr
+    container_name: langchain_ocr
+    volumes:
+      - .:/app/ocr
+      - ../CompetitionDataset:/app/CompetitionDataset
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: ["tail", "-f", "/dev/null"]
