@@ -3,9 +3,9 @@ from typing import List, Optional
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain.document_loaders import PDFPlumberLoader
-from utils.rag_processor.config import TextProcessorConfig
+from utils.rag_processor.config import RAGProcessorConfig
 
-def read_pdf(pdf_loc: str, config: TextProcessorConfig, page_infos: Optional[List[int]]=None) -> List[Document]:
+def read_pdf(pdf_loc: str, config: RAGProcessorConfig, page_infos: Optional[List[int]]=None) -> List[Document]:
     """
     讀取PDF文件並進行文本處理
     
