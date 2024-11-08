@@ -9,5 +9,5 @@ langchain-community
 langchain-huggingface
 langchain-text-splitters
 numpy
-sklearn
-dotenv
+scikit-learn
+python-dotenv
