@@ -10,7 +10,7 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.vectorstores import FAISS
 from sklearn.metrics.pairwise import cosine_similarity
 
-from .text_processor import TextProcessorConfig, ResourceLoader, QueryProcessor, DocumentScoreCalculator, DocumentProcessor
+from .rag_processor import RAGProcessorConfig, ResourceLoader, QueryProcessor, DocumentProcessor
 import logging
 
 # 設定日誌記錄
@@ -21,7 +21,7 @@ class Retrieval:
     """
     文本處理器主類，負責文本處理的核心功能
     """
-    def __init__(self, config: TextProcessorConfig = TextProcessorConfig()):
+    def __init__(self, config: RAGProcessorConfig = RAGProcessorConfig()):
         """
         初始化文本處理器
         

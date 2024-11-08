@@ -31,7 +31,7 @@ DEFAULT_CONFIG = {
 }
 
 @dataclass
-class TextProcessorConfig:
+class RAGProcessorConfig:
     """
     文本處理器的配置類，用於集中管理所有配置參數
     此類可在主程式中實例化並傳入TextProcessor，方便統一管理和修改配置
@@ -83,7 +83,7 @@ class TextProcessorConfig:
 
 
     @classmethod
-    def from_yaml(cls, yaml_path: str) -> 'TextProcessorConfig':
+    def from_yaml(cls, yaml_path: str) -> 'RAGProcessorConfig':
         """
         從YAML文件加載配置
         
@@ -91,7 +91,7 @@ class TextProcessorConfig:
             yaml_path (str): YAML配置文件路徑
             
         Returns:
-            TextProcessorConfig: 配置實例
+            RAGProcessorConfig: 配置實例
             
         Example:
             config.yaml:
@@ -131,7 +131,7 @@ class TextProcessorConfig:
             yaml.dump(asdict(self), f, allow_unicode=True, sort_keys=False)
 
 if __name__ == '__main__':
-    config = TextProcessorConfig()
+    config = RAGProcessorConfig()
     config.to_yaml('./config.yaml')
     print(config)
 

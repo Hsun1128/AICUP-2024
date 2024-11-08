@@ -2,7 +2,7 @@ import logging
 from typing import List, Set, Tuple
 import numpy as np
 from collections import Counter
-from utils.text_processor.retrieval_system import RetrievalSystem
+from utils.rag_processor.retrieval_system import RetrievalSystem
 from gensim.models import KeyedVectors
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 

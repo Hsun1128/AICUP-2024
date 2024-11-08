@@ -3,7 +3,7 @@ from typing import List, Set, Tuple, Optional, Dict
 import numpy as np
 from collections import Counter
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from utils.text_processor.document_score_calculator import DocumentScoreCalculator
+from utils.rag_processor.document_score_calculator import DocumentScoreCalculator
 logger = logging.getLogger(__name__)
 
 class DocumentProcessor:
