@@ -1,6 +1,8 @@
+from typing import Optional
 import logging
 from gensim.models import KeyedVectors
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+import torch
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +37,7 @@ class ResourceLoader:
         return stopwords
 
     @staticmethod
-    def load_word2vec_model(model_path: str):
+    def load_word2vec_model(model_path: str) -> Optional[KeyedVectors]:
         """
         加載word2vec模型
         
@@ -53,7 +55,7 @@ class ResourceLoader:
         return model
         
     @staticmethod
-    def load_embeddings(use_faiss: bool):
+    def load_embeddings(embedding_model_name: str, use_faiss: bool) -> Optional[HuggingFaceBgeEmbeddings]:
         """
         加載FAISS使用的詞嵌入模型
         
@@ -64,9 +66,11 @@ class ResourceLoader:
             Optional[HuggingFaceBgeEmbeddings]: 詞嵌入模型實例或None
         """
         if use_faiss:
+            device = 'cuda' if torch.cuda.is_available() else 'cpu'
+            logger.info(f'Using device: {device}')
             return HuggingFaceBgeEmbeddings(
-                model_name='BAAI/bge-m3',
-                model_kwargs={'device': 'cuda'},
+                model_name=embedding_model_name,
+                model_kwargs={'device': device},
                 encode_kwargs={'normalize_embeddings': True}
             )
         return None
