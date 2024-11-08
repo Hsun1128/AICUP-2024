@@ -7,3 +7,4 @@ word2vec/model.bin.wv.vectors.npy
 *npy
 *vec
 CompetitionDataset/
+*.pyc
