@@ -95,7 +95,7 @@ if __name__ == "__main__":
         logger.info(f'{"="*65} QID: {q_dict["qid"]} {"="*65}')
         if q_dict['category'] == 'finance':
             source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
-            corpus_dict_finance = DocumentLoader.load_data(source_path_finance, q_dict['source'], config)
+            corpus_dict_finance = DocumentLoader.auto_load_data(source_path_finance, q_dict['source'], config)
             # 進行檢索
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_finance)
             # 將結果加入字典
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
         elif q_dict['category'] == 'insurance':
             source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定考資料路徑
-            corpus_dict_insurance = DocumentLoader.load_data(source_path_insurance, q_dict['source'], config)
+            corpus_dict_insurance = DocumentLoader.auto_load_data(source_path_insurance, q_dict['source'], config)
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_insurance)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
