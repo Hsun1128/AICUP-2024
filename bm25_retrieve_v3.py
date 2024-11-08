@@ -97,10 +97,7 @@ if __name__ == "__main__":
         logger.info(f'{"="*65} QID: {q_dict["qid"]} {"="*65}')
         if q_dict['category'] == 'finance':
             source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
-            if args.source_type == 'pdf':
-                corpus_dict_finance = DocumentLoader.load_data(source_path_finance, q_dict['source'], config)
-            elif args.source_type == 'json':
-                corpus_dict_finance = DocumentLoader.load_json_data(source_path_finance, q_dict['source'])
+            corpus_dict_finance = DocumentLoader.load_data(source_path_finance, q_dict['source'], config, args.source_type)
             # 進行檢索
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_finance)
             # 將結果加入字典
@@ -108,18 +105,16 @@ if __name__ == "__main__":
 
         elif q_dict['category'] == 'insurance':
             source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定考資料路徑
-            if args.source_type == 'pdf':
-                corpus_dict_insurance = DocumentLoader.load_data(source_path_insurance, q_dict['source'], config)
-            elif args.source_type == 'json':
-                corpus_dict_insurance = DocumentLoader.load_json_data(source_path_insurance, q_dict['source'])
+            corpus_dict_insurance = DocumentLoader.load_data(source_path_insurance, q_dict['source'], config, args.source_type)
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_insurance)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
         elif q_dict['category'] == 'faq':
             if args.source_type == 'pdf':
                 corpus_dict_faq = {key: str(value) for key, value in key_to_source_dict.items() if key in q_dict['source']}
-            elif args.source_type == 'json':
-                corpus_dict_faq = DocumentLoader.load_json_data(source_path_insurance, q_dict['source'])
+            else:
+                source_path_faq = os.path.join(args.source_path, 'faq')
+                corpus_dict_faq = DocumentLoader.load_data(source_path_faq, q_dict['source'], config, args.source_type)
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_faq)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
