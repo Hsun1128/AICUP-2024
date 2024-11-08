@@ -24,11 +24,12 @@ class Retrieval:
     def __init__(self, config: RAGProcessorConfig = RAGProcessorConfig()):
         """
         初始化文本處理器
-        
+
         Args:
-            config (TextProcessorConfig): 配置對象，包含所有必要的參數設置
+            config (RAGProcessorConfig): 配置對象，包含所有必要的參數設置
         """
         # 保存配置參數
+        self.config = config
         self.bm25_k1 = config.bm25_k1
         self.bm25_b = config.bm25_b
         self.chunk_size = config.chunk_size
@@ -69,7 +70,7 @@ class Retrieval:
         使用BM25算法進行文檔檢索，並結合多個評分指標進行排序
         """
         # 1. 文檔預處理
-        chunked_corpus, key_idx_map = self._prepare_corpus(source, corpus_dict)
+        chunked_corpus, key_idx_map = self.doc_processor.prepare_corpus(source, corpus_dict)
         
         # 2. BM25基礎檢索
         bm25_results = self._process_and_score_bm25(chunked_corpus, qs)
@@ -80,7 +81,7 @@ class Retrieval:
         tokenized_corpus = bm25_results['tokenized_corpus']
         
         # 3. 特徵計算
-        feature_results = self._analyze_query_features(tokenized_query, expanded_query, tokenized_corpus)
+        feature_results = self.query_processor._analyze_query_features(tokenized_query, expanded_query, tokenized_corpus)
         doc_freq = feature_results['doc_freq']
         query_vector = feature_results['query_vector']
         query_length = feature_results['query_length']
@@ -101,77 +102,8 @@ class Retrieval:
             score_results, query_length, query_diversity
         )
 
-    def _calculate_doc_frequencies(self, tokenized_corpus: List[List[str]]) -> Counter[str]:
-        """
-        計算文檔頻率(每個詞出現在多少文檔中)
-
-        Args:
-            tokenized_corpus (List[List[str]]): 分詞後的文檔集合，每個文檔是一個詞列表
-                例如: [["台灣", "總統府"], ["台北", "101"]]
-
-        Returns:
-            Counter[str]: 包含每個詞的文檔頻率的Counter對象
-                例如: Counter({"台灣": 1, "總統府": 1, "台北": 1, "101": 1})
-
-        Example:
-            >>> processor = TextProcessor()
-            >>> corpus = [["台灣", "總統府"], ["台北", "101"]]
-            >>> doc_freq = processor._calculate_doc_frequencies(corpus)
-            >>> print(doc_freq)
-            Counter({"台灣": 1, "總統府": 1, "台北": 1, "101": 1})
-
-        Notes:
-            - 對每個文檔中的詞進行去重，確保每個詞在一個文檔中只被計算一次
-            - 使用Counter累加每個詞在不同文檔中的出現次數
-            - 返回的Counter對象可用於計算IDF值和其他相關指標
-        """
-        doc_freq = Counter()
-        for doc in tokenized_corpus:
-            # 對每個文檔中的詞進行去重
-            doc_freq.update(set(doc))
-        return doc_freq
-
-    def _calculate_query_vector(self, tokenized_query: Set[str], tokenized_corpus: List[List[str]], doc_freq: Counter[str]) -> np.ndarray:
-        """
-        計算查詢向量，使用word2vec加權平均
-
-        Args:
-            tokenized_query (Set[str]): 分詞後的查詢詞集合，例如 {"台灣", "總統府"}
-            tokenized_corpus (List[List[str]]): 分詞後的文檔集合，例如 [["台灣", "總統府"], ["台北", "101"]]
-            doc_freq (Counter[str]): 詞頻統計字典，例如 Counter({"台灣": 2, "總統府": 1})
-
-        Returns:
-            np.ndarray: 查詢向量，使用word2vec加權平均計算得到，例如 array([0.2, 0.3, 0.1,...])
-            
-        Example:
-            >>> processor = TextProcessor()
-            >>> query = {"台灣", "總統府"}
-            >>> corpus = [["台灣", "總統府"], ["台北", "101"]]
-            >>> doc_freq = Counter({"台灣": 2, "總統府": 1})
-            >>> vector = processor._calculate_query_vector(query, corpus, doc_freq)
-            >>> print(vector.shape)
-            (300,)
-            
-        Notes:
-            - 使用IDF作為權重計算查詢向量
-            - 對於不在word2vec模型中的詞會被忽略
-            - 如果沒有任何詞的權重，返回零向量
-        """
-        query_vector: np.ndarray = np.zeros(self.word2vec_model.vector_size)
-        total_weight: float = 0.0
-        
-        for word in tokenized_query:
-            if word in self.word2vec_model:
-                # 使用IDF作為權重
-                weight: float = np.log(len(tokenized_corpus) / (doc_freq[word] + 1))
-                query_vector += weight * self.word2vec_model[word]
-                total_weight += weight
-                
-        if total_weight > 0:
-            query_vector /= total_weight
-            
-        return query_vector
-
+    
+    
     def _calculate_weighted_scores(self, bm25_results: Dict[Tuple[int, int], float], 
                                  faiss_results: Dict[Tuple[int, int], float],
                                  term_importance: Dict[Tuple[int, int], float], 
@@ -440,32 +372,6 @@ class Retrieval:
                       
         return faiss_results
     
-    
-    def _calculate_query_features(self, tokenized_query: Set[str], expanded_query: Set[str]) -> Tuple[int, float]:
-        """
-        計算查詢的複雜度特徵
-        
-        Args:
-            tokenized_query (Set[str]): 分詞後的原始查詢詞集合，例如 {"台灣", "總統府", "哪裡"}
-            expanded_query (Set[str]): 擴展後的查詢詞集合，例如 {"台灣", "總統府", "哪裡", "中華民國", "政府", "位置"}
-            
-        Returns:
-            Tuple[int, float]:
-                - query_length (int): 原始查詢的詞數量，例如 3 (對應上述例子)
-                - query_diversity (float): 查詢擴展的多樣性,計算為擴展詞數量與原始詞數量的比值，例如 2.0 (6/3)
-                
-        Example:
-            >>> processor = TextProcessor(...)
-            >>> tokenized = {"台灣", "總統府", "哪裡"}
-            >>> expanded = {"台灣", "總統府", "哪裡", "中華民國", "政府", "位置"}
-            >>> length, diversity = processor._calculate_query_features(tokenized, expanded)
-            >>> print(length, diversity)
-            3 2.0
-        """
-        query_length = len(tokenized_query)  # 查詢長度
-        query_diversity = len(expanded_query) / (len(tokenized_query) + 1)  # 查詢擴展的多樣性
-        return query_length, query_diversity
-    
     def _calculate_retrieval_scores(self, ans: List[str], chunked_corpus: List[str], 
                                   key_idx_map: List[Tuple[int, int]], tokenized_corpus: List[List[str]],
                                   scores: List[float], expanded_query: Set[str], 
@@ -585,49 +491,7 @@ class Retrieval:
         # 如果沒有找���任何結果，返回None
         return None
    
-    def _analyze_query_features(self, tokenized_query: List[str], expanded_query: Set[str], 
-                              tokenized_corpus: List[List[str]]) -> Dict[str, Any]:
-        """
-        分析查詢特徵，包括文檔頻率、查詢向量和查詢特徵
-        
-        Args:
-            tokenized_query (List[str]): 分詞後的原始查詢，例如 ["台灣", "總統府"]
-            expanded_query (Set[str]): 擴展後的查詢，例如 {"台灣", "總統府", "政府"} 
-            tokenized_corpus (List[List[str]]): 分詞後的文檔列表，例如 [["台灣", "總統府"], ["政府", "機關"]]
-            
-        Returns:
-            Dict[str, Any]: 包含以下鍵值的字典:
-                - doc_freq (Counter[str]): 文檔頻率字典，例如 Counter({"台灣": 2, "總統府": 1})
-                - query_vector (np.ndarray): 查詢向量，例如 array([0.2, 0.3, 0.1])
-                - query_length (int): 查詢長度，例如 2
-                - query_diversity (float): 查詢多樣性分數，例如 0.8
-                
-        Example:
-            >>> processor = TextProcessor()
-            >>> result = processor._analyze_query_features(
-            ...     ["台灣", "總統府"],
-            ...     {"台灣", "總統府", "政府"},
-            ...     [["台灣", "總統府"], ["政府", "機關"]]
-            ... )
-            >>> print(result)
-            {
-                'doc_freq': Counter({"台灣": 2, "總統府": 1}),
-                'query_vector': array([0.2, 0.3, 0.1]),
-                'query_length': 2,
-                'query_diversity': 0.8
-            }
-        """
-        doc_freq = self._calculate_doc_frequencies(tokenized_corpus)
-        query_vector = self._calculate_query_vector(tokenized_query, tokenized_corpus, doc_freq)
-        query_length, query_diversity = self._calculate_query_features(tokenized_query, expanded_query)
-        
-        return {
-            'doc_freq': doc_freq,
-            'query_vector': query_vector,
-            'query_length': query_length,
-            'query_diversity': query_diversity
-        }
-
+    
     def _integrate_results(self, query: str, chunked_corpus: List[str], key_idx_map: List[Tuple[int, int]],
                           retrieved_keys: List[Tuple[int, int]], score_results: Dict[str, Dict[Tuple[int, int], float]], 
                           query_length: int, query_diversity: float) -> Optional[Tuple[int, int]]:
@@ -751,51 +615,3 @@ class Retrieval:
             results['context_similarity'][chunk_key] = scores['context_similarity']
             
         return results
-
-    def _prepare_corpus(self, source: List[int], corpus_dict: Dict[int, Union[str, List[Any]]]) -> Tuple[List[str], List[Tuple[int, int]]]:
-        """
-        準備語料庫數據，將原始文檔切分並建立索引映射
-        
-        Args:
-            source (List[int]): 來源文件ID列表，例如 [1, 2, 3]
-            corpus_dict (Dict[int, Union[str, List[Any]]]): 語料庫字典，key為文件ID，value為文件內容或Document列表
-                例如 {1: "文件1內容", 2: [Document對象1, Document對象2]}
-            
-        Returns:
-            Tuple[List[str], List[Tuple[int, int]]]: 包含以下兩個元素:
-                - chunked_corpus (List[str]): 切分後的文本片段列表，例如 ["片段1", "片段2"]
-                - key_idx_map (List[Tuple[int, int]]): 每個文本片段對應的(file_key, chunk_index)列表
-                    例如 [(1, 0), (1, 1), (2, 0)]
-                    
-        Example:
-            >>> processor = TextProcessor()
-            >>> source = [1, 2]
-            >>> corpus_dict = {
-            ...     1: "文件1內容",
-            ...     2: [Document(page_content="片段1"), Document(page_content="片段2")]
-            ... }
-            >>> chunked, key_map = processor._prepare_corpus(source, corpus_dict)
-            >>> print(chunked)
-            ["文件1內容", "片段1", "片段2"]
-            >>> print(key_map)
-            [(1, 0), (2, 0), (2, 1)]
-        """
-        chunked_corpus: List[str] = []  # 存儲所有切分後的文本片段
-        key_idx_map: List[Tuple[int, int]] = []  # 存儲每個文本片段對應的(file_key, chunk_index)
-        
-        # 遍歷每個來源文件ID
-        for file_key in source:
-            # 獲取對應文件的內容
-            corpus = corpus_dict[int(file_key)]
-            # 對每個文件內容進行切分
-            for idx, chunk in enumerate(corpus):
-                key_idx_map.append((file_key, idx))
-                try:    
-                    # 如果是Document對象,取其page_content屬性
-                    chunked_corpus.append(chunk.page_content)
-                except AttributeError:
-                    # 如果不是Document對象,直接添加文本內容
-                    chunked_corpus.append(corpus)
-                    break
-                    
-        return chunked_corpus, key_idx_map

@@ -1,5 +1,6 @@
 import logging
-from typing import List, Set, Tuple
+from typing import List, Set, Tuple, Counter, Any, Dict
+import numpy as np
 import jieba
 from gensim.models import KeyedVectors
 
@@ -53,7 +54,7 @@ class QueryProcessor:
         tokenized_query = set(self.jieba_cut_with_stopwords(query))
         
         # 使用word2vec進行查詢擴展
-        expanded_query = self.expand_query(tokenized_query)
+        expanded_query = self._expand_query(tokenized_query)
 
         # 記錄查詢相關信息
         logger.info(f'query分詞結果: {"/".join(tokenized_query)}')
@@ -62,7 +63,7 @@ class QueryProcessor:
         
         return tokenized_query, expanded_query
 
-    def expand_query(self, tokenized_query: Set[str]) -> Set[str]:
+    def _expand_query(self, tokenized_query: Set[str]) -> Set[str]:
         """
         對輸入的分詞後查詢進行擴展，增加相似詞以提高召回率
         
@@ -95,5 +96,147 @@ class QueryProcessor:
         """
         words = jieba.cut_for_search(text)
         return [word for word in words if word not in self.stopwords and word.strip()]
+    
+    def _analyze_query_features(self, tokenized_query: List[str], expanded_query: Set[str], 
+                              tokenized_corpus: List[List[str]]) -> Dict[str, Any]:
+        """
+        分析查詢特徵，包括文檔頻率、查詢向量和查詢特徵
+        
+        Args:
+            tokenized_query (List[str]): 分詞後的原始查詢，例如 ["台灣", "總統府"]
+            expanded_query (Set[str]): 擴展後的查詢，例如 {"台灣", "總統府", "政府"} 
+            tokenized_corpus (List[List[str]]): 分詞後的文檔列表，例如 [["台灣", "總統府"], ["政府", "機關"]]
+            
+        Returns:
+            Dict[str, Any]: 包含以下鍵值的字典:
+                - doc_freq (Counter[str]): 文檔頻率字典，例如 Counter({"台灣": 2, "總統府": 1})
+                - query_vector (np.ndarray): 查詢向量，例如 array([0.2, 0.3, 0.1])
+                - query_length (int): 查詢長度，例如 2
+                - query_diversity (float): 查詢多樣性分數，例如 0.8
+                
+        Example:
+            >>> processor = TextProcessor()
+            >>> result = processor._analyze_query_features(
+            ...     ["台灣", "總統府"],
+            ...     {"台灣", "總統府", "政府"},
+            ...     [["台灣", "總統府"], ["政府", "機關"]]
+            ... )
+            >>> print(result)
+            {
+                'doc_freq': Counter({"台灣": 2, "總統府": 1}),
+                'query_vector': array([0.2, 0.3, 0.1]),
+                'query_length': 2,
+                'query_diversity': 0.8
+            }
+        """
+        doc_freq = self._calculate_doc_frequencies(tokenized_corpus)
+        query_vector = self._calculate_query_vector(tokenized_query, tokenized_corpus, doc_freq)
+        query_length, query_diversity = self._calculate_query_features(tokenized_query, expanded_query)
+        
+        return {
+            'doc_freq': doc_freq,
+            'query_vector': query_vector,
+            'query_length': query_length,
+            'query_diversity': query_diversity
+        }
+
+    
+    def _calculate_doc_frequencies(self, tokenized_corpus: List[List[str]]) -> Counter[str]:
+        """
+        計算文檔頻率(每個詞出現在多少文檔中)
+
+        Args:
+            tokenized_corpus (List[List[str]]): 分詞後的文檔集合，每個文檔是一個詞列表
+                例如: [["台灣", "總統府"], ["台北", "101"]]
+
+        Returns:
+            Counter[str]: 包含每個詞的文檔頻率的Counter對象
+                例如: Counter({"台灣": 1, "總統府": 1, "台北": 1, "101": 1})
+
+        Example:
+            >>> processor = TextProcessor()
+            >>> corpus = [["台灣", "總統府"], ["台北", "101"]]
+            >>> doc_freq = processor._calculate_doc_frequencies(corpus)
+            >>> print(doc_freq)
+            Counter({"台灣": 1, "總統府": 1, "台北": 1, "101": 1})
+
+        Notes:
+            - 對每個文檔中的詞進行去重，確保每個詞在一個文檔中只被計算一次
+            - 使用Counter累加每個詞在不同文檔中的出現次數
+            - 返回的Counter對象可用於計算IDF值和其他相關指標
+        """
+        doc_freq = Counter()
+        for doc in tokenized_corpus:
+            # 對每個文檔中的詞進行去重
+            doc_freq.update(set(doc))
+        return doc_freq
+
+    def _calculate_query_vector(self, tokenized_query: Set[str], tokenized_corpus: List[List[str]], doc_freq: Counter[str]) -> np.ndarray:
+        """
+        計算查詢向量，使用word2vec加權平均
+
+        Args:
+            tokenized_query (Set[str]): 分詞後的查詢詞集合，例如 {"台灣", "總統府"}
+            tokenized_corpus (List[List[str]]): 分詞後的文檔集合，例如 [["台灣", "總統府"], ["台北", "101"]]
+            doc_freq (Counter[str]): 詞頻統計字典，例如 Counter({"台灣": 2, "總統府": 1})
+
+        Returns:
+            np.ndarray: 查詢向量，使用word2vec加權平均計算得到，例如 array([0.2, 0.3, 0.1,...])
+            
+        Example:
+            >>> processor = TextProcessor()
+            >>> query = {"台灣", "總統府"}
+            >>> corpus = [["台灣", "總統府"], ["台北", "101"]]
+            >>> doc_freq = Counter({"台灣": 2, "總統府": 1})
+            >>> vector = processor._calculate_query_vector(query, corpus, doc_freq)
+            >>> print(vector.shape)
+            (300,)
+            
+        Notes:
+            - 使用IDF作為權重計算查詢向量
+            - 對於不在word2vec模型中的詞會被忽略
+            - 如果沒有任何詞的權重，返回零向量
+        """
+        query_vector: np.ndarray = np.zeros(self.word2vec_model.vector_size)
+        total_weight: float = 0.0
+        
+        for word in tokenized_query:
+            if word in self.word2vec_model:
+                # 使用IDF作為權重
+                weight: float = np.log(len(tokenized_corpus) / (doc_freq[word] + 1))
+                query_vector += weight * self.word2vec_model[word]
+                total_weight += weight
+                
+        if total_weight > 0:
+            query_vector /= total_weight
+            
+        return query_vector
+    
+    def _calculate_query_features(self, tokenized_query: Set[str], expanded_query: Set[str]) -> Tuple[int, float]:
+        """
+        計算查詢的複雜度特徵
+        
+        Args:
+            tokenized_query (Set[str]): 分詞後的原始查詢詞集合，例如 {"台灣", "總統府", "哪裡"}
+            expanded_query (Set[str]): 擴展後的查詢詞集合，例如 {"台灣", "總統府", "哪裡", "中華民國", "政府", "位置"}
+            
+        Returns:
+            Tuple[int, float]:
+                - query_length (int): 原始查詢的詞數量，例如 3 (對應上述例子)
+                - query_diversity (float): 查詢擴展的多樣性,計算為擴展詞數量與原始詞數量的比值，例如 2.0 (6/3)
+                
+        Example:
+            >>> processor = TextProcessor(...)
+            >>> tokenized = {"台灣", "總統府", "哪裡"}
+            >>> expanded = {"台灣", "總統府", "哪裡", "中華民國", "政府", "位置"}
+            >>> length, diversity = processor._calculate_query_features(tokenized, expanded)
+            >>> print(length, diversity)
+            3 2.0
+        """
+        query_length = len(tokenized_query)  # 查詢長度
+        query_diversity = len(expanded_query) / (len(tokenized_query) + 1)  # 查詢擴展的多樣性
+        return query_length, query_diversity
+    
+
 
 __all__ = ['QueryProcessor']

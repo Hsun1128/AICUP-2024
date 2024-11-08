@@ -1,5 +1,5 @@
 import logging
-from typing import List, Set, Tuple, Optional, Dict
+from typing import List, Set, Tuple, Optional, Dict, Union, Any
 import numpy as np
 from collections import Counter
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
@@ -129,5 +129,54 @@ class DocumentProcessor:
             f'Context Similarity: {scores_dict["context_similarity"]:.4f}, '
             f'Frequency: {frequency.most_common(10)}'
         )
+
+    def prepare_corpus(self, source: List[int], corpus_dict: Dict[int, Union[str, List[Any]]]) -> Tuple[List[str], List[Tuple[int, int]]]:
+        """
+        準備語料庫數據，將原始文檔切分並建立索引映射
+        
+        Args:
+            source (List[int]): 來源文件ID列表，例如 [1, 2, 3]
+            corpus_dict (Dict[int, Union[str, List[Any]]]): 語料庫字典，key為文件ID，value為文件內容或Document列表
+                例如 {1: "文件1內容", 2: [Document對象1, Document對象2]}
+            
+        Returns:
+            Tuple[List[str], List[Tuple[int, int]]]: 包含以下兩個元素:
+                - chunked_corpus (List[str]): 切分後的文本片段列表，例如 ["片段1", "片段2"]
+                - key_idx_map (List[Tuple[int, int]]): 每個文本片段對應的(file_key, chunk_index)列表
+                    例如 [(1, 0), (1, 1), (2, 0)]
+                    
+        Example:
+            >>> processor = TextProcessor()
+            >>> source = [1, 2]
+            >>> corpus_dict = {
+            ...     1: "文件1內容",
+            ...     2: [Document(page_content="片段1"), Document(page_content="片段2")]
+            ... }
+            >>> chunked, key_map = processor._prepare_corpus(source, corpus_dict)
+            >>> print(chunked)
+            ["文件1內容", "片段1", "片段2"]
+            >>> print(key_map)
+            [(1, 0), (2, 0), (2, 1)]
+        """
+        chunked_corpus: List[str] = []  # 存儲所有切分後的文本片段
+        key_idx_map: List[Tuple[int, int]] = []  # 存儲每個文本片段對應的(file_key, chunk_index)
+        
+        # 遍歷每個來源文件ID
+        for file_key in source:
+            # 獲取對應文件的內容
+            corpus = corpus_dict[int(file_key)]
+            # 對每個文件內容進行切分
+            for idx, chunk in enumerate(corpus):
+                key_idx_map.append((file_key, idx))
+                try:    
+                    # 如果是Document對象,取其page_content屬性
+                    chunked_corpus.append(chunk.page_content)
+                except AttributeError:
+                    # 如果不是Document對象,直接添加文本內容
+                    chunked_corpus.append(corpus)
+                    break
+                    
+        return chunked_corpus, key_idx_map
+
 
 __all__ = ['DocumentProcessor']
