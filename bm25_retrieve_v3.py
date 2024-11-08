@@ -1,12 +1,7 @@
 # 導入所需的套件
 import os
-import re
 import json
 import argparse
-from concurrent.futures import ProcessPoolExecutor
-import concurrent.futures
-from typing import List, Set, Tuple, Dict, Counter, Any, Optional, Union
-from collections import Counter
 import logging
 from dataclasses import asdict
 
@@ -16,20 +11,10 @@ from utils.RAGProcessor import Retrieval, RAGProcessorConfig
 from utils.rag_processor import DocumentLoader
 
 # 導入數據處理相關套件
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
 import jieba  # 用於中文文本分詞
 import pdfplumber  # 用於從PDF文件中提取文字的工具
-from rank_bm25 import BM25Okapi  # 使用BM25演算法進行文件檢索
-from gensim.models import KeyedVectors  # 確保引入gensim
 
-# 導入LangChain相關套件
-from langchain_community.document_loaders import PDFPlumberLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from langchain_core.documents import Document
 
 # 設定日誌記錄
 logging.basicConfig(level=logging.INFO, filename='retrieve.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -45,7 +30,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some paths and files.')
     parser.add_argument('--question_path', type=str, required=True, help='讀取發布題目路徑')  # 問題文件的路徑
     parser.add_argument('--source_path', type=str, required=True, help='讀取參考資料路徑')  # 參考資料的路徑
-    parser.add_argument('--source_type', type=str, default='pdf', help='參考資料的類型（pdf, json）')  # 參考資料的類型
     parser.add_argument('--output_path', type=str, required=True, help='輸出符合參賽格式的答案路徑')  # 答案輸出的路徑
     parser.add_argument('--load_path', type=str, default="./custom_dicts/with_frequency", help='自定義字典的路徑（可選）')  # 自定義字典的路徑
     parser.add_argument('--zhTW_dict_path', type=str, default="./custom_dicts/dict.txt.big", help='繁中字典的路徑（可選）')  # 繁中字典的路徑
@@ -87,7 +71,7 @@ if __name__ == "__main__":
     """
 
     # 讀取FAQ映射文件
-    if args.source_type == 'pdf':
+    if False:
         with open(os.path.join(args.source_path, 'faq/pid_map_content.json'), 'rb') as f_s:
             key_to_source_dict = json.load(f_s)  # 讀取參考資料文件
             key_to_source_dict = {int(key): value for key, value in key_to_source_dict.items()}

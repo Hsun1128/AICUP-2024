@@ -25,3 +25,4 @@ base_weights:
   position: 0.1
   density: 0.15
   context: 0.05
+chunk_preview: true

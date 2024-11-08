@@ -69,7 +69,7 @@ class Retrieval:
         使用BM25算法進行文檔檢索
         """
         # 1. 文檔預處理
-        chunked_corpus, key_idx_map = self.doc_processor.prepare_corpus(source, corpus_dict)
+        chunked_corpus, key_idx_map = self.doc_processor.prepare_corpus(source, corpus_dict, self.config)
         
         # 2. BM25基礎檢索
         bm25_results = self.bm25_scorer.process_and_score(chunked_corpus, qs, self.query_processor)

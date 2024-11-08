@@ -40,7 +40,9 @@ DEFAULT_CONFIG = {
         'position': 0.10,
         'density': 0.15,
         'context': 0.05
-    }
+    },
+
+    'chunk_preview': False  # 是否顯示分塊預覽
 }
 
 @dataclass
@@ -117,6 +119,8 @@ class RAGProcessorConfig:
     @property
     def use_context_similarity(self) -> bool:
         return self.scoring_methods['use_context_similarity']
+    
+    chunk_preview: bool = DEFAULT_CONFIG['chunk_preview']
 
     @classmethod
     def from_yaml(cls, yaml_path: str) -> 'RAGProcessorConfig':

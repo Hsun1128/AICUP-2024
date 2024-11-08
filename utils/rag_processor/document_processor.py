@@ -4,6 +4,9 @@ import numpy as np
 from collections import Counter
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from utils.rag_processor.document_score_calculator import DocumentScoreCalculator
+from utils.rag_processor.config import RAGProcessorConfig
+import os
+
 logger = logging.getLogger(__name__)
 
 class DocumentProcessor:
@@ -130,7 +133,7 @@ class DocumentProcessor:
             f'Frequency: {frequency.most_common(10)}'
         )
 
-    def prepare_corpus(self, source: List[int], corpus_dict: Dict[int, Union[str, List[Any]]]) -> Tuple[List[str], List[Tuple[int, int]]]:
+    def prepare_corpus(self, source: List[int], corpus_dict: Dict[int, Union[str, List[Any]]], config: RAGProcessorConfig) -> Tuple[List[str], List[Tuple[int, int]]]:
         """
         準備語料庫數據，將原始文檔切分並建立索引映射
         
@@ -171,9 +174,13 @@ class DocumentProcessor:
                 try:    
                     # 如果是Document對象,取其page_content屬性
                     chunked_corpus.append(chunk.page_content)
+                    if config.chunk_preview:
+                        logger.info(f'file {file_key}, Chunk {idx}: {chunk.page_content}')
                 except AttributeError:
                     # 如果不是Document對象,直接添加文本內容
                     chunked_corpus.append(corpus)
+                    if config.chunk_preview:
+                        logger.info(f'file {file_key}, Chunk {idx}: {corpus}')
                     break
                     
         return chunked_corpus, key_idx_map

@@ -7,7 +7,6 @@ import os
 import concurrent.futures
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 import logging
-import json
 
 logger = logging.getLogger(__name__)
 class DocumentLoader:
@@ -15,22 +14,27 @@ class DocumentLoader:
     @staticmethod
     def auto_load_data(source_path: str, files_to_load: List[int], config: RAGProcessorConfig) -> Dict[int, List[Document]]:
         """
-        Load reference data from PDF files in a directory.
+        Load reference data from files in a directory, automatically detecting file type.
 
         Args:
-            source_path (str): The directory path containing PDF files.
+            source_path (str): The directory path containing the files.
             files_to_load (List[int]): List of file IDs to load.
             config (RAGProcessorConfig): Configuration object.
 
         Returns:
             Dict[int, List[Document]]: Mapping of file ID to list of Documents.
         """
-        if config.source_type == "pdf":
+        # Get first file extension to determine type
+        first_file = f"{files_to_load[0]}"
+        test_path = os.path.join(source_path, first_file)
+        
+        # Try common extensions
+        if os.path.exists(test_path + ".pdf"):
             return DocumentLoader.load_pdf_data(source_path, files_to_load, config)
-        elif config.source_type == "json":
+        elif os.path.exists(test_path + ".json"):
             return DocumentLoader.load_json_data(source_path, files_to_load, config)
         else:
-            raise ValueError(f"Unsupported source type: {config.source_type}")
+            raise ValueError(f"Could not detect supported file type in {source_path}")
 
         
     @staticmethod

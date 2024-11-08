@@ -1,12 +1,7 @@
 # 導入所需的套件
 import os
-import re
 import json
 import argparse
-from concurrent.futures import ProcessPoolExecutor
-import concurrent.futures
-from typing import List, Set, Tuple, Dict, Counter, Any, Optional, Union
-from collections import Counter
 import logging
 from dataclasses import asdict
 
@@ -16,20 +11,9 @@ from utils.RAGProcessor import Retrieval, RAGProcessorConfig
 from utils.rag_processor import DocumentLoader
 
 # 導入數據處理相關套件
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
 import jieba  # 用於中文文本分詞
 import pdfplumber  # 用於從PDF文件中提取文字的工具
-from rank_bm25 import BM25Okapi  # 使用BM25演算法進行文件檢索
-from gensim.models import KeyedVectors  # 確保引入gensim
-
-# 導入LangChain相關套件
-from langchain_community.document_loaders import PDFPlumberLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from langchain_core.documents import Document
 
 # 設定日誌記錄
 logging.basicConfig(level=logging.INFO, filename='retrieve.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
