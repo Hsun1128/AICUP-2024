@@ -1,6 +1,6 @@
 import os
 import yaml
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 
 # 設置全局參數
 RANGE = range(0, 150)  # 處理問題的範圍
@@ -9,25 +9,38 @@ RANGE = range(0, 150)  # 處理問題的範圍
 DEFAULT_CONFIG = {
     'stopwords_filepath': './custom_dicts/stopwords.txt',  # 停用詞文件路徑
     'embedding_model_name': 'BAAI/bge-m3',  # embedding模型路徑
+    'expansion_model_path': '../word2vec/wiki.zh.bin',  # word2vec模型路徑
 
     'bm25_k1': 0.5,  # BM25算法的k1參數
     'bm25_b': 0.7,  # BM25算法的b參數
     'bm25_epsilon': 0.5,  # BM25算法的epsilon參數
 
     'use_expansion': False,  # 是否使用查詢擴展
-    'expansion_model_path': '../word2vec/wiki.zh.bin',  # word2vec模型路徑
     'expanded_topn': 2,  # 查詢擴展時每個詞的相似詞數量
 
     'chunk_size': 500,  # 文本分塊大小
     'overlap': 100,  # 文本分塊重疊大小
 
-    'use_faiss': True,  # 是否使用FAISS向量檢索
-    'use_term_importance': True,  # 是否使用詞項重要性評分
-    'use_semantic_search': True,  # 是否使用語義相似度評分
-    'use_term_density': True,  # 是否使用詞密度評分
-    'use_query_coverage': True,  # 是否使用查詢覆蓋率評分
-    'use_position_score': True,  # 是否使用位置得分評分
-    'use_context_similarity': True  # 是否使用上下文相似度評分
+    'scoring_methods': {
+        'use_faiss': True,  # 是否使用FAISS向量檢索
+        'use_term_importance': True,  # 是否使用詞項重要性評分
+        'use_semantic_search': True,  # 是否使用語義相似度評分
+        'use_term_density': True,  # 是否使用詞密度評分
+        'use_query_coverage': True,  # 是否使用查詢覆蓋率評分
+        'use_position_score': True,  # 是否使用位置得分評分
+        'use_context_similarity': True,  # 是否使用上下文相似度評分
+    },
+
+    'base_weights': {
+        'bm25': 0.20,
+        'faiss': 0.30,
+        'importance': 0.00,
+        'semantic': 0.10,
+        'coverage': 0.10,
+        'position': 0.10,
+        'density': 0.15,
+        'context': 0.05
+    }
 }
 
 @dataclass
@@ -54,6 +67,7 @@ class RAGProcessorConfig:
         use_query_coverage (bool): 是否使用查詢覆蓋率評分
         use_position_score (bool): 是否使用位置得分評分
         use_context_similarity (bool): 是否使用上下文相似度評分
+        base_weights (dict): 各項評分的基礎權重設定
         
     Example:
         >>> config = TextProcessorConfig.from_yaml("config.yaml")
@@ -61,26 +75,48 @@ class RAGProcessorConfig:
     """
     stopwords_filepath: str = DEFAULT_CONFIG['stopwords_filepath']
     embedding_model_name: str = DEFAULT_CONFIG['embedding_model_name']
+    expansion_model_path: str = DEFAULT_CONFIG['expansion_model_path']
 
     bm25_k1: float = DEFAULT_CONFIG['bm25_k1']
     bm25_b: float = DEFAULT_CONFIG['bm25_b']
     bm25_epsilon: float = DEFAULT_CONFIG['bm25_epsilon']
 
     use_expansion: bool = DEFAULT_CONFIG['use_expansion']
-    expansion_model_path: str = DEFAULT_CONFIG['expansion_model_path']
     expanded_topn: int = DEFAULT_CONFIG['expanded_topn']
 
     chunk_size: int = DEFAULT_CONFIG['chunk_size']
     overlap: int = DEFAULT_CONFIG['overlap']
     
-    use_faiss: bool = DEFAULT_CONFIG['use_faiss']
-    use_term_importance: bool = DEFAULT_CONFIG['use_term_importance']
-    use_semantic_search: bool = DEFAULT_CONFIG['use_semantic_search']
-    use_term_density: bool = DEFAULT_CONFIG['use_term_density']
-    use_query_coverage: bool = DEFAULT_CONFIG['use_query_coverage']
-    use_position_score: bool = DEFAULT_CONFIG['use_position_score']
-    use_context_similarity: bool = DEFAULT_CONFIG['use_context_similarity']
+    scoring_methods: dict = field(default_factory=lambda: DEFAULT_CONFIG['scoring_methods'])
+    base_weights: dict = field(default_factory=lambda: DEFAULT_CONFIG['base_weights'])
 
+    @property
+    def use_faiss(self) -> bool:
+        return self.scoring_methods['use_faiss']
+        
+    @property
+    def use_term_importance(self) -> bool:
+        return self.scoring_methods['use_term_importance']
+        
+    @property
+    def use_semantic_search(self) -> bool:
+        return self.scoring_methods['use_semantic_search']
+        
+    @property
+    def use_term_density(self) -> bool:
+        return self.scoring_methods['use_term_density']
+        
+    @property
+    def use_query_coverage(self) -> bool:
+        return self.scoring_methods['use_query_coverage']
+        
+    @property
+    def use_position_score(self) -> bool:
+        return self.scoring_methods['use_position_score']
+        
+    @property
+    def use_context_similarity(self) -> bool:
+        return self.scoring_methods['use_context_similarity']
 
     @classmethod
     def from_yaml(cls, yaml_path: str) -> 'RAGProcessorConfig':

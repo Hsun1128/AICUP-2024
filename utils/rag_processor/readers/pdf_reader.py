@@ -2,7 +2,7 @@ import re
 from typing import List, Optional
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
-from langchain.document_loaders import PDFPlumberLoader
+from langchain_community.document_loaders import PDFPlumberLoader
 from utils.rag_processor.config import RAGProcessorConfig
 
 def read_pdf(pdf_loc: str, config: RAGProcessorConfig, page_infos: Optional[List[int]]=None) -> List[Document]:
