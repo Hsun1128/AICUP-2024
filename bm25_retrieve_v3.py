@@ -100,7 +100,7 @@ if __name__ == "__main__":
             if args.source_type == 'pdf':
                 corpus_dict_finance = DocumentLoader.load_data(source_path_finance, q_dict['source'], config)
             elif args.source_type == 'json':
-                corpus_dict_finance = DocumentLoader.load_json_data(source_path_finance, q_dict['source'])
+                corpus_dict_finance = DocumentLoader.load_json_data(source_path_finance, q_dict['source'], config)
             # 進行檢索
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_finance)
             # 將結果加入字典
@@ -111,12 +111,17 @@ if __name__ == "__main__":
             if args.source_type == 'pdf':
                 corpus_dict_insurance = DocumentLoader.load_data(source_path_insurance, q_dict['source'], config)
             elif args.source_type == 'json':
-                corpus_dict_insurance = DocumentLoader.load_json_data(source_path_insurance, q_dict['source'])
+                corpus_dict_insurance = DocumentLoader.load_json_data(source_path_insurance, q_dict['source'], config)
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_insurance)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
         elif q_dict['category'] == 'faq':
-            corpus_dict_faq = {key: str(value) for key, value in key_to_source_dict.items() if key in q_dict['source']}
+            #corpus_dict_faq = {key: str(value) for key, value in key_to_source_dict.items() if key in q_dict['source']}
+            source_path_faq = os.path.join(args.source_path, 'faq')  # 設定考資料路徑
+            if args.source_type == 'pdf':
+                corpus_dict_faq = DocumentLoader.load_data(source_path_faq, q_dict['source'], config)
+            elif args.source_type == 'json':
+                corpus_dict_faq = DocumentLoader.load_json_data(source_path_faq, q_dict['source'], config)
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_faq)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 

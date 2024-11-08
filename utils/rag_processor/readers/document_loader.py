@@ -1,10 +1,11 @@
 from langchain_core.documents import Document
 from utils.rag_processor.config import RAGProcessorConfig
 from utils.rag_processor.readers.pdf_reader import read_pdf
+from utils.rag_processor.readers.json_reader import load_single_json
 from typing import List, Dict
 import os
 import concurrent.futures
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 import logging
 import json
 
@@ -47,9 +48,9 @@ class DocumentLoader:
         return corpus_dict
     
     @staticmethod
-    def load_json_data(source_path: str, files_to_load: List[int]) -> Dict[int, List[Document]]:
+    def load_json_data(source_path: str, files_to_load: List[int], config: RAGProcessorConfig) -> Dict[int, List[Document]]:
         """
-        Load JSON data directly from JSON files in a directory.
+        Load JSON data directly from JSON files in a directory using multi-threading.
 
         Args:
             source_path (str): The directory path containing JSON files.
@@ -60,18 +61,17 @@ class DocumentLoader:
         """
         corpus_dict = {}
 
-        for file_id in files_to_load:
-            json_path = os.path.join(source_path, f"{file_id}.json")
-            try:
-                with open(json_path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    document = Document(
-                        page_content=data["contents"],  # Assumes 'contents' holds the main text
-                        metadata={"id": data["id"]}
-                    )
-                    corpus_dict[file_id] = [document]  # Wrap in a list to match load_data output
-            except Exception as e:
-                logger.error(f"Error loading JSON file {json_path}: {e}")
+        # Use ThreadPoolExecutor for I/O bound JSON loading
+        with ThreadPoolExecutor() as executor:
+            futures = {executor.submit(load_single_json, file_id, source_path, config): file_id for file_id in files_to_load}
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    file_id, documents = future.result()
+                    if documents:  # Only add if documents were successfully loaded
+                        corpus_dict[file_id] = documents
+                except Exception as e:
+                    logger.error(f"Error processing future: {e}")
 
         return corpus_dict
+    
 __all__ = ["DocumentLoader"]
