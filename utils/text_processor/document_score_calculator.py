@@ -12,15 +12,15 @@ class DocumentScoreCalculator:
     """
     文檔評分計算器，負責計算文檔的各項評分指標
     """
-    def __init__(self, word2vec_model: KeyedVectors, embedding_model: HuggingFaceBgeEmbeddings):
+    def __init__(self, word2vec_model: KeyedVectors, embeddings: HuggingFaceBgeEmbeddings):
         """
         初始化文檔評分計算器
         
         Args:
             word2vec_model: Word2Vec模型，用於計算語義相似度
-            embedding_model: 嵌入模型，用於檢索
+            embeddings: 嵌入模型，用於檢索
         """
-        self.retrieval_system = RetrievalSystem(word2vec_model, embedding_model)
+        self.retrieval_system = RetrievalSystem(word2vec_model, embeddings)
 
     def calculate_document_scores(self, tokenized_corpus: List[List[str]], 
                                  doc_tokens: List[str],

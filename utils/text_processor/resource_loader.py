@@ -1,6 +1,6 @@
 import logging
 from gensim.models import KeyedVectors
-from langchain.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 
 logger = logging.getLogger(__name__)
 

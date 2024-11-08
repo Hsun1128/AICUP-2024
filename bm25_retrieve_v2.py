@@ -8,6 +8,7 @@ import concurrent.futures
 from typing import List, Set, Tuple, Dict, Counter, Any, Optional, Union
 from collections import Counter
 import logging
+from dataclasses import asdict
 
 # 導入自定義環境設定
 from utils.env import load_env
@@ -23,7 +24,7 @@ from rank_bm25 import BM25Okapi  # 使用BM25演算法進行文件檢索
 from gensim.models import KeyedVectors  # 確保引入gensim
 
 # 導入LangChain相關套件
-from langchain.document_loaders import PDFPlumberLoader
+from langchain_community.document_loaders import PDFPlumberLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
@@ -1422,10 +1423,10 @@ if __name__ == "__main__":
                 logger.info(f"沒有自定義字典，只載入原始字典")
 
     # 初始化文本處理器
-    retrieval = Retrieval()
+    config = TextProcessorConfig.from_yaml('./config.yaml')
+    retrieval = Retrieval(config)
 
-    logger.info(f'BM25_K1: {BM25_K1}')
-    logger.info(f'BM25_B: {BM25_B}')
+    logger.info(f'Config:\n{json.dumps(asdict(config), indent=2)}')
 
     # 讀取問題文件
     with open(args.question_path, 'rb') as f:

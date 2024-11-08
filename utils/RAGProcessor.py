@@ -6,8 +6,8 @@ from collections import Counter
 from typing import List, Set, Tuple, Dict, Counter, Any, Optional, Union
 from gensim.models import KeyedVectors
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceBgeEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.vectorstores import FAISS
 from sklearn.metrics.pairwise import cosine_similarity
 
 from .text_processor import TextProcessorConfig, ResourceLoader, QueryProcessor, DocumentScoreCalculator, DocumentProcessor
@@ -59,11 +59,9 @@ class Retrieval:
             keep_separator=False,
             separators=['\n\n', '\n', '!', '?', '。', ';']
         )
-        # 初始化文檔評分計算器
-        self.score_calculator = DocumentScoreCalculator(word2vec_model=self.word2vec_model, embedding_model=self.embeddings)
 
         # 初始化文檔處理器
-        self.doc_processor = DocumentProcessor(word2vec_model=self.word2vec_model, score_calculator=self.score_calculator)
+        self.doc_processor = DocumentProcessor(word2vec_model=self.word2vec_model, embeddings=self.embeddings)
         
 
     def BM25_retrieve(self, qs: str, source: List[int], corpus_dict: dict) -> Optional[int]:
@@ -188,7 +186,7 @@ class Retrieval:
         計算多指標加權分數
         
         Args:
-            bm25_results (Dict[Tuple[int, int], float]): BM25檢索結果分數，格式為{(文檔ID,chunk_idx): 分數}
+            bm25_results (Dict[Tuple[int, int], float]): BM25檢索結果分數，格��為{(文檔ID,chunk_idx): 分數}
             faiss_results (Dict[Tuple[int, int], float]): FAISS檢索結果分數，格式為{(文檔ID,chunk_idx): 分數}
             term_importance (Dict[Tuple[int, int], float]): 詞項重要性分數，格式為{(文檔ID,chunk_idx): 分數}
             semantic_similarity (Dict[Tuple[int, int], float]): 語義相似度分數，格式為{(文檔ID,chunk_idx): 分數}
@@ -397,7 +395,7 @@ class Retrieval:
         
         Args:
             query (str): 查詢文本，例如 "台灣總統府在哪裡?"
-            chunked_corpus (List[str]): 切分後的文本列表，例如 ["台灣總統府位於台北市中正區...", "總統府是一棟巴洛克式建築..."]
+            chunked_corpus (List[str]): 切分後的文本列表，例如 ["台灣總統府位於台北市中正區...", "���統府是一棟巴洛克式建築..."]
             key_idx_map (List[Tuple[int, int]]): 文本片段對應的(file_key, chunk_index)列表，例如 [(1, 0), (1, 1)]
             
         Returns:
@@ -584,7 +582,7 @@ class Retrieval:
         elif retrieved_keys:
             return retrieved_keys[0][0]
             
-        # 如果沒有找到任何結果，返回None
+        # 如果沒有找���任何結果，返回None
         return None
    
     def _analyze_query_features(self, tokenized_query: List[str], expanded_query: Set[str], 

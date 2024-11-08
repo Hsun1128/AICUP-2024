@@ -1,0 +1,17 @@
+stopwords_filepath: ./custom_dicts/stopwords.txt
+embedding_model_name: BAAI/bge-m3
+bm25_k1: 0.5
+bm25_b: 0.7
+bm25_epsilon: 0.5
+use_expansion: false
+expansion_model_path: ../word2vec/wiki.zh.bin
+expanded_topn: 2
+chunk_size: 500
+overlap: 100
+use_faiss: true
+use_term_importance: true
+use_semantic_search: true
+use_term_density: true
+use_query_coverage: true
+use_position_score: true
+use_context_similarity: true

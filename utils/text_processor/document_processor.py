@@ -2,22 +2,25 @@ import logging
 from typing import List, Set, Tuple, Optional, Dict
 import numpy as np
 from collections import Counter
-
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from utils.text_processor.document_score_calculator import DocumentScoreCalculator
 logger = logging.getLogger(__name__)
 
 class DocumentProcessor:
-    def __init__(self, word2vec_model = None, score_calculator = None):
+    def __init__(self, word2vec_model = None, embeddings: HuggingFaceBgeEmbeddings = None):
         """
         初始化文檔處理器
         
         Args:
             word2vec_model: Word2Vec模型實例，用於計算語義相似度
+            embedding_model_name: embedding模型路徑
         """
         # 保存word2vec模型
         self.word2vec_model = word2vec_model
+        self.embeddings = embeddings
         
         # 初始化文檔評分計算器
-        self.score_calculator = score_calculator
+        self.score_calculator = DocumentScoreCalculator(word2vec_model=self.word2vec_model, embeddings=self.embeddings)
         
     def process_retrieved_document(self, doc_index: int, doc_content: str, 
                                   chunked_corpus: List[str], key_idx_map: List[Tuple[int, int]], 
