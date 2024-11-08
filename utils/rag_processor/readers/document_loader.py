@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class DocumentLoader:
     # 載入參考資料，返回一個字典，key為檔案名稱，value為PDF檔內容的文本
     @staticmethod
-    def load_data(source_path: str, files_to_load: List[int], config: RAGProcessorConfig, source_type: str) -> Dict[int, List[Document]]:
+    def auto_load_data(source_path: str, files_to_load: List[int], config: RAGProcessorConfig) -> Dict[int, List[Document]]:
         """
         Load reference data from PDF files in a directory.
 
@@ -26,15 +26,15 @@ class DocumentLoader:
             Dict[int, List[Document]]: Mapping of file ID to list of Documents.
         """
         if config.source_type == "pdf":
-            return DocumentLoader.load_data_pdf(source_path, files_to_load, config)
+            return DocumentLoader.load_pdf_data(source_path, files_to_load, config)
         elif config.source_type == "json":
-            return DocumentLoader.load_json_data(source_path, files_to_load)
+            return DocumentLoader.load_json_data(source_path, files_to_load, config)
         else:
             raise ValueError(f"Unsupported source type: {config.source_type}")
 
         
     @staticmethod
-    def load_data_pdf(source_path: str, files_to_load: List[int], config: RAGProcessorConfig) -> Dict[int, List[Document]]:
+    def load_pdf_data(source_path: str, files_to_load: List[int], config: RAGProcessorConfig) -> Dict[int, List[Document]]:
         """
         載入參考資料
         
