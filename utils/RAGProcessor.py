@@ -1,16 +1,9 @@
 import os
-import jieba
-import numpy as np
-from rank_bm25 import BM25Okapi
-from collections import Counter
 from typing import List, Set, Tuple, Dict, Counter, Any, Optional, Union
-from gensim.models import KeyedVectors
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from langchain_community.vectorstores import FAISS
-from sklearn.metrics.pairwise import cosine_similarity
 
 from .rag_processor import RAGProcessorConfig, ResourceLoader, QueryProcessor, DocumentProcessor
+from .rag_processor.retrieval_system import RetrievalSystem
 import logging
 from .rag_processor.scoring.bm25_scorer import BM25Scorer
 from .rag_processor.scoring.weighted_scorer import WeightedScorer
@@ -63,6 +56,7 @@ class Retrieval:
         # 初始化評分器
         self.bm25_scorer = BM25Scorer(config, self.doc_processor)
         self.weighted_scorer = WeightedScorer(config, self.doc_processor)
+        self.retrieval_system = RetrievalSystem(self.word2vec_model, self.embeddings)
 
     def BM25_retrieve(self, qs: str, source: List[int], corpus_dict: dict) -> Optional[int]:
         """
@@ -96,57 +90,6 @@ class Retrieval:
             score_results, query_length, query_diversity
         )
 
-    def _faiss_retrieve(self, query: str, chunked_corpus: List[str], key_idx_map: List[Tuple[int, int]]) -> Dict[Tuple[int, int], float]:
-        """
-        使用FAISS進行向量檢索
-        
-        Args:
-            query (str): 查詢文本，例如 "台灣總統府在哪裡?"
-            chunked_corpus (List[str]): 切分後的文本列表，例如 ["台灣總統府位於台北市中正區...", "總統府是一棟巴洛克式建築..."]
-            key_idx_map (List[Tuple[int, int]]): 文本片段對應的(file_key, chunk_index)列表，例如 [(1, 0), (1, 1)]
-            
-        Returns:
-            Dict[Tuple[int, int], float]: 包含檢索結果的字典，格式為 {(file_key, chunk_index): score}
-                 例如 {(1, 0): 0.85, (1, 1): 0.75}
-                 - file_key (int): 文件ID，例如 1 
-                 - chunk_index (int): 文本片段索引，例如 0
-                 - score (float): 相似度分數，範圍0-1，例如 0.85
-                 
-        Example:
-            >>> processor = TextProcessor()
-            >>> query = "台灣總統府在哪裡?"
-            >>> corpus = ["台灣總統府位於台北市中正區...", "總統府是一棟巴洛克式建築..."]
-            >>> key_idx_map = [(1, 0), (1, 1)]
-            >>> results = processor._faiss_retrieve(query, corpus, key_idx_map)
-            >>> print(results)
-            {(1, 0): 0.85, (1, 1): 0.75}
-        """
-        # 初始化結果字典
-        faiss_results: Dict[Tuple[int, int], float] = {}
-        
-        # 使用FAISS建立向量索引
-        vector_store = FAISS.from_texts(chunked_corpus, self.embeddings, normalize_L2=True)
-        
-        # 進行相似度搜索，返回前5個最相似的文檔及其分數
-        faiss_ans = vector_store.similarity_search_with_score(query, k=5)
-
-        # 記錄分隔線
-        logger.info('-'*100)
-        
-        # 處理每個檢索結果
-        for doc, score in faiss_ans:
-            # 找到文檔在chunked_corpus中的索引
-            faiss_actual_index: int = chunked_corpus.index(doc.page_content)
-            # 獲取對應的文檔鍵值
-            faiss_chunk_key: Tuple[int, int] = key_idx_map[faiss_actual_index]
-            # 儲存分數
-            faiss_results[faiss_chunk_key] = float(score)
-            # 記錄檢索結果
-            logger.info(f'FAISS Score: [{score:.4f}], PDF: {faiss_chunk_key[0]}, '
-                      f'Chunk: {faiss_chunk_key[1]}, metadata: [{doc.metadata}]')
-                      
-        return faiss_results
-    
     def _get_faiss_or_bm25_result(self, retrieved_keys: List[Tuple[int, int]], score_results: Dict[str, Dict[Tuple[int, int], float]],
                                   faiss_results: Dict[Tuple[int, int], float], query_length: int,
                                   query_diversity: float, weighted_scores: Optional[Dict[Tuple[int, int], float]]) -> Optional[Tuple[int, int]]:
@@ -232,7 +175,7 @@ class Retrieval:
         """
         faiss_results: Dict[Tuple[int, int], float] = {}
         if self.config.use_faiss:
-            faiss_results = self._faiss_retrieve(query, chunked_corpus, key_idx_map)
+            faiss_results = self.retrieval_system.retrieve_with_faiss(query, chunked_corpus, key_idx_map)
 
         weighted_scores: Optional[Dict[Tuple[int, int], float]] = None
         if score_results['bm25_results'] and faiss_results:

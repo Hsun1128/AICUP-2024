@@ -8,8 +8,9 @@ RANGE = range(0, 150)  # 處理問題的範圍
 # 默認配置
 DEFAULT_CONFIG = {
     'stopwords_filepath': './custom_dicts/stopwords.txt',  # 停用詞文件路徑
-    'embedding_model_name': 'BAAI/bge-m3',  # embedding模型路徑
     'expansion_model_path': '../word2vec/wiki.zh.bin',  # word2vec模型路徑
+    'embedding_model_name': 'BAAI/bge-m3',  # embedding模型名稱
+    'reranker_model_name': 'BAAI/bge-reranker-v2-m3',  # reranker模型名稱
 
     'bm25_k1': 0.5,  # BM25算法的k1參數
     'bm25_b': 0.7,  # BM25算法的b參數
@@ -53,7 +54,8 @@ class RAGProcessorConfig:
     
     Attributes:
         stopwords_filepath (str): 停用詞文件路徑
-        embedding_model_name (str): embedding模型路徑
+        embedding_model_name (str): embedding模型名稱
+        reranker_model_name (str): reranker模型名稱
         bm25_k1 (float): BM25算法的k1參數,用於控制詞頻的影響程度
         bm25_b (float): BM25算法的b參數,用於控制文檔長度的影響程度
         bm25_epsilon (float): BM25算法的epsilon參數,用於控制文檔長度的影響程度
@@ -70,14 +72,16 @@ class RAGProcessorConfig:
         use_position_score (bool): 是否使用位置得分評分
         use_context_similarity (bool): 是否使用上下文相似度評分
         base_weights (dict): 各項評分的基礎權重設定
-        
+        chunk_preview (bool): 是否顯示分塊預覽
+
     Example:
         >>> config = TextProcessorConfig.from_yaml("config.yaml")
         >>> processor = TextProcessor(config)
     """
     stopwords_filepath: str = DEFAULT_CONFIG['stopwords_filepath']
-    embedding_model_name: str = DEFAULT_CONFIG['embedding_model_name']
     expansion_model_path: str = DEFAULT_CONFIG['expansion_model_path']
+    embedding_model_name: str = DEFAULT_CONFIG['embedding_model_name']
+    reranker_model_name: str = DEFAULT_CONFIG['reranker_model_name']
 
     bm25_k1: float = DEFAULT_CONFIG['bm25_k1']
     bm25_b: float = DEFAULT_CONFIG['bm25_b']

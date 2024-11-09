@@ -38,7 +38,7 @@ class FaissRetrieval:
         faiss_results: Dict[Tuple[int, int], float] = {}
         
         # 使用FAISS建立向量索引
-        vector_store = FAISS.from_texts(chunked_corpus, self.embeddings, normalize_L2=True)
+        vector_store = FAISS.from_texts(chunked_corpus, self.embedding_model, normalize_L2=True)
         
         # 進行相似度搜索，返回前5個最相似的文檔及其分數
         faiss_ans = vector_store.similarity_search_with_score(query, k=5)
@@ -59,4 +59,3 @@ class FaissRetrieval:
                       f'Chunk: {faiss_chunk_key[1]}, metadata: [{doc.metadata}]')
                       
         return faiss_results
-    
