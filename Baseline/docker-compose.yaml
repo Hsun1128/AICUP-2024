@@ -4,13 +4,12 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - .:/app/baseline
-      - ../CompetitionDataset:/app/CompetitionDataset
+      - ../:/app
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
               count: 1
-              capabilities: [gpu]
-    command: ["tail", "-f", "/dev/null"]
+              capabilities: [ gpu ]
+    command: [ "tail", "-f", "/dev/null" ]
