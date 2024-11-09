@@ -7,6 +7,7 @@ RANGE = range(0, 150)  # 處理問題的範圍
 
 # 默認配置
 DEFAULT_CONFIG = {
+    'load_all_data': False,  # 是否載入所有資料
     'stopwords_filepath': './custom_dicts/stopwords.txt',  # 停用詞文件路徑
     'expansion_model_path': '../word2vec/wiki.zh.bin',  # word2vec模型路徑
     'embedding_model_name': 'BAAI/bge-m3',  # embedding模型名稱
@@ -78,6 +79,7 @@ class RAGProcessorConfig:
         >>> config = TextProcessorConfig.from_yaml("config.yaml")
         >>> processor = TextProcessor(config)
     """
+    load_all_data: bool = DEFAULT_CONFIG['load_all_data']
     stopwords_filepath: str = DEFAULT_CONFIG['stopwords_filepath']
     expansion_model_path: str = DEFAULT_CONFIG['expansion_model_path']
     embedding_model_name: str = DEFAULT_CONFIG['embedding_model_name']

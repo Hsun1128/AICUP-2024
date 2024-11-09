@@ -60,14 +60,15 @@ if __name__ == "__main__":
     with open(args.question_path, 'rb') as f:
         qs_ref = json.load(f)  # 讀取問題檔案
 
-    """
-    # 載入所有資料集
-    source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定參考資料路徑
-    corpus_dict_insurance = load_data(source_path_insurance)
+    # 預加載資料集
+    if config.load_all_data:
+        # 載入所有資料集
+        source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定參考資料路徑
+        corpus_dict_insurance = DocumentLoader.auto_load_data(source_path_insurance, config=config)
 
-    source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
-    corpus_dict_finance = load_data(source_path_finance)
-    """
+        source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
+        corpus_dict_finance = DocumentLoader.auto_load_data(source_path_finance, config=config)
+    
 
     # 讀取FAQ映射文件
     with open(os.path.join(args.source_path, 'faq/pid_map_content.json'), 'rb') as f_s:
@@ -78,16 +79,18 @@ if __name__ == "__main__":
     for q_dict in tqdm((q for q in qs_ref['questions'] if q['qid']-1 in RANGE), total=len(RANGE), desc="Processing questions"):
         logger.info(f'{"="*65} QID: {q_dict["qid"]} {"="*65}')
         if q_dict['category'] == 'finance':
-            source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
-            corpus_dict_finance = DocumentLoader.auto_load_data(source_path_finance, q_dict['source'], config)
+            if not config.load_all_data:
+                source_path_finance = os.path.join(args.source_path, 'finance')  # 設定參考資料路徑
+                corpus_dict_finance = DocumentLoader.auto_load_data(source_path_finance, q_dict['source'], config)
             # 進行檢索
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_finance)
             # 將結果加入字典
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 
         elif q_dict['category'] == 'insurance':
-            source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定考資料路徑
-            corpus_dict_insurance = DocumentLoader.auto_load_data(source_path_insurance, q_dict['source'], config)
+            if not config.load_all_data:
+                source_path_insurance = os.path.join(args.source_path, 'insurance')  # 設定考資料路徑
+                corpus_dict_insurance = DocumentLoader.auto_load_data(source_path_insurance, q_dict['source'], config)
             retrieved = retrieval.BM25_retrieve(q_dict['query'], q_dict['source'], corpus_dict_insurance)
             answer_dict['answers'].append({"qid": q_dict['qid'], "retrieve": retrieved})
 

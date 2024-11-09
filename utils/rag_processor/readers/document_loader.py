@@ -7,26 +7,31 @@ import os
 import concurrent.futures
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 import logging
+from tqdm import tqdm  # 新增進度條庫
 
 logger = logging.getLogger(__name__)
 class DocumentLoader:
     # 載入參考資料，返回一個字典，key為檔案名稱，value為PDF檔內容的文本
     @staticmethod
-    def auto_load_data(source_path: str, files_to_load: List[int], config: RAGProcessorConfig) -> Dict[int, List[Document]]:
+    def auto_load_data(source_path: str, files_to_load: List[int]=None, config: RAGProcessorConfig=RAGProcessorConfig()) -> Dict[int, List[Document]]:
         """
         Load reference data from files in a directory, automatically detecting file type.
 
         Args:
             source_path (str): The directory path containing the files.
-            files_to_load (List[int]): List of file IDs to load.
             config (RAGProcessorConfig): Configuration object.
+            files_to_load (List[int]): List of file IDs to load.
 
         Returns:
             Dict[int, List[Document]]: Mapping of file ID to list of Documents.
         """
         # Get first file extension to determine type
-        first_file = f"{files_to_load[0]}"
-        test_path = os.path.join(source_path, first_file)
+        if not files_to_load:
+            test_path = os.path.splitext(os.path.join(source_path, os.listdir(source_path)[0]))[0]
+            print(f"test_path: {test_path}")
+        else:
+            first_file = f"{files_to_load[0]}"
+            test_path = os.path.join(source_path, first_file)
         
         # Try common extensions
         if os.path.exists(test_path + ".pdf"):
@@ -56,8 +61,11 @@ class DocumentLoader:
             >>> print(len(corpus[1]))  # 第一個文件的Document數量
             5
         """
-        #masked_file_ls = os.listdir(source_path)  # 獲取資料夾中的檔案列表
-        masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
+        if not files_to_load:
+            masked_file_ls = os.listdir(source_path)  # 獲取資料夾中的檔案列表
+            masked_file_ls = tqdm(masked_file_ls, desc="Loading PDF files")  # 添加進度條
+        else:
+            masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
         corpus_dict = {}
         
         # 使用多進程處理PDF文件
@@ -84,11 +92,16 @@ class DocumentLoader:
         Returns:
             Dict[int, List[Document]]: Mapping of file ID to list of Documents.
         """
+        if not files_to_load:
+            masked_file_ls = os.listdir(source_path)  # 獲取資料夾中的檔案列表
+            masked_file_ls = tqdm(masked_file_ls, desc="Loading JSON files")  # 添加進度條
+        else:
+            masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
         corpus_dict = {}
 
         # Use ThreadPoolExecutor for I/O bound JSON loading
         with ThreadPoolExecutor() as executor:
-            futures = {executor.submit(load_single_json, file_id, source_path, config): file_id for file_id in files_to_load}
+            futures = {executor.submit(load_single_json, file_id, source_path, config): file_id for file_id in masked_file_ls}
             for future in concurrent.futures.as_completed(futures):
                 try:
                     file_id, documents = future.result()
