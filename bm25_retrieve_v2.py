@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 # 載入環境變數
 load_env()
 
-RANGE = range(0, 150)  # 處理問題的範圍
+RANGE = range(0, 900)  # 處理問題的範圍
 
 if __name__ == "__main__":
     # 使用argparse解析命令列參數

@@ -27,8 +27,8 @@ class DocumentLoader:
         """
         # Get first file extension to determine type
         if not files_to_load:
+            files_to_load = os.listdir(source_path)
             test_path = os.path.splitext(os.path.join(source_path, os.listdir(source_path)[0]))[0]
-            print(f"test_path: {test_path}")
         else:
             first_file = f"{files_to_load[0]}"
             test_path = os.path.join(source_path, first_file)
@@ -61,11 +61,7 @@ class DocumentLoader:
             >>> print(len(corpus[1]))  # 第一個文件的Document數量
             5
         """
-        if not files_to_load:
-            masked_file_ls = os.listdir(source_path)  # 獲取資料夾中的檔案列表
-            masked_file_ls = tqdm(masked_file_ls, desc="Loading PDF files")  # 添加進度條
-        else:
-            masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
+        masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
         corpus_dict = {}
         
         # 使用多進程處理PDF文件
@@ -92,11 +88,7 @@ class DocumentLoader:
         Returns:
             Dict[int, List[Document]]: Mapping of file ID to list of Documents.
         """
-        if not files_to_load:
-            masked_file_ls = os.listdir(source_path)  # 獲取資料夾中的檔案列表
-            masked_file_ls = tqdm(masked_file_ls, desc="Loading JSON files")  # 添加進度條
-        else:
-            masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
+        masked_file_ls = files_to_load  # 指定資料夾中的檔案列表
         corpus_dict = {}
 
         # Use ThreadPoolExecutor for I/O bound JSON loading
