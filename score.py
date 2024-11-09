@@ -8,7 +8,9 @@ logger = logging.getLogger(__name__)
 def calculate_score(ground_truth_file, prediction_file):
     # Load the ground truth and prediction data
     with open(ground_truth_file, 'r', encoding='utf-8') as f:
-        ground_truths = json.load(f)["ground_truths"]
+        #ground_truths = json.load(f)["ground_truths"]  # 範例資料集答案
+        ground_truths = json.load(f)["answers"]  # json 版資料集
+
     
     with open(prediction_file, 'r', encoding='utf-8') as f:
         predictions = json.load(f)["answers"]
@@ -58,7 +60,8 @@ if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Create paths relative to the script location
-    ground_truth_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/ground_truths_example.json')
-    prediction_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/pred_retrieve.json')
+    #ground_truth_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/ground_truths_example.json')  # 範例資料集答案
+    ground_truth_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/pred_retrieve_v3.json')  # json 版資料集
+    prediction_file = os.path.join(current_dir, './CompetitionDataset/dataset/preliminary/pred_retrieve.json')  # pdf 版資料集（無ocr）
 
     main(ground_truth_file, prediction_file)
