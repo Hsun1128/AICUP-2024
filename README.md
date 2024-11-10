@@ -1,5 +1,8 @@
 # AICUP-2024
 
+## Program Description
+See [utils/README.md](utils/README.md) for detailed program description.
+
 
 ## Data Structure
 
