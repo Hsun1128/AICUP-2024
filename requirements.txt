@@ -11,3 +11,7 @@ langchain-text-splitters
 numpy
 scikit-learn
 python-dotenv
+gensim
+faiss-gpu
+sklearn
+torch
