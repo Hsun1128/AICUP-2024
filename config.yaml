@@ -19,12 +19,12 @@ scoring_methods:
   use_position_score: true
   use_context_similarity: true
 base_weights:
-  bm25: 0.2
+  bm25: 0.15
   faiss: 0.3
-  importance: 0.0
+  importance: 0.5
   semantic: 0.1
   coverage: 0.1
   position: 0.1
   density: 0.15
   context: 0.05
-chunk_preview: false
+chunk_preview: true

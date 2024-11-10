@@ -6,8 +6,19 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from utils.rag_processor.document_score_calculator import DocumentScoreCalculator
 from utils.rag_processor.config import RAGProcessorConfig
 import os
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
+chunk_logger = logging.getLogger('chunk')
+
+# 在創建 FileHandler 之前，先確保日誌目錄存在
+log_dir = './logs'
+os.makedirs(log_dir, exist_ok=True)  # 如果目錄不存在則創建
+
+# 然後再創建 FileHandler
+chunk_handler = logging.FileHandler(f'{log_dir}/chunk_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.log')
+chunk_logger.addHandler(chunk_handler)
+chunk_logger.propagate = False
 
 class DocumentProcessor:
     def __init__(self, word2vec_model = None, embeddings: HuggingFaceBgeEmbeddings = None):
@@ -161,7 +172,7 @@ class DocumentProcessor:
             >>> print(key_map)
             [(1, 0), (2, 0), (2, 1)]
         """
-        chunked_corpus: List[str] = []  # 存儲所有切分後的文本片段
+        chunked_corpus: List[str] = []  # 存儲所有切分後的文本���段
         key_idx_map: List[Tuple[int, int]] = []  # 存儲每個文本片段對應的(file_key, chunk_index)
         
         # 遍歷每個來源文件ID
@@ -175,12 +186,12 @@ class DocumentProcessor:
                     # 如果是Document對象,取其page_content屬性
                     chunked_corpus.append(chunk.page_content)
                     if config.chunk_preview:
-                        logger.info(f'file {file_key}, Chunk {idx}: {chunk.page_content}')
+                        chunk_logger.info(f'file {file_key}, Chunk {idx}: {chunk.page_content}')
                 except AttributeError:
                     # 如果不是Document對象,直接添加文本內容
                     chunked_corpus.append(corpus)
                     if config.chunk_preview:
-                        logger.info(f'file {file_key}, Chunk {idx}: {corpus}')
+                        chunk_logger.info(f'file {file_key}, Chunk {idx}: {corpus}')
                     break
                     
         return chunked_corpus, key_idx_map

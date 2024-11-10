@@ -1,8 +1,18 @@
 # 導入所需的套件
 import os
+from datetime import datetime
+import logging
+
+# 在創建 FileHandler 之前，先確保日誌目錄存在
+log_dir = './logs'
+os.makedirs(log_dir, exist_ok=True)  # 如果目錄不存在則創建
+
+# 然後再創建 FileHandler
+logging.basicConfig(level=logging.INFO, filename=f'{log_dir}/retrieve_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+logger = logging.getLogger(__name__)
+
 import json
 import argparse
-import logging
 from dataclasses import asdict
 
 # 導入自定義環境設定
@@ -14,11 +24,6 @@ from utils.rag_processor import DocumentLoader
 from tqdm import tqdm
 import jieba  # 用於中文文本分詞
 import pdfplumber  # 用於從PDF文件中提取文字的工具
-
-
-# 設定日誌記錄
-logging.basicConfig(level=logging.INFO, filename='retrieve.log', filemode='w', format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-logger = logging.getLogger(__name__)
 
 # 載入環境變數
 load_env()

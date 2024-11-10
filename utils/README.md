@@ -1,4 +1,9 @@
-## 1. 環境
+# 基於多維度評分機制的混合式檢索系統
+
+## 摘要
+本研究提出一個結合BM25與神經網路的混合式檢索系統，創新性地引入多維度評分機制與自適應權重調整。系統在實際測試中達到83.66分的成績，展現了在金融保險領域專業文件檢索任務上的良好效能。
+
+## 1. 實驗環境與設置
 
 ### 1.1 基礎環境
 - 作業系統：Ubuntu 18.04 LTS
@@ -45,77 +50,55 @@
   - insurance_dict.txt：保險專業詞彙
   - common_use_dict.txt：財務會計常用詞彙
 
-## 2. 演算方法與模型架構
+## 2. 方法論
 
-本研究提出一個混合式檢索架構，結合了BM25詞頻統計與FAISS向量檢索的優勢，並創新性地引入多維度評分機制。系統架構主要包含以下核心組件：
+### 2.1 系統整體架構
 
-### 2.1 檢索核心架構
-本系統實現了雙重檢索機制：
+```mermaid
+graph TD
+    A[用戶查詢] --> B[查詢處理]
+    B --> C[分詞與停用詞過濾]
+    
+    D[文件庫] --> E[文件分塊]
+    E --> F[向量化]
+    F --> G[建立索引]
+    
+    C --> H[多維度檢索]
+    H --> I[BM25檢索]
+    H --> J[向量檢索]
+    
+    I --> K[多維度評分]
+    J --> K
+    G --> K
+    
+    K --> L[自適應權重]
+    L --> M[結果排序]
+    M --> N[返回結果]
+```
 
-1. **改良版BM25檢索引擎**
-   - 採用優化的BM25Okapi算法：
-     ```
-     score(D,Q) = ∑(IDF(qi) * (f(qi,D) * (k1 + 1)) / (f(qi,D) + k1 * (1 - b + b * |D|/avgdl)))
-     ```
-   - 關鍵參數優化：
-     - k1=0.5：控制詞頻(TF)的飽和曲線
-     - b=0.7：調節文檔長度正規化程度
-     - epsilon=0.5：平滑因子，避免零分問題
+### 2.2 評分機制架構
 
-2. **神經網路向量檢索**
-   - 採用BAAI/bge-m3預訓練模型進行文本向量化
-   - 實現L2正規化的向量表示
-   - 基於餘弦相似度的高效檢索機制
-
-### 2.2 多維度評分系統
-本系統設計了七個獨立評分模組，每個模組針對不同的相關性維度：
-
-1. **詞項重要性評分**
-   ```python
-   score = ∑(TF * IDF * position_weight)
-   position_weight = 1 / (position + 1)
-   ```
-   - 考慮詞頻、逆文檔頻率與位置權重
-   - 動態調整專業術語權重
-
-2. **語義相似度評分**
-   ```python
-   doc_vector = ∑(IDF(word) * word2vec(word)) / ∑IDF(word)
-   score = cosine_similarity(query_vector, doc_vector)
-   ```
-   - 使用加權詞向量表示文檔語義
-   - IDF加權降低常見詞影響
-
-3. **查詢覆蓋度評分**
-   ```python
-   weighted_coverage = ∑(log(N/df[term]) for term in intersection)
-   score = weighted_coverage / len(expanded_query)
-   ```
-   - 評估查詢詞的覆蓋程度
-   - 考慮擴展查詢詞的匹配情況
-
-4. **位置感知評分**
-   ```python
-   score = 1 / (1 + std_pos + avg_pos/len(doc_tokens))
-   ```
-   - 考慮匹配詞的位置分布
-   - 結合平均位置和離散程度
-
-5. **詞密度評分**
-   ```python
-   density = ∑(log(N/df[w]) for w in window if w in intersection) / window_size
-   score = max(density for each sliding window)
-   ```
-   - 使用滑動窗口計算局部密度
-   - 動態調整窗口大小(預設20)
-
-6. **上下文相似度評分**
-   ```python
-   context_score = ∑(cosine_similarity(term_vector, context_term_vector))
-   score = context_score / (len(intersection) + 1)
-   ```
-   - 分析匹配詞的上下文語境
-   - 固定上下文窗口大小(±3詞)
+```mermaid
+graph TD
+    A[檢索結果] --> B[評分模組]
+    
+    B --> C[詞頻相關性]
+    C --> C1[BM25分數]
+    C --> C2[詞項重要性]
+    C --> C3[查詢覆蓋度]
+    
+    B --> D[語義相關性]
+    D --> D1[向量相似度]
+    D --> D2[語義相似度]
+    
+    B --> E[結構相關性]
+    E --> E1[位置分數]
+    E --> E2[詞密度]
+    E --> E3[上下文相似度]
+    
+    C1 & C2 & C3 & D1 & D2 & E1 & E2 & E3 --> F[自適應權重]
+    F --> G[最終分數]
+```
 
 ### 2.3 自適應權重機制
 本系統實現了基於查詢特徵的動態權重調整：
@@ -141,6 +124,21 @@
    - 高多樣性查詢(>1.5)：增強語義理解
      - semantic * 1.2
      - context * 1.2
+
+### 2.4 評分權重分析
+
+| 評分維度  | 基礎權重  | 短查詢權重  | 長查詢權重   | 查詢擴展權重 | 平均貢獻度 |
+|---------|----------|------------|------------|------------|------------|
+| BM25    | 0.15     | *0.8       | *1.2      | -          | 15.0%      |
+| FAISS   | 0.30     | -          | -       | -             | 30.0%        |
+| semantic  | 0.10     | *1.2     | *0.8      | *1.2        | 10.0%       |
+| importance| 0.05     | -        | -         | -         | 5.0%       |
+| coverage  | 0.10     | -        | *1.2       | -        | 10.0%      |
+| position  | 0.10     | -        | -       | -           | 10.0%       |
+| density   | 0.15     | -        | -      | -             | 15.0%      |
+| context | 0.05     | *1.2       | *1.2       | *1.2       | 5.0%       |
+
+註：短查詢定義為詞數≤2，長查詢定義為詞數>2
 
 ## 3. 創新性
 
@@ -258,7 +256,7 @@
    - 對金融、保險等專業領域有良好理解
    - 向量表示質量穩定可靠
 
-2. **資源效率**
+2. **資率**
    - 避免耗費大量計算資源進行訓練
    - 減少模型調整時間
    - 降低過擬合風險
@@ -274,3 +272,78 @@
 2. 檢索策略的優化與整合
 3. 自適應權重機制的開發
 4. 系統效能的優化
+
+## 6. 分析與結論
+
+### 6.1 系統表現分析
+本系統在比賽測試集上達到83.66分的成績，在本地測試集上達到95分(150題中答對143題)。分析其表現特點如下：
+
+1. **優勢表現**
+   - 專業術語理解：透過自定義詞典的支援，系統對保險和金融專業術語有良好的理解能力
+   - 語義相似性：BGE-M3模型能準確捕捉查詢與文檔間的語義關係
+   - 多維度評分：綜合考慮多個相關性維度，提高檢索準確性
+
+2. **劣勢分析**
+   - 長文本處理：對於較長的查詢(>12詞)可能出現語義理解不完整的情況
+   - 上下文關聯：有時無法準確捕捉跨段落的語義關聯
+   - 計算開銷：多維度評分機制增加了系統的計算負擔
+
+### 6.2 案例分析
+
+1. **成功案例**
+   ```
+   查詢：「留學生在申請貸款時，除了入學證明外，還需提供哪些文件」(QID: 120)
+   系統回答：正確找到相關段落，列出所需文件
+   成功原因：
+   - 查詢目標明確(文件清單)
+   - 關鍵詞「留學生」、「貸款」、「文件」被準確識別
+   - 答案在單一段落中完整列舉
+   - 文件類型的答案較易於精確匹配
+   ```
+
+2. **失敗案例**
+   ```
+   查詢：「長榮於2022年第3季的合併權益變動表中，歸屬於母公司業主之本期綜合損益總額為多少新台幣仟元？」(QID: 53)
+   系統回答：返回錯誤的財報段落
+   失敗原因：
+   - 查詢包含多個限定條件(年份、季度、報表類型、科目)
+   - 財報數據的層級關係判斷不準確(合併報表vs個別報表)
+   - 數字型答案需要精確定位特定欄位
+   - 財務報表的結構化資訊未被充分利用
+   ```
+
+### 6.3 改進方向
+
+1. **模型優化**
+   - 引入財報數據的結構化解析
+     - 表格資訊的欄位對應
+     - 數字資料的單位統一
+     - 報表類型的明確區分
+   - 增強多條件查詢的處理能力
+     - 條件之間的邏輯關係識別
+     - 時間資訊的標準化處理
+   - 優化數字型答案的匹配機制
+     - 引入數值範圍檢查
+     - 單位換算的自動處理
+
+## 7. 外部資源與參考文獻
+
+### 7.1 外部資源
+1. 預訓練模型：
+   - BAAI/bge-m3: https://huggingface.co/BAAI/bge-m3
+   - Word2Vec預訓練詞向量: https://fasttext.cc/docs/en/pretrained-vectors.html
+
+2. 開源工具：
+   - Faiss: https://github.com/facebookresearch/faiss
+   - LangChain: https://github.com/langchain-ai/langchain
+
+### 7.2 參考文獻
+[1] Su, Y., et al. (2023). "BGE: BAAI General Embedding," arXiv preprint arXiv:2309.07597.
+
+[2] Robertson, S. E., & Zaragoza, H. (2009). "The Probabilistic Relevance Framework: BM25 and Beyond," Foundations and Trends in Information Retrieval, 3(4), 333-389.
+
+[3] Reimers, N., & Gurevych, I. (2019). "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks," Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing.
+
+[4] Johnson, J., et al. (2019). "Billion-scale similarity search with GPUs," IEEE Transactions on Big Data, 7(3), 535-547.
+
+[5] Langchain. (2023). "LangChain Documentation," Retrieved from https://python.langchain.com/docs/get_started/introduction
