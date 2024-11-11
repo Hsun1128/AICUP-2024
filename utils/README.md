@@ -62,12 +62,12 @@
 
 ```mermaid
 graph TD
-    query[用戶查詢] --> clean&cut[分詞與停用詞過濾]
-    clean&cut --> query_expanded[查詢擴展]
+    query[用戶查詢] --> cleanNcut[分詞與停用詞過濾]
+    cleanNcut --> query_expanded[查詢擴展]
     
     DataBase[文件庫] --> CleanDataBase[文件清理]
     CleanDataBase --> ChunkDataBase[文件分塊]
-    ChunkDataBase --> clean&cut
+    ChunkDataBase --> cleanNcut
     ChunkDataBase --> Embedding[向量化]
     
     
@@ -117,7 +117,7 @@ graph TD
 
    ```python
    base_weights = {
-       'bm25': 0.20, 'faiss': 0.30, 'importance': 0.00,
+       'bm25': 0.15, 'faiss': 0.30, 'importance': 0.05,
        'semantic': 0.10, 'coverage': 0.10, 'position': 0.10,
        'density': 0.15, 'context': 0.05
    }
@@ -138,7 +138,7 @@ graph TD
 
 ### 2.4 評分權重分析
 
-| 評分維度   | 基礎權重 | 短查詢權重 | 長查詢權重 | 查詢擴展權重 | 平均貢獻度 |
+| 評分維度    | 基礎權重  | 短查詢權重 | 長查詢權重  | 查詢擴展權重  | 平均貢獻度  |
 | ---------- | -------- | ---------- | ---------- | ------------ | ---------- |
 | BM25       | 0.15     | \*0.8      | \*1.2      | -            | 15.0%      |
 | FAISS      | 0.30     | -          | -          | -            | 30.0%      |
@@ -147,7 +147,7 @@ graph TD
 | coverage   | 0.10     | -          | \*1.2      | -            | 10.0%      |
 | position   | 0.10     | -          | -          | -            | 10.0%      |
 | density    | 0.15     | -          | -          | -            | 15.0%      |
-| context    | 0.05     | \*1.2      | \*1.2      | \*1.2        | 5.0%       |
+| context    | 0.05     | \*1.2      | -          | \*1.2        | 5.0%       |
 
 註：短查詢定義為詞數 ≤2，長查詢定義為詞數>2，查詢擴展定義為查詢詞彙多樣性>1.5
 
