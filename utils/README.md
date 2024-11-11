@@ -62,24 +62,27 @@
 
 ```mermaid
 graph TD
-    A[用戶查詢] --> B[查詢處理]
-    B --> C[分詞與停用詞過濾]
-
-    D[文件庫] --> E[文件分塊]
-    E --> F[向量化]
-    F --> G[建立索引]
-
-    C --> H[多維度檢索]
-    H --> I[BM25檢索]
-    H --> J[向量檢索]
-
-    I --> K[多維度評分]
-    J --> K
-    G --> K
-
-    K --> L[自適應權重]
-    L --> M[結果排序]
-    M --> N[返回結果]
+    query[用戶查詢] --> clean&cut[分詞與停用詞過濾]
+    clean&cut --> query_expanded[查詢擴展]
+    
+    DataBase[文件庫] --> CleanDataBase[文件清理]
+    CleanDataBase --> ChunkDataBase[文件分塊]
+    ChunkDataBase --> clean&cut
+    ChunkDataBase --> Embedding[向量化]
+    
+    
+    query_expanded --> BM25_retrieve[BM25檢索]
+    BM25_retrieve --> Multy_search[多維度檢索]
+    Embedding --> BuildIndex[建立索引]
+    
+    Multy_search --> score[多維度評分]
+    faiss_retrieve --> score
+    query --> faiss_retrieve[向量檢索]
+    BuildIndex --> faiss_retrieve
+    
+    score --> weight_score[自適應權重]
+    weight_score --> rank[結果排序]
+    rank --> Output[返回結果]
 ```
 
 ### 2.2 評分機制架構
