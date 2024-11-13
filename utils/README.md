@@ -171,12 +171,12 @@ $$
 
 #### 位置分數
 $$
-Position(Q,D) = \frac{1}{1 + \text{std\_pos} + \frac{\text{avg\_pos}}{|D|}}
+Position(Q,D) = \frac{1}{1 + \text{std-pos} + \frac{\text{avg-pos}}{|D|}}
 $$
 
 其中:
-- $\text{avg\_pos}$: 查詢詞在文檔中的平均位置
-- $\text{std\_pos}$: 查詢詞在文檔中的位置的標準差
+- $\text{avg-pos}$: 查詢詞在文檔中的平均位置
+- $\text{std-pos}$: 查詢詞在文檔中的位置的標準差
 - $|D|$: 文檔長度
 
 #### 詞密度
