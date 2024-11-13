@@ -78,8 +78,8 @@
 
    Adjust these parameters based on your specific needs and run the retrieval script again to see the effects.
 
-   > [!NOTE]
-   > Some parameters in config.yaml are still under development and may need further tuning. Please check back later for the optimal settings.
+> [!NOTE]
+> Some parameters in config.yaml are still under development and may need further tuning. Please check back later for the optimal settings.
 
 
 
