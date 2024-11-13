@@ -109,6 +109,110 @@ graph TD
     F --> G[最終分數]
 ```
 
+### 2.2.1 評分公式說明
+
+### 詞頻相關性
+
+#### BM25分數
+$$
+BM25(Q,D) = \sum_{i=1}^n IDF(q_i) \cdot \frac{f(q_i,D) \cdot (k_1 + 1)}{f(q_i,D) + k_1 \cdot (1 - b + b \cdot \frac{|D|}{avgdl})}
+$$
+
+其中:
+- $f(q_i,D)$: 詞$q_i$在文檔$D$中的頻率
+- $|D|$: 文檔長度
+- $avgdl$: 平均文檔長度
+- $k_1, b$: 可調參數(本系統中$k_1=0.5, b=0.7$)
+
+#### 詞項重要性
+$$
+Importance(t, D) = TF(t, D) \cdot IDF(t) \cdot \sum_{i} \frac{1}{1 + pos_i}
+$$
+
+其中:
+- $TF(t,D)$: 詞$t$在文檔$D$中的詞頻
+- $IDF(t) = \log\frac{N}{df(t)}$，$N$為總文檔數，$df(t)$為包含詞$t$的文檔數
+- $\sum_{i} \frac{1}{1 + pos_i}$：詞 $t$ 在文檔 $D$ 中所有出現位置的權重總和，$pos_i$ 為第 $i$ 個出現位置
+
+
+#### 查詢覆蓋度
+$$
+Coverage(Q,D) = \frac{\sum_{t \in Q \cap D} \log\left(\frac{N}{df(t)}\right)}{|Q|}
+$$
+
+其中:
+- $Q$: 查詢詞集合
+- $D$: 文檔詞集合
+- $N$: 總文檔數
+- $df(t)$: 詞$t$的文檔頻率，即包含詞$t$的文檔數
+
+### 語義相關性
+
+#### 向量相似度(FAISS)
+$$
+Similarity(q,d) = cosine(Embed(q), Embed(d))
+$$
+
+其中:
+- $Embed()$: BGE-M3模型生成的1024維向量
+- $cosine()$: 餘弦相似度
+
+#### 語義相似度
+$$
+SemanticSim(Q,D) = \cos(\mathbf{q}, \mathbf{d})
+$$
+
+其中:
+- $\mathbf{q}$: 查詢 $Q$ 的向量表示，通過加權查詢詞向量的平均計算得出，其中每個詞的權重基於其詞頻和逆文件頻率（IDF）
+- $\mathbf{d}$: 文檔 $D$ 的向量表示，通過加權文檔詞向量的平均計算得出，其中每個詞的權重基於其詞頻和逆文件頻率（IDF）
+- $\cos(\mathbf{q}, \mathbf{d})$: 向量 $\mathbf{q}$ 和 $\mathbf{d}$ 之間的餘弦相似度，用於衡量查詢與文檔的語義相似性
+
+### 結構相關性
+
+#### 位置分數
+$$
+Position(Q,D) = \frac{1}{1 + \text{std\_pos} + \frac{\text{avg\_pos}}{|D|}}
+$$
+
+其中:
+- $\text{avg\_pos}$: 查詢詞在文檔中的平均位置
+- $\text{std\_pos}$: 查詢詞在文檔中的位置的標準差
+- $|D|$: 文檔長度
+
+#### 詞密度
+$$
+Density(Q,D) = \max_{\text{window}} \left( \frac{\sum_{w \in \text{window} \cap Q} \log\left(\frac{N}{df(w)}\right)}{\text{window size}} \right)
+$$
+
+其中:
+- $Q$: 查詢詞集合
+- $D$: 文檔詞集合
+- $\text{window}$: 文檔中的滑動窗口
+- $N$: 總文檔數
+- $df(w)$: 詞$w$的文檔頻率，即包含詞$w$的文檔數
+- $\text{window size}$: 滑動窗口的大小
+
+
+#### 上下文相似度
+$$
+ContextSim(q,d) = \frac{\sum_{i=1}^n cosine(Embed(context(q_i)), Embed(context(d_i)))}{n + 1}
+$$
+
+其中:
+- $context()$: 取詞的上下文窗口(預設3個詞)
+- $n$: 匹配詞對的數量
+
+### 最終加權分數
+
+$$
+FinalScore = \sum_{i=1}^m w_i \cdot Score_i
+$$
+
+其中:
+- $w_i$: 各維度的自適應權重
+- $Score_i$: 各維度的正規化分數
+- $m$: 評分維度數量
+
 ### 2.3 自適應權重機制
 
 本系統實現了基於查詢特徵的動態權重調整：
@@ -135,6 +239,10 @@ graph TD
    - 高多樣性查詢(>1.5)：增強語義理解
      - semantic \* 1.2
      - context \* 1.2
+
+3. **權重正規化**
+   - 所有權重調整後進行正規化，確保權重總和為1
+   - 正規化公式: weight = weight / sum(weights)
 
 ### 2.4 評分權重分析
 

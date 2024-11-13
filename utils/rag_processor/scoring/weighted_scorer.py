@@ -31,7 +31,7 @@ class WeightedScorer(BaseScorer):
         計算多指標加權分數
         
         Args:
-            bm25_results (Dict[Tuple[int, int], float]): BM25檢索結果分數，格��為{(文檔ID,chunk_idx): 分數}
+            bm25_results (Dict[Tuple[int, int], float]): BM25檢索結果分數，格為{(文檔ID,chunk_idx): 分數}
             faiss_results (Dict[Tuple[int, int], float]): FAISS檢索結果分數，格式為{(文檔ID,chunk_idx): 分數}
             term_importance (Dict[Tuple[int, int], float]): 詞項重要性分數，格式為{(文檔ID,chunk_idx): 分數}
             semantic_similarity (Dict[Tuple[int, int], float]): 語義相似度分數，格式為{(文檔ID,chunk_idx): 分數}
@@ -132,6 +132,7 @@ class WeightedScorer(BaseScorer):
             weighted_scores[key] = score
 
         # 記錄權重和分數詳情
+        logger.info(f'Query Features - Length: {query_length}, Diversity: {query_diversity:.2f}')
         logger.info(f'Adjusted Weights: {adjusted_weights}')
         for key in sorted(weighted_scores.keys(), key=lambda k: weighted_scores[k], reverse=True):
             logger.info(

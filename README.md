@@ -22,6 +22,7 @@
   
     ```bash
     #!/bin/bash
+    # ... check word2vec/wiki.zh.bin
     python3 bm25_retrieve_v2.py \
       --question_path ./CompetitionDataset/dataset/preliminary/questions_example.json \
       --source_path ./CompetitionDataset/reference \
@@ -35,12 +36,43 @@
    ./retrieve_v2.sh
    ```
    
-   This will start the retrieval process, and the results will be saved to the file specified in --output_path.
+   This will start the retrieval process, and the results will be saved to the file specified in `--output_path`.
 
 4. **After the script finishes running, you can check the output at the location specified in the `--output_path` to view the retrieval results.**
    
 > [!NOTE]
 > If you have a **ground_truths.json** file, you can also run `python3 score.py` to evaluate the retrieval results.
+
+
+5. **If you want to experiment with different parameters, you can modify the settings in `config.yaml`:**
+
+   The `config.yaml` file contains various configurable parameters that control the retrieval behavior:
+
+   ```yaml
+   # Core parameters
+   load_all_data: false        # Whether to load all data at once
+   bm25_k1: 0.5               # BM25 k1 parameter
+   bm25_b: 0.7                # BM25 b parameter
+   chunk_size: 500            # Size of text chunks
+   overlap: 100               # Overlap between chunks
+
+   # Scoring method weights
+   base_weights:
+     bm25: 0.20              # Weight for BM25 score
+     faiss: 0.3              # Weight for FAISS similarity
+     semantic: 0.1           # Weight for semantic matching
+     coverage: 0.1           # Weight for query coverage
+     position: 0.1           # Weight for position scoring
+     density: 0.15           # Weight for term density
+     context: 0.05           # Weight for context similarity
+   ```
+
+   Adjust these parameters based on your specific needs and run the retrieval script again to see the effects.
+
+   > [!NOTE]
+   > Some parameters in config.yaml are still under development and may need further tuning. Please check back later for the optimal settings.
+
+
 
 ## ⚡Quick Start with Docker
 
@@ -115,7 +147,7 @@ AICUP-2024/     # 專案資料夾
 |   |   ├─ retrieval_system/                       # 檢索工具
 |   |   |   ├─ __pycache__
 |   |   |   ├─ __init.py                             # 匯出檢索模組
-|   |   |   ├─ bm25_retrival.py                      # BM25 
+|   |   |   ├─ bm25_retrival.py                      # BM25 (未分離)
 |   |   |   ├─ context_similarity.py                 # 計算上下文相似度
 |   |   |   ├─ faiss_retrieval.py                    # faiss 向量檢索
 |   |   |   ├─ position_score.py                     # 計算位置得分
@@ -143,18 +175,20 @@ AICUP-2024/     # 專案資料夾
 │   └─ env.py                                    # 檢查環境變數
 ├─ logs/                                    # 運行日誌
 │   ├─ retrieve_xxxx-xx-xx_xx-xx-xx.log       # 檢索狀況
-│   ├─ chunk_xxxx-xx-xx_xx-xx-xx.log          # 檢索狀況
+│   ├─ chunk_xxxx-xx-xx_xx-xx-xx.log          # 文件分塊狀況
 │   └─ score_xxxx-xx-xx_xx-xx-xx.log          # 評分結果
 ├─ .env                   # 環境變數
 ├─ .gitignore
 ├─ README.md              # 程式使用說明文件
-├─ bm25_retrieve_v2.py    # 主程式
+├─ bm25_retrieve_v2.py    # 主程式 (直接讀取PDF)
+├─ bm25_retrieve_v3.py    # 主程式 (載入預處理json，json_reader未更新完成，尚未與v2合併)
 ├─ config.yaml            # 主程式運行參數 (部分參數尚未設置完成)
 ├─ docker-compose.yaml    # docker compose
 ├─ dockerfile             # 建立 docker
 ├─ requirements.txt       # 需安裝的 module
 ├─ retrieve.log           # 檢索狀況
-├─ retrieve_v2.sh         # 運行主程式
+├─ retrieve_v2.sh         # 運行主程式 (直接讀取PDF)
+├─ retrieve_v3.sh         # 運行主程式 (載入預處理json，json_reader未更新完成，尚未與v2合併)
 ├─ score.log              # 評分結果
 └─ score.py               # 評估運行結果
 ```
