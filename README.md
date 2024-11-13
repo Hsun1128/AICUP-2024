@@ -2,7 +2,16 @@
 
 ## 🔧How to use
 
-1. **Open `retrieve_v2.sh` and check the file paths for the following variables:**
+> [!WARNING]
+> Ensure that your CUDA version and GPU are compatible with the dependencies in the `requirements.txt` file. For GPU-accelerated tasks, make sure you have the appropriate CUDA version installed and that your GPU drivers are up to date.
+
+1. **Install required dependencies:**
+    
+    ```
+    pip install -r requirements.txt
+    ```
+    
+2. **Open `retrieve_v2.sh` and check the file paths for the following variables:**
 
     - `--question_path`: Path to the file containing the questions to retrieve.
     - `--source_path`: Path to the folder containing the source documents or dataset.
@@ -19,16 +28,19 @@
       --output_path ./CompetitionDataset/dataset/preliminary/pred_retrieve.json \
       --load_path ./custom_dicts/with_frequency
     ```
-2. **Once you've verified the file paths, open your terminal and navigate to the directory where retrieve_v2.sh is located.**
 
-3. **In the terminal, run the following command to execute the script:**
+3. **Once you've verified the file paths, open your terminal, navigate to the directory where the `retrieve_v2.sh` script is located, and run the following command to execute it:**
    
    ```bash
    ./retrieve_v2.sh
    ```
-This will start the retrieval process, and the results will be saved to the file specified in --output_path.
+   
+   This will start the retrieval process, and the results will be saved to the file specified in --output_path.
 
-4. **After the script finishes running, you can check the output at the location specified in the --output_path to view the retrieval results.**
+4. **After the script finishes running, you can check the output at the location specified in the `--output_path` to view the retrieval results.**
+   
+> [!NOTE]
+> If you have a **ground_truths.json** file, you can also run `python3 score.py` to evaluate the retrieval results.
 
 ## ⚡Quick Start with Docker
 
