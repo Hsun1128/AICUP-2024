@@ -47,9 +47,13 @@
    This will start the retrieval process, and the results will be saved to the file specified in `--output_path`.
 
 5. **After the script finishes running, you can check the output at the location specified in the `--output_path` to view the retrieval results.**
-   
+> [!TIP]
+> You can find detailed logs in the `logs/` directory:
+> - `retrieve_YYYY-MM-DD_HH-MM-SS.log`: Contains retrieval process logs and results
+> - `chunk_YYYY-MM-DD_HH-MM-SS.log`: Contains word segmentation results and chunking details
+
 > [!NOTE]
-> If you have a **ground_truths.json** file, you can also run `python3 score.py` to evaluate the retrieval results.
+> If you have a **ground_truths.json** file, you can also run `python3 score.py` to evaluate the retrieval results. The evaluation results will be saved in `logs/score_YYYY-MM-DD_HH-MM-SS.log`.
 
 
 6. **If you want to experiment with different parameters, you can modify the settings in `config.yaml`:**
