@@ -30,7 +30,17 @@ from datetime import datetime
 import sys
 
 class CustomFormatter(logging.Formatter):
-    """自定義日誌格式化器，添加顏色"""
+    """自定義日誌格式化器類
+    
+    此類繼承自logging.Formatter，用於為不同級別的日誌添加不同的顏色。
+    
+    顏色對應：
+    - DEBUG: 灰色
+    - INFO: 藍色
+    - WARNING: 黃色
+    - ERROR: 紅色
+    - CRITICAL: 粗體紅色
+    """
     grey = "\x1b[38;21m"
     blue = "\x1b[38;5;39m"
     yellow = "\x1b[38;5;226m"
@@ -55,6 +65,25 @@ class CustomFormatter(logging.Formatter):
         return formatter.format(record)
 
 class PDFExtractor:
+    """PDF文本提取器類
+    
+    此類用於批量處理PDF文件，將其中的文本內容提取出來並保存為JSON格式。
+    支持OCR功能，可識別中英文文本，並提供多進程處理能力。
+    
+    主要功能：
+    1. 自動檢測系統依賴（tesseract-ocr）
+    2. 多進程並行處理PDF文件
+    3. 詳細的日誌記錄
+    4. 處理統計信息收集
+    
+    Attributes:
+        input_dir (Path): 輸入PDF文件的目錄
+        output_dir (Path): 輸出JSON文件的目錄
+        max_workers (int): 最大工作進程數
+        log_dir (Path): 日誌文件存儲目錄
+        logger (Logger): 日誌記錄器實例
+        stats (dict): 處理統計信息字典
+    """
     def __init__(self, input_dir: str, output_dir: str, max_workers: int = None):
         """
         初始化PDF提取器
@@ -90,7 +119,17 @@ class PDFExtractor:
         }
 
     def _setup_logging(self):
-        """設置日誌系統"""
+        """配置日誌系統
+        
+        設置兩個日誌處理器：
+        1. 文件處理器：記錄所有級別的日誌到文件
+        2. 控制台處理器：只顯示INFO及以上級別的彩色日誌
+        
+        日誌文件特點：
+        - 自動按大小分割（每個文件最大10MB）
+        - 最多保留5個備份文件
+        - 使用UTF-8編碼
+        """
         # 獲取logger
         self.logger = logging.getLogger('PDFExtractor')
         self.logger.setLevel(logging.DEBUG)
@@ -130,7 +169,15 @@ class PDFExtractor:
         self.stats_file = self.log_dir / f'statistics_{timestamp}.json'
 
     def _check_dependencies(self):
-        """檢查必要的依賴"""
+        """檢查系統依賴
+        
+        檢查項目：
+        1. tesseract-ocr 是否已安裝
+        2. 中文語言包(chi_tra)是否可用
+        
+        Raises:
+            FileNotFoundError: 當tesseract未安裝時拋出
+        """
         try:
             result = subprocess.run(['tesseract', '--version'], 
                                  capture_output=True, 
@@ -149,11 +196,22 @@ class PDFExtractor:
 
     @staticmethod
     def process_single_pdf(args: Tuple[Path, Path]) -> Tuple[str, bool, str, float]:
-        """
-        處理單個PDF檔案
+        """處理單個PDF文件
+        
+        使用unstructured庫的partition_pdf函數進行PDF文本提取，
+        支持OCR功能，可識別表格結構。
+        
+        Args:
+            args: 包含(pdf_path, output_path)的元組
+                pdf_path (Path): PDF文件路徑
+                output_path (Path): 輸出JSON文件路徑
         
         Returns:
-            Tuple[str, bool, str, float]: (檔案名, 是否成功, 訊息, 處理時間)
+            tuple: 包含以下信息的元組：
+                - 文件名 (str)
+                - 處理是否成功 (bool)
+                - 處理信息或錯誤信息 (str)
+                - 處理耗時 (float)
         """
         pdf_path, output_path = args
         start_time = time.time()
@@ -192,7 +250,12 @@ class PDFExtractor:
             return pdf_path.name, False, str(e), process_time
 
     def update_statistics(self, success: bool, process_time: float):
-        """更新處理統計資料"""
+        """更新處理統計信息
+        
+        Args:
+            success (bool): 處理是否成功
+            process_time (float): 處理耗時（秒）
+        """
         self.stats['total_files'] += 1
         self.stats['total_processing_time'] += process_time
         if success:
@@ -201,7 +264,15 @@ class PDFExtractor:
             self.stats['failed_files'] += 1
 
     def save_statistics(self):
-        """儲存統計資料到JSON檔案"""
+        """保存統計信息
+        
+        將處理統計信息保存為JSON文件，包括：
+        - 開始和結束時間
+        - 總文件數
+        - 成功和失敗數量
+        - 平均處理時間
+        - 成功率
+        """
         self.stats['end_time'] = datetime.now().isoformat()
         self.stats['average_processing_time'] = (
             self.stats['total_processing_time'] / self.stats['total_files']
@@ -225,7 +296,15 @@ class PDFExtractor:
         self.logger.info(f"詳細統計已儲存至: {self.stats_file}")
 
     def process_all_pdfs(self):
-        """使用多進程處理所有PDF檔案"""
+        """批量處理所有PDF文件
+        
+        主要流程：
+        1. 掃描輸入目錄中的所有PDF文件
+        2. 使用進程池並行處理文件
+        3. 使用tqdm顯示處理進度
+        4. 收集處理結果並更新統計信息
+        5. 保存最終統計數據
+        """
         self.stats['start_time'] = datetime.now().isoformat()
         
         # 取得所有PDF檔案
@@ -270,7 +349,17 @@ class PDFExtractor:
         self.save_statistics()
 
 def main():
-    """主程式入口點"""
+    """程序入口點
+    
+    支持的命令行參數：
+    - input_dir: PDF文件輸入目錄
+    - output_dir: JSON文件輸出目錄
+    - --workers: 可選，指定工作進程數
+    
+    異常處理：
+    - 捕獲所有異常並記錄到日誌
+    - 發生嚴重錯誤時返回退出碼1
+    """
     import argparse
     
     parser = argparse.ArgumentParser(description='Extract text from PDF files including OCR')
