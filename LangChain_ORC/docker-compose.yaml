@@ -1,6 +1,8 @@
 services:
   langchain_ocr:
-    image: esun/ocr
+    build:
+      context: .
+      dockerfile: dockerfile
     container_name: langchain_ocr
     volumes:
       - .:/app/ocr
@@ -12,4 +14,5 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    command: ["tail", "-f", "/dev/null"]
+    command: >
+      bash -c "cd /app/ocr && conda run -n langchain_ocr bash ./preprocess.sh"

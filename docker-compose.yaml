@@ -1,0 +1,16 @@
+services:
+  baseline:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: baseline
+    volumes:
+      - ./:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: ["conda", "run", "-n", "baseline", "bash", "/app/retrieve_v2.sh"]

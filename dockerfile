@@ -32,7 +32,8 @@ RUN apt-get update && apt-get install -y g++ \
     libjpeg8-dev \
     libtiff5-dev \
     zlib1g-dev \
-    libleptonica-dev && \
+    libleptonica-dev \
+    libgl1-mesa-glx && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ### help using command line
@@ -57,24 +58,7 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py310_24.7.1-0-Linux-x86
 
 RUN conda init
 
-FROM conda as langchain_ocr
-RUN conda init
-# Create conda environment and install GPU versions with CUDA 11.8
-RUN conda config --set ssl_verify false
-RUN conda update --all -y && \
-    conda install -c anaconda ca-certificates -y && \
-    conda install -c anaconda openssl -y
-
-RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main && \
-    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free && \
-    conda config --set ssl_verify false
-
-
-RUN conda create -n langchain_ocr python=3.10 -y
-
-RUN conda run -n langchain_ocr -c pip install "unstructured[pdf]" langchain-unstructured tqdm
-
-FROM conda as Baseline
+FROM conda as baseline
 
 RUN conda init
 # Create conda environment and install GPU versions with CUDA 11.8
@@ -95,10 +79,10 @@ RUN conda run -n baseline conda install pytorch==2.4.1 torchvision==0.19.1 torch
 RUN conda run -n baseline conda install -c conda-forge openjdk=21 maven lightgbm nmslib -y 
 RUN conda run -n baseline conda install -c pytorch -c nvidia faiss-gpu=1.8.0 pytorch=*=*cuda* pytorch-cuda=12 -y
 RUN conda run -n baseline conda install -c conda-forge numpy==1.23.5 scipy==1.9.3 scikit-learn==1.5.2 -y
-RUN conda run -n baseline pip install pdfplumber tqdm rank_bm25 jieba pillow pymupdf loguru sklearn
-RUN conda run -n baseline pip install langchain langchain-core langchain-community langchain-huggingface langchain-text-splitters dotenv
-RUN conda run -n baseline pip install pyserini ollama marqo
-
+RUN conda run -n baseline pip install pdfplumber tqdm rank_bm25 jieba pillow pymupdf loguru scikit-learn
+RUN conda run -n baseline pip install langchain langchain-core langchain-community langchain-huggingface langchain-text-splitters
+RUN conda run -n baseline pip install pyserini ollama marqo gensim
+RUN conda run -n baseline pip install  python-dotenv
 # Install pytesseract
 RUN conda run -n baseline pip install pytesseract
 

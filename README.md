@@ -108,6 +108,31 @@
 
 
 ##  🐳 Quick Start with Docker
+### Run [retrieve_v2.sh](retrieve_v2.sh)
+1. Build and run the container.
+  ```bash
+  docker compose up -d --build
+  ```
+2. Then You will realized the server is computing.
+
+### RUN [retrieve_v3.sh](retrieve_v3.sh)
+#### **Part 1 run the preprocess**
+1. Get into the [LangChain_ORC](LangChain_ORC)
+  ```bash
+  cd LangChain_ORC
+  ```
+2. Run the docker and the OCR process
+  ```bash
+  docker compose up -d --build
+  ```
+#### **Part 2 Run the [retrieve_v3.sh](retrieve_v3.sh)**
+1. Build and run the container.
+  ```bash
+  docker compose up -d --build
+  ```
+2. Then You will realized the server is computing.
+
+
 
 ## 🚀 Program Description
 
@@ -116,7 +141,7 @@ See [utils/README.md](utils/README.md) for detailed program description.
 
 ## 📂Data Structure
 
-```
+```bash
 AICUP-2024/     # 專案資料夾
 ├─ Baseline/                 # 官方提供的範例資料夾
 │   ├─ README.md               # 簡介
