@@ -1,6 +1,6 @@
 # AICUP-2024
 
-## 🔧How to use
+## 🔧 How to use
 
 > [!WARNING]
 > Ensure that your CUDA version and GPU are compatible with the dependencies in the `requirements.txt` file. For GPU-accelerated tasks, make sure you have the appropriate CUDA version installed and that your GPU drivers are up to date.
@@ -81,15 +81,34 @@
 > [!NOTE]
 > Some parameters in config.yaml are still under development and may need further tuning. Please check back later for the optimal settings.
 
+## 🔄 [Optional] Data Preprocessing 
+
+   If you want to preprocess the data using OCR and text extraction, you can use the tools in the `LangChain_ORC` directory:
+
+   ```bash
+   cd LangChain_ORC
+   ./preprocess.sh
+   ```
+
+   This will:
+   - Extract text from PDF files in the reference directory
+   - Format FAQ documents for better retrieval
+   - Generate preprocessed files in a structured format
+
+   See [LangChain_ORC/README.md](LangChain_ORC/README.md) for detailed preprocessing instructions and options.
+
+> [!NOTE]
+> Data preprocessing is optional. The retrieval system will work with raw files, but preprocessing may improve results for certain document types.
 
 
-## ⚡Quick Start with Docker
 
-## 🚀Program Description
+
+##  🐳 Quick Start with Docker
+
+## 🚀 Program Description
 
 See [utils/README.md](utils/README.md) for detailed program description.
 
-See [LangChain_ORC/README.md](LangChain_ORC/README.md) for detailed data preprocessing description.
 
 ## 📂Data Structure
 
