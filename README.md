@@ -1,5 +1,33 @@
 # AICUP-2024
 
+## How to use
+
+1. Open `retrieve_v2.sh` and check the file paths for the following variables:
+  - `--question_path`: Path to the file containing the questions to retrieve.
+  - `--source_path`: Path to the folder containing the source documents or dataset.
+  - `--output_path`: Path where the retrieval results will be saved.
+  - `--load_path`: Path to a custom dictionary or resource file, such as a frequency dictionary.
+
+Example of `retrieve_v2.sh` file:
+  ```bash
+  #!/bin/bash
+  python3 bm25_retrieve_v2.py \
+    --question_path ./CompetitionDataset/dataset/preliminary/questions_example.json \
+    --source_path ./CompetitionDataset/reference \
+    --output_path ./CompetitionDataset/dataset/preliminary/pred_retrieve.json \
+    --load_path ./custom_dicts/with_frequency
+  ```
+2. Once you've verified the file paths, open your terminal and navigate to the directory where retrieve_v2.sh is located.
+
+3. In the terminal, run the following command to execute the script:
+  ```bash
+  ./retrieve_v2.sh
+  ```
+This will start the retrieval process, and the results will be saved to the file specified in --output_path.
+
+4. After the script finishes running, you can check the output at the location specified in the --output_path to view the retrieval results.
+
+
 ## Program Description
 See [utils/README.md](utils/README.md) for detailed program description.
 
