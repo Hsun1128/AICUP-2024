@@ -1,4 +1,5 @@
 from typing import Optional
+import os
 import logging
 from gensim.models import KeyedVectors
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
@@ -50,6 +51,9 @@ class ResourceLoader:
         Raises:
             FileNotFoundError: 當模型文件不存在時
         """
+        if not os.path.exists(model_path):
+            logger.warning('Word2Vec model not found')
+
         model = KeyedVectors.load(model_path)
         logger.info('Word2Vec model loaded successfully')
         return model
