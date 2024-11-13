@@ -125,9 +125,9 @@ AICUP-2024/     # 專案資料夾
 │   ├─ __init__.py
 │   └─ env.py                                    # 檢查環境變數
 ├─ logs/                                    # 運行日誌
-│   ├─ retrieve_xxxx.xx.xx_xx.xx.xx.log       # 檢索狀況
-│   ├─ chunk_xxxx.xx.xx_xx.xx.xx.log          # 檢索狀況
-│   └─ score_xxxx.xx.xx_xx.xx.xx.log          # 評分結果
+│   ├─ retrieve_xxxx-xx-xx_xx-xx-xx.log       # 檢索狀況
+│   ├─ chunk_xxxx-xx-xx_xx-xx-xx.log          # 檢索狀況
+│   └─ score_xxxx-xx-xx_xx-xx-xx.log          # 評分結果
 ├─ .env                   # 環境變數
 ├─ .gitignore
 ├─ README.md              # 程式使用說明文件
