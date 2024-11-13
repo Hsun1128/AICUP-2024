@@ -89,6 +89,7 @@
 
 See [utils/README.md](utils/README.md) for detailed program description.
 
+See [LangChain_ORC/README.md](LangChain_ORC/README.md) for detailed data preprocessing description.
 
 ## 📂Data Structure
 
