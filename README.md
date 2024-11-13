@@ -154,8 +154,6 @@ AICUP-2024/     # 專案資料夾
 │   ├─ README.pdf              # pdf 簡介
 │   ├─ bm25_retrieve.py        # 範例程式
 │   ├─ bm25_with_faiss.py      # 測試 faiss
-│   ├─ docker-compose.yaml     # docker
-│   ├─ dockerfile              # 建立 docker
 │   ├─ langchain_test.py       # 測試 langchain
 │   ├─ new_bm25_retrieve.py    # 測試新 bm25 程式
 │   └─ retrieve-test.py        # 測試 retrieve
