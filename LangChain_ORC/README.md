@@ -2,11 +2,11 @@
 
 這是一個使用 LangChain 和 Tesseract OCR 的文件預處理系統，主要用於處理 PDF 文件和 FAQ 資料的轉換。
 
-## 系統需求
-
-- Docker 環境
-- NVIDIA GPU (支援 CUDA)
-- Docker Compose
+> [!NOTE]
+> 系統需求
+> - Docker 環境
+> - NVIDIA GPU (支援 CUDA)
+> - Docker Compose
 
 ## 專案結構
 ```
@@ -116,12 +116,11 @@ CompetitionDataset/
 └── ...
 ```
 
-### 注意事項
-
-1. 確保輸入目錄中存在 `pid_map_content.json` 文件
-2. 程序會自動創建輸出目錄（如果不存在）
-3. 輸出文件中的問答對使用製表符（\t）分隔
-4. 多個答案使用逗號（,）連接
+> [!WARNING]
+> 1. 確保輸入目錄中存在 `pid_map_content.json` 文件
+> 2. 程序會自動創建輸出目錄（如果不存在）
+> 3. 輸出文件中的問答對使用製表符（\t）分隔
+> 4. 多個答案使用逗號（,）連接
 
 ## PDF 文件處理工具(`pdf_extractor.py`)
 
@@ -208,26 +207,23 @@ output_folder/
    - 詳細的錯誤日誌
    - 處理失敗統計
 
-### 注意事項
+> [!WARNING]
+> 1. 確保系統已安裝 Tesseract OCR 及中文語言包
+> 2. 輸入資料夾必須包含 PDF 檔案
+> 3. 程式會自動建立輸出資料夾及日誌資料夾
+> 4. 大型 PDF 檔案可能需要較長處理時間
+> 5. 建議預留足夠的系統記憶體
 
-1. 確保系統已安裝 Tesseract OCR 及中文語言包
-2. 輸入資料夾必須包含 PDF 檔案
-3. 程式會自動建立輸出資料夾及日誌資料夾
-4. 大型 PDF 檔案可能需要較長處理時間
-5. 建議預留足夠的系統記憶體
 
-### 錯誤排除
-
-1. 如果遇到 Tesseract 相關錯誤：
-   ```bash
-   sudo apt-get update
-   sudo apt-get install tesseract-ocr tesseract-ocr-chi-tra
-   ```
-
-2. 如果遇到記憶體不足：
-   - 減少同時處理的工作進程數
-   - 使用 `--workers` 參數指定較小的數值
-
-3. 如果遇到權限問題：
-   - 確保對輸入和輸出資料夾有讀寫權限
-   - 檢查日誌資料夾的權限設定
+> [!TIP]
+> 1. 如果遇到 Tesseract 相關錯誤：
+>    ```bash
+>    sudo apt-get update
+>    sudo apt-get install tesseract-ocr tesseract-ocr-chi-tra
+>    ```
+> 2. 如果遇到記憶體不足：
+>    - 減少同時處理的工作進程數
+>    - 使用 `--workers` 參數指定較小的數值
+> 3. 如果遇到權限問題：
+>    - 確保對輸入和輸出資料夾有讀寫權限
+>    - 檢查日誌資料夾的權限設定
