@@ -34,9 +34,9 @@ DEFAULT_CONFIG = {
     },
 
     'base_weights': {
-        'bm25': 0.20,
+        'bm25': 0.15,
         'faiss': 0.30,
-        'importance': 0.00,
+        'importance': 0.05,
         'semantic': 0.10,
         'coverage': 0.10,
         'position': 0.10,
@@ -51,7 +51,7 @@ DEFAULT_CONFIG = {
 class RAGProcessorConfig:
     """
     文本處理器的配置類，用於集中管理所有配置參數
-    此類可在主程式中實例化並傳入TextProcessor，方便統一管理和修改配置
+    此類可在主程式中實例化並傳入RAGProcessor，方便統一管理和修改配置
     
     Attributes:
         stopwords_filepath (str): 停用詞文件路徑
@@ -76,8 +76,8 @@ class RAGProcessorConfig:
         chunk_preview (bool): 是否顯示分塊預覽
 
     Example:
-        >>> config = TextProcessorConfig.from_yaml("config.yaml")
-        >>> processor = TextProcessor(config)
+        >>> config = RAGProcessorConfig.from_yaml("config.yaml")
+        >>> processor = RAGProcessor(config)
     """
     load_all_data: bool = DEFAULT_CONFIG['load_all_data']
     stopwords_filepath: str = DEFAULT_CONFIG['stopwords_filepath']
@@ -163,7 +163,6 @@ class RAGProcessorConfig:
         for key, default_value in DEFAULT_CONFIG.items():
             if key not in config_dict:
                 config_dict[key] = default_value
-                
         return cls(**config_dict)
 
     def to_yaml(self, yaml_path: str = './config.yaml') -> None:
