@@ -10,8 +10,17 @@
     ```
     pip install -r requirements.txt
     ```
+
+2. **Set the question range in `bm25_retrieve_v2.py`:**
+
+    Modify the `RANGE` variable to specify which questions to process. For example:
+    ```python
+    RANGE = range(0, 150)  # Process questions range from 0 to 149 (total 150 questions)
+    ```
     
-2. **Open `retrieve_v2.sh` and check the file paths for the following variables:**
+    This setting controls which subset of questions will be processed during retrieval.
+
+3. **Open `retrieve_v2.sh` and check the file paths for the following variables:**
 
     - `--question_path`: Path to the file containing the questions to retrieve.
     - `--source_path`: Path to the folder containing the source documents or dataset.
@@ -19,7 +28,6 @@
     - `--load_path`: Path to a custom dictionary or resource file, such as a frequency dictionary.
 
     Example of `retrieve_v2.sh` file:
-  
     ```bash
     #!/bin/bash
     # ... check word2vec/wiki.zh.bin
@@ -30,7 +38,7 @@
       --load_path ./custom_dicts/with_frequency
     ```
 
-3. **Once you've verified the file paths, open your terminal, navigate to the directory where the `retrieve_v2.sh` script is located, and run the following command to execute it:**
+4. **Once you've verified the file paths, open your terminal, navigate to the directory where the `retrieve_v2.sh` script is located, and run the following command to execute it:**
    
    ```bash
    ./retrieve_v2.sh
@@ -38,19 +46,19 @@
    
    This will start the retrieval process, and the results will be saved to the file specified in `--output_path`.
 
-4. **After the script finishes running, you can check the output at the location specified in the `--output_path` to view the retrieval results.**
+5. **After the script finishes running, you can check the output at the location specified in the `--output_path` to view the retrieval results.**
    
 > [!NOTE]
 > If you have a **ground_truths.json** file, you can also run `python3 score.py` to evaluate the retrieval results.
 
 
-5. **If you want to experiment with different parameters, you can modify the settings in `config.yaml`:**
+6. **If you want to experiment with different parameters, you can modify the settings in `config.yaml`:**
 
    The `config.yaml` file contains various configurable parameters that control the retrieval behavior:
 
    ```yaml
    # Core parameters
-   load_all_data: false        # Whether to load all data at once
+   load_all_data: false       # Whether to load all data at once (not developed yet)
    bm25_k1: 0.5               # BM25 k1 parameter
    bm25_b: 0.7                # BM25 b parameter
    chunk_size: 500            # Size of text chunks
@@ -60,6 +68,7 @@
    base_weights:
      bm25: 0.20              # Weight for BM25 score
      faiss: 0.3              # Weight for FAISS similarity
+     importance: 0.0         # Weight for term importance
      semantic: 0.1           # Weight for semantic matching
      coverage: 0.1           # Weight for query coverage
      position: 0.1           # Weight for position scoring
