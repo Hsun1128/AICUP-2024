@@ -113,7 +113,10 @@
   ```bash
   docker compose up -d --build
   ```
-2. Then You will realized the server is computing.
+2. Run the [retrieve_v2.sh](retrieve_v2.sh)
+  ```bash
+  docker exec baseline conda run -n baseline bash /app/retrieve_v2.sh
+  ```
 
 ### RUN [retrieve_v3.sh](retrieve_v3.sh)
 #### **Part 1 run the preprocess**
@@ -130,7 +133,10 @@
   ```bash
   docker compose up -d --build
   ```
-2. Then You will realized the server is computing.
+2. Run the [retrieve_v3.sh](retrieve_v3.sh)
+  ```bash
+  docker exec baseline conda run -n baseline bash /app/retrieve_v3.sh
+  ```
 
 
 
