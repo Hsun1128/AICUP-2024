@@ -37,7 +37,7 @@ To download the pre-trained Word2Vec model and convert it to a faster binary for
 
 ### 1. **Download and Convert the Model**
 
-Run the following script to automatically download the pre-trained Word2Vec model named `wiki.zh.vec` and convert it to the `.bin` format, which is optimized for faster loading:
+Run [`transfer_vec2bin.py`](transfer_vec2bin.py) to automatically download the pre-trained Word2Vec model named `wiki.zh.vec` and convert it to the `.bin` format, which is optimized for faster loading:
 
 ```bash
 python3 transfer_vec2bin.py
@@ -103,8 +103,9 @@ Once the training is completed, congratulations! You will have your own Word2Vec
 ## 🏆 Outcome
 After running the training process, you'll have a custom-trained Word2Vec model that you can use for:
 
-Word embeddings  
-Semantic analysis  
-Text similarity  
-And much more!  
+- Word embeddings  
+- Semantic analysis  
+- Text similarity  
+- And much more!
+  
 Enjoy your trained model!  
