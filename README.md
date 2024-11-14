@@ -38,7 +38,7 @@ For a comprehensive overview of the program's logic and algorithms, refer to the
     - `--output_path`: Path where the retrieval results will be saved.
     - `--load_path`: Path to a custom dictionary or resource file, such as a frequency dictionary.
 
-    Example of `retrieve_v2.sh` file:
+    Example of [`retrieve_v2.sh`](retrieve_v2.sh) file:
     ```bash
     #!/bin/bash
     # ... check word2vec/wiki.zh.bin
@@ -59,7 +59,7 @@ For a comprehensive overview of the program's logic and algorithms, refer to the
 
 5. **After the script finishes running, you can check the output at the location specified in the `--output_path` to view the retrieval results.**
 > [!TIP]
-> You can find detailed logs in the `logs/` directory:
+> You can find detailed logs in the [logs/](logs/) directory:
 > - `retrieve_YYYY-MM-DD_HH-MM-SS.log`: Contains retrieval process logs and results
 > - `chunk_YYYY-MM-DD_HH-MM-SS.log`: Contains word segmentation results and chunking details
 
@@ -67,9 +67,9 @@ For a comprehensive overview of the program's logic and algorithms, refer to the
 > If you have a **ground_truths.json** file, you can also run [`python3 score.py`](score.py) to evaluate the retrieval results. The evaluation results will be saved in `logs/score_YYYY-MM-DD_HH-MM-SS.log`.
 
 
-6. **If you want to experiment with different parameters, you can modify the settings in `config.yaml`:**
+6. **If you want to experiment with different parameters, you can modify the settings in [`config.yaml`](config.yaml):**
 
-   The [`config.yaml`](config.yaml) file contains various configurable parameters that control the retrieval behavior:
+   The `config.yaml` file contains various configurable parameters that control the retrieval behavior:
 
    ```yaml
    # Core parameters
