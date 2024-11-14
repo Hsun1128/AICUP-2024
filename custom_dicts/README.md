@@ -1,6 +1,6 @@
 # 📚 Custom_dicts
 
-This repository contains custom dictionaries for text processing, specifically designed for traditional Chinese text.
+This directory contains custom dictionaries for text processing, specifically designed for traditional Chinese text.
 
 ## 📂 Directory Structure
 
