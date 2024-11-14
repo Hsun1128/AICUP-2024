@@ -46,17 +46,17 @@ python3 transfer_vec2bin.py
 This will download the model and save it as `wiki.zh.vec` in the current directory, then convert it into the .bin format and store it as `wiki.zh.bin`.
 
 ### 2. **Verify the Conversion**
-After the conversion, you can use the load_pretrain.py script to verify that the wiki.zh.bin model is working properly:
+After the conversion, you can use the [`load_pretrain.py`](load_pretrain.py) script to verify that the wiki.zh.bin model is working properly:
 
 ```bash
 python3 load_pretrain.py
 ```
 
-This script checks if the wiki.zh.bin model can be loaded successfully and confirms that it is ready for use.
+This script checks if the `wiki.zh.bin` model can be loaded successfully and confirms that it is ready for use.
 
 ### 🚀 Benefits
-Faster Loading: The .bin format is optimized for quicker model loading and inference, making it ideal for performance-critical applications.
-Pre-trained Model: The wiki.zh.vec model is trained on large Chinese text corpora, providing a solid foundation for various natural language processing (NLP) tasks.
+Faster Loading: The `.bin` format is optimized for quicker model loading and inference, making it ideal for performance-critical applications.
+Pre-trained Model: The `wiki.zh.vec` model is trained on large Chinese text corpora, providing a solid foundation for various natural language processing (NLP) tasks.
 
 ### 🌐 Download Pre-trained Models
 You can also find other pre-trained models that suit your needs. For example, the Word2Vec pre-trained vectors are available for download at the following link:
@@ -65,7 +65,7 @@ You can also find other pre-trained models that suit your needs. For example, th
 
 ## 🧠 Train Your Own Word2Vec Model
 
-Before training the model, you need to set the hyperparameters in [`train_word2vec`](train_word2vec). Here is an example configuration:
+Before training the model, you need to set the hyperparameters in [`train_word2vec.py`](train_word2vec.py). Here is an example configuration:
 
 ```python
 sg = 1  # Skip-gram model
