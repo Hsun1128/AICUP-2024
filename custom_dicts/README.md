@@ -20,5 +20,6 @@ This repository contains custom dictionaries for text processing, specifically d
     ```bash
     python3 add_dict_frequency.py
     ```
+3. **Manage Stop Words**  
+   Adding stop words is simple—just add any words you want to exclude from the analysis to the [stopwords.txt](stopwords.txt) file. This helps filter out irrelevant or common terms that should not appear in your text processing.
 
-This will ensure all words in the custom dictionaries are correctly weighted for more accurate segmentation and analysis.
