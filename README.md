@@ -110,33 +110,33 @@
 ##  🐳 Quick Start with Docker
 ### Run [retrieve_v2.sh](retrieve_v2.sh)
 1. Build and run the container.
-  ```bash
-  docker compose up -d --build
-  ```
+```bash
+docker compose up -d --build
+```
 2. Run the [retrieve_v2.sh](retrieve_v2.sh)
-  ```bash
-  docker exec baseline conda run -n baseline bash /app/retrieve_v2.sh
-  ```
+```bash
+docker exec baseline conda run -n baseline bash /app/retrieve_v2.sh
+```
 
 ### RUN [retrieve_v3.sh](retrieve_v3.sh)
 #### **Part 1 run the preprocess**
 1. Get into the [LangChain_ORC](LangChain_ORC)
-  ```bash
-  cd LangChain_ORC
-  ```
+```bash
+cd LangChain_ORC
+```
 2. Run the docker and the OCR process
-  ```bash
-  docker compose up -d --build
-  ```
+```bash
+docker compose up -d --build
+```
 #### **Part 2 Run the [retrieve_v3.sh](retrieve_v3.sh)**
 1. Build and run the container.
-  ```bash
-  docker compose up -d --build
-  ```
+```bash
+docker compose up -d --build
+```
 2. Run the [retrieve_v3.sh](retrieve_v3.sh)
-  ```bash
-  docker exec baseline conda run -n baseline bash /app/retrieve_v3.sh
-  ```
+```bash
+docker exec baseline conda run -n baseline bash /app/retrieve_v3.sh
+```
 
 
 
