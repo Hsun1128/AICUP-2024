@@ -1,6 +1,13 @@
 # AICUP-2024
 
-## 🔧 How to use
+> [!TIP]
+> This program is designed for efficient retrieval and evaluation tasks, especially useful for document-based question answering. It includes BM25 and FAISS-based retrieval methods, along with optional preprocessing and scoring tools, for AICUP-2024 competition datasets. This project supports various settings, such as custom dictionaries and weighted scoring, enabling fine-tuning for optimized retrieval accuracy.
+
+## 🚀 Program Description
+
+For a comprehensive overview of the program's logic and algorithms, refer to the [utils/README.md](utils/README.md) file.
+
+## 📦 Installation and Start
 
 > [!WARNING]
 > Ensure that your CUDA version and GPU are compatible with the dependencies in the `requirements.txt` file. For GPU-accelerated tasks, make sure you have the appropriate CUDA version installed and that your GPU drivers are up to date.
@@ -11,7 +18,7 @@
     pip install -r requirements.txt
     ```
 
-2. **Set the question range in `bm25_retrieve_v2.py`:**
+2. **Set the question range in [`bm25_retrieve_v2.py`](bm25_retrieve_v2.py):**
 
     Modify the `RANGE` variable to specify which questions to process. For example:
     ```python
@@ -20,7 +27,7 @@
     
     This setting controls which subset of questions will be processed during retrieval.
 
-3. **Open `retrieve_v2.sh` and check the file paths for the following variables:**
+3. **Open [`retrieve_v2.sh`](retrieve_v2.sh) and check the file paths for the following variables:**
 
     - `--question_path`: Path to the file containing the questions to retrieve.
     - `--source_path`: Path to the folder containing the source documents or dataset.
@@ -53,12 +60,12 @@
 > - `chunk_YYYY-MM-DD_HH-MM-SS.log`: Contains word segmentation results and chunking details
 
 > [!NOTE]
-> If you have a **ground_truths.json** file, you can also run `python3 score.py` to evaluate the retrieval results. The evaluation results will be saved in `logs/score_YYYY-MM-DD_HH-MM-SS.log`.
+> If you have a **ground_truths.json** file, you can also run [`python3 score.py`](score.py) to evaluate the retrieval results. The evaluation results will be saved in `logs/score_YYYY-MM-DD_HH-MM-SS.log`.
 
 
 6. **If you want to experiment with different parameters, you can modify the settings in `config.yaml`:**
 
-   The `config.yaml` file contains various configurable parameters that control the retrieval behavior:
+   The [`config.yaml`](config.yaml) file contains various configurable parameters that control the retrieval behavior:
 
    ```yaml
    # Core parameters
@@ -87,7 +94,7 @@
 
 ## 🔄 [Optional] Data Preprocessing 
 
-   If you want to preprocess the data using OCR and text extraction, you can use the tools in the `LangChain_ORC` directory:
+   If you want to preprocess the data using OCR and text extraction, you can use the tools in the [LangChain_ORC/](LangChain_ORC/) directory:
 
    ```bash
    cd LangChain_ORC
@@ -104,11 +111,8 @@
 > [!NOTE]
 > Data preprocessing is optional. The retrieval system will work with raw files, but preprocessing may improve results for certain document types.
 
-
-
-
 ##  🐳 Quick Start with Docker
-### Run [retrieve_v2.sh](retrieve_v2.sh)
+### Run [`retrieve_v2.sh`](retrieve_v2.sh)
 1. Build and run the container.
 ```bash
 docker compose up -d --build
@@ -118,31 +122,26 @@ docker compose up -d --build
 docker exec baseline conda run -n baseline bash /app/retrieve_v2.sh
 ```
 
-### RUN [retrieve_v3.sh](retrieve_v3.sh)
+### RUN [`retrieve_v3.sh`](retrieve_v3.sh)
 #### **Part 1 run the preprocess**
-1. Get into the [LangChain_ORC](LangChain_ORC)
-```bash
-cd LangChain_ORC
-```
+
+1. Get into the [LangChain_ORC/](LangChain_ORC/)
+  ```bash
+  cd LangChain_ORC
+  ```
 2. Run the docker and the OCR process
-```bash
-docker compose up -d --build
-```
-#### **Part 2 Run the [retrieve_v3.sh](retrieve_v3.sh)**
+  ```bash
+  docker compose up -d --build
+  ```
+#### **Part 2 Run the [`retrieve_v3.sh`](retrieve_v3.sh)**
 1. Build and run the container.
-```bash
-docker compose up -d --build
-```
-2. Run the [retrieve_v3.sh](retrieve_v3.sh)
-```bash
-docker exec baseline conda run -n baseline bash /app/retrieve_v3.sh
-```
-
-
-
-## 🚀 Program Description
-
-See [utils/README.md](utils/README.md) for detailed program description.
+  ```bash
+  docker compose up -d --build
+  ```
+2. Run the [`retrieve_v3.sh`](retrieve_v3.sh)
+  ```bash
+  docker exec baseline conda run -n baseline bash /app/retrieve_v3.sh
+  ```
 
 
 ## 📂Data Structure
