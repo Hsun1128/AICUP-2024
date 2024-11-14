@@ -1,6 +1,8 @@
 # AICUP-2024
 
-
+<p align="center">
+  <a href="#"><img src="./2024_AICUP_Banner.jpg" alt="AICUP Team Logo"></a>
+</p>
 
 > [!TIP]
 > This program is designed for efficient retrieval and evaluation tasks, especially useful for document-based question answering. It includes BM25 and FAISS-based retrieval methods, along with optional preprocessing and scoring tools, for AICUP-2024 competition datasets. This project supports various settings, such as custom dictionaries and weighted scoring, enabling fine-tuning for optimized retrieval accuracy.
