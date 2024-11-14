@@ -18,7 +18,7 @@ For a comprehensive overview of the program's logic and algorithms, refer to the
 
 1. **Install required dependencies:**
     
-    ```
+    ```bash
     pip install -r requirements.txt
     ```
 
