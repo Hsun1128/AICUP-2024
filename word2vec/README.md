@@ -55,8 +55,8 @@ python3 load_pretrain.py
 This script checks if the `wiki.zh.bin` model can be loaded successfully and confirms that it is ready for use.
 
 ### 🚀 Benefits
-Faster Loading: The `.bin` format is optimized for quicker model loading and inference, making it ideal for performance-critical applications.
-Pre-trained Model: The `wiki.zh.vec` model is trained on large Chinese text corpora, providing a solid foundation for various natural language processing (NLP) tasks.
+- Faster Loading: The `.bin` format is optimized for quicker model loading and inference, making it ideal for performance-critical applications.
+- Pre-trained Model: The `wiki.zh.vec` model is trained on large Chinese text corpora, providing a solid foundation for various natural language processing (NLP) tasks.
 
 ### 🌐 Download Pre-trained Models
 You can also find other pre-trained models that suit your needs. For example, the Word2Vec pre-trained vectors are available for download at the following link:
