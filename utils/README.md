@@ -51,10 +51,10 @@
 
 - 繁體中文詞典：
   - dict.txt.big (結巴分詞繁體版詞典)
-  - 來源：github.com/fxsjy/jieba
+  - 來源：[github.com/fxsjy/jieba](github.com/fxsjy/jieba)
 - 自定義詞典：
-  - insurance_dict.txt：保險專業詞彙
-  - common_use_dict.txt：財務會計常用詞彙
+  - insurance_dict.txt：[保險專業詞彙](../custom_dicts/with_frequency/insurance_dict_with_frequency.txt)
+  - common_use_dict.txt：[財務會計常用詞彙](../custom_dicts/with_frequency/common_use_dict_with_frequency.txt)
 
 ## 2. 方法論
 
