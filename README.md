@@ -202,35 +202,35 @@ AICUP-2024/     # 專案資料夾
 ├─ utils/                                      # 工具包
 │   ├─ rag_processor/                            # 存放 RAG 的所有功能 (功能尚未分離完全)
 │   │   ├─ readers/                                # 檔案讀取工具
-|   |   |   ├─ __init__.py                           # 匯出文件讀取模組
-|   |   |   ├─ document_loader.py                    # 文件讀取器
-|   |   |   ├─ json_reader.py                        # 讀取 json
-|   |   |   └─ pdf_reader.py                         # 讀取 pdf
-|   |   ├─ retrieval_system/                       # 檢索工具
-|   |   |   ├─ __pycache__
-|   |   |   ├─ __init.py                             # 匯出檢索模組
-|   |   |   ├─ bm25_retrival.py                      # BM25 (未分離)
-|   |   |   ├─ context_similarity.py                 # 計算上下文相似度
-|   |   |   ├─ faiss_retrieval.py                    # faiss 向量檢索
-|   |   |   ├─ position_score.py                     # 計算位置得分
-|   |   |   ├─ query_coverage.py                     # 計算查詢詞覆蓋率
-|   |   |   ├─ reranker.py                           # 向量搜索重排序 (未完成)
-|   |   |   ├─ retrieval_system.py                   # 整合檢索器
-|   |   |   ├─ semantic_similarity.py                # 計算語意相似度
-|   |   |   ├─ term_density.py                       # 計算詞密度
-|   |   |   └─ term_importance.py                    # 計算詞項重要性
-|   |   ├─ scoring/                                # 評分工具
-|   |   |   ├─ __pycache__
-|   |   |   ├─ __init__                              # 匯出評分模組
-|   |   |   ├─ base_scorer.py                        # 基礎評分 (未完成)
-|   |   |   ├─ bm25_scorer.py                        # BM25 主要評分
-|   |   |   └─ weighted_scorer.py                    # 多維度加權評分
-|   |   ├─ __init__.py                             # 匯出 RAG 系統中各處理模組的核心元件，提供統一的接口供外部使用
-|   |   ├─ config.py                               # 讀取、儲存 config 文件
-|   |   ├─ document_processor.py                   # 文件處理器
-|   |   ├─ document_score_calculator.py            # 文件評分器
-|   |   ├─ query_processor.py                      # 查詢處理器
-|   |   └─ resource_loader.py                      # 資源載入器
+│   │   │   ├─ __init__.py                           # 匯出文件讀取模組
+│   │   │   ├─ document_loader.py                    # 文件讀取器
+│   │   │   ├─ json_reader.py                        # 讀取 json
+│   │   │   └─ pdf_reader.py                         # 讀取 pdf
+│   │   ├─ retrieval_system/                       # 檢索工具
+│   │   │   ├─ __pycache__
+│   │   │   ├─ __init.py                             # 匯出檢索模組
+│   │   │   ├─ bm25_retrival.py                      # BM25 (未分離)
+│   │   │   ├─ context_similarity.py                 # 計算上下文相似度
+│   │   │   ├─ faiss_retrieval.py                    # faiss 向量檢索
+│   │   │   ├─ position_score.py                     # 計算位置得分
+│   │   │   ├─ query_coverage.py                     # 計算查詢詞覆蓋率
+│   │   │   ├─ reranker.py                           # 向量搜索重排序 (未完成)
+│   │   │   ├─ retrieval_system.py                   # 整合檢索器
+│   │   │   ├─ semantic_similarity.py                # 計算語意相似度
+│   │   │   ├─ term_density.py                       # 計算詞密度
+│   │   │   └─ term_importance.py                    # 計算詞項重要性
+│   │   ├─ scoring/                                # 評分工具
+│   │   │   ├─ __pycache__
+│   │   │   ├─ __init__                              # 匯出評分模組
+│   │   │   ├─ base_scorer.py                        # 基礎評分 (未完成)
+│   │   │   ├─ bm25_scorer.py                        # BM25 主要評分
+│   │   │   └─ weighted_scorer.py                    # 多維度加權評分
+│   │   ├─ __init__.py                             # 匯出 RAG 系統中各處理模組的核心元件，提供統一的接口供外部使用
+│   │   ├─ config.py                               # 讀取、儲存 config 文件
+│   │   ├─ document_processor.py                   # 文件處理器
+│   │   ├─ document_score_calculator.py            # 文件評分器
+│   │   ├─ query_processor.py                      # 查詢處理器
+│   │   └─ resource_loader.py                      # 資源載入器
 │   ├─ RAGProcessor.py                           # RAG檢索器
 │   ├─ README.md                                 # 整個檢索方式的說明
 │   ├─ __init__.py
