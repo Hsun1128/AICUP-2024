@@ -172,7 +172,7 @@ class DocumentProcessor:
             >>> print(key_map)
             [(1, 0), (2, 0), (2, 1)]
         """
-        chunked_corpus: List[str] = []  # 存儲所有切分後的文本���段
+        chunked_corpus: List[str] = []  # 存儲所有切分後的文本段落
         key_idx_map: List[Tuple[int, int]] = []  # 存儲每個文本片段對應的(file_key, chunk_index)
         
         # 遍歷每個來源文件ID
