@@ -93,8 +93,12 @@ For a comprehensive overview of the program's logic and algorithms, refer to the
 
    Adjust these parameters based on your specific needs and run the retrieval script again to see the effects.
 
-> [!NOTE]
-> Some parameters in config.yaml are still under development and may need further tuning. Please check back later for the optimal settings.
+> [!IMPORTANT]
+> Some parameters in `config.yaml` are still under development and may need further tuning. Please check back later for the optimal settings.
+
+> [!TIP]
+> 🌟 **You may want to add common words or stop words. For details, refer to [custom_dicts/README.md](custom_dicts/README.md).**  
+> 🧠 **If you want to train your own Word2Vec model, check out [word2vec/README.md](word2vec/README.md) for more information.**
 
 ## 🔄 [Optional] Data Preprocessing 
 
